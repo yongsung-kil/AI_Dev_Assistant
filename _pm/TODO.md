@@ -4,6 +4,10 @@
 
 ## 작업 목록
 
+- [ ] 플러그인 5단계: paper-search, paper-screen, paper-analyze
+  - 상세: _pm/tasks/20260930_plugin_stage5/
+  - [x] db, 검색과 들여오기, 선별, 분석 스크립트, 양식 넷, paper-reader, 스킬 셋
+  - [ ] 검사 사례, 라이트 리뷰
 - [ ] 플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt
   - 상세: _pm/tasks/20260930_plugin_stage4/
   - [x] 스크립트 셋과 최적화기 뼈대, 양식, 스킬 넷, 검사 사례 둘
