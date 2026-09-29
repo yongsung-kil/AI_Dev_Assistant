@@ -7,7 +7,7 @@
 - [ ] 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬
   - 상세: _pm/tasks/20260930_plugin_stage1/
   - [x] 작업 1부터 7 (뼈대, doc_check, doc-check 스킬, pm_stamp와 양식, pm 스킬, 자동 실행, 금지 표현 검사)
-  - [ ] 작업 9 검사 사례
+  - [x] 작업 9 검사 사례 (eval 명령이 early access라 시험장 실제 실행으로 검증)
 ## 새 작업 추가
 
 (비어 있음)
