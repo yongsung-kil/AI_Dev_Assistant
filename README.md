@@ -75,4 +75,6 @@ python plugin/scripts/doc_check.py plugin docs _pm
 claude plugin eval plugin --runs 1 --no-publish --allow-tools Bash Write Edit
 ```
 
+시험장에서 스킬을 `claude -p`(비대화 실행)로 돌릴 때는 `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`을 환경 변수로 주어야 한다. 주지 않으면 뒤에서 도는 에이전트가 600초를 넘길 때 세션이 끊긴다 (wiki처럼 오래 도는 스킬에서 겪음).
+
 검사 사례는 `plugin/evals/` 아래 10건이다 (pm-register, doc-check-fix, onboard-profile, explore-module, wiki-cold-start, dashboard-build, idea-apply-register, param-opt-scaffold, paper-import-screen, review-light). 이 명령이 계정에서 열리지 않으면 같은 프롬프트를 `claude --plugin-dir ./plugin -p "..."`로 시험장에서 돌려 결과를 눈으로 확인한다.
