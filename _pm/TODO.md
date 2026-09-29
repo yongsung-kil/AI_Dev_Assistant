@@ -4,6 +4,10 @@
 
 ## 작업 목록
 
+- [ ] 플러그인 6단계: plan, review, debug, test-design 스킬 이관
+  - 상세: _pm/tasks/20260930_plugin_stage6/
+  - [x] 스킬 넷, reviewer 에이전트, 검사 사례
+  - [ ] 라이트 리뷰 (8단계 뒤)
 - [ ] 플러그인 5단계: paper-search, paper-screen, paper-analyze
   - 상세: _pm/tasks/20260930_plugin_stage5/
   - [x] db, 검색과 들여오기, 선별, 분석 스크립트, 양식 넷, paper-reader, 스킬 셋
