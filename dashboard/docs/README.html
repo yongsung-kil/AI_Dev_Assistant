@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI_Assisted_Dev</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<header class="top">
+<a class="brand" href="../index.html">AI_Assisted_Dev</a>
+<input id="search" type="search" placeholder="검색 (제목과 본문)" autocomplete="off">
+<div id="search-results" hidden></div>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<a class="nav-home" href="../index.html">대시보드</a>
+<details><summary>작업</summary>
+<ul>
+<li><a href="_pm/tasks/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
+<li><a href="_pm/tasks/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
+<li><a href="_pm/tasks/20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
+</ul>
+</details>
+<details><summary>결정</summary>
+</details>
+<details><summary>아이디어</summary>
+</details>
+<details><summary>실험</summary>
+</details>
+<details open><summary>문서</summary>
+<details open><summary>루트</summary>
+<ul>
+<li><a href="CLAUDE.html">CLAUDE.md: 이 저장소에서 작업할 때의 규칙</a></li>
+<li><a href="README.html">AI_Assisted_Dev</a></li>
+</ul>
+</details>
+<details><summary>_pm</summary>
+<ul>
+<li><a href="_pm/DONE.html">DONE</a></li>
+<li><a href="_pm/TODO.html">TODO</a></li>
+<li><a href="_pm/tasks/20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
+<li><a href="_pm/tasks/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
+<li><a href="_pm/tasks/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
+<li><a href="_pm/tasks/_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
+<li><a href="_pm/tasks/_template/decision_request.html">판정요청: (주제)</a></li>
+<li><a href="_pm/tasks/_template/task.html">(작업 제목)</a></li>
+</ul>
+</details>
+<details><summary>docs</summary>
+<ul>
+<li><a href="docs/html_guide.html">HTML 작성 가이드</a></li>
+</ul>
+</details>
+</details>
+</nav>
+<main class="content">
+<h1 id="ai_assisted_dev">AI_Assisted_Dev</h1>
+<p>Claude Code 플러그인 <code>ai-assisted-dev</code>를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.</p>
+<h2 id="폴더">폴더</h2>
+<ul><li>㉮ <code>plugin/</code>: 플러그인 본체. 이 폴더만 배포한다</li><li>㉯ <code>testbed/</code>: 시험장. 실제 프로젝트 사본을 두고 플러그인을 돌려 본다 (git 무시)</li><li>㉰ <code>_pm/</code>: 이 저장소의 작업 관리 (플러그인의 pm 스킬로 운영)</li><li>㉱ <code>_checks/</code>: 배포 전 검사 (금지 표현)</li><li>㉲ <code>tests/</code>: 스크립트 테스트</li></ul>
+<h2 id="로컬에서-써-보기">로컬에서 써 보기</h2>
+<pre><code>claude --plugin-dir ./plugin          # 이 세션에만 플러그인을 싣는다
+claude plugin validate --strict plugin
+python -m pytest tests -q</code></pre>
+<p>필요한 것: Claude Code, Python 3 (PATH에 <code>python</code>), git.</p>
+<p>자동 실행 설정(세션 시작 때 TODO 확인, md 수정 뒤 문서 검사)은 <code>python</code> 명령으로 스크립트를 부른다. macOS와 Linux처럼 <code>python3</code>만 있는 PC에서는 <code>python</code>이 <code>python3</code>를 가리키게 연결해야 오류 없이 돈다.</p>
+
+</main>
+<aside class="toc"><div class="toc-title">이 페이지의 차례</div>
+<ul><li class="h2"><a href="#폴더">폴더</a></li><li class="h2"><a href="#로컬에서-써-보기">로컬에서 써 보기</a></li></ul>
+</aside>
+</div>
+<footer class="foot">생성: 2026-09-30 02:54:42</footer>
+<script>window.DASH_PREFIX = "../";</script>
+<script src="../assets/search.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>

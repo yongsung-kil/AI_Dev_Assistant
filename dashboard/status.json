@@ -1,0 +1,145 @@
+{
+ "generated": "2026-09-30 02:54:42",
+ "project": "AI_Assisted_Dev",
+ "todo": [
+  {
+   "title": "플러그인 3단계: 대시보드와 HTML 작성 가이드",
+   "done": false,
+   "detail": "_pm/tasks/20260930_plugin_stage3/",
+   "subtasks": [
+    {
+     "title": "md 변환기, 현황 수집, 렌더러, html_guide.md",
+     "done": true
+    },
+    {
+     "title": "dashboard 스킬, 자기 적용, 시험장 적용, 라이트 리뷰",
+     "done": false
+    }
+   ],
+   "notes": []
+  },
+  {
+   "title": "플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일",
+   "done": false,
+   "detail": "_pm/tasks/20260930_plugin_stage2/",
+   "subtasks": [
+    {
+     "title": "작업 1부터 4 (onboard_init와 양식, explorer와 explore, onboard, wiki_init와 wiki)",
+     "done": true
+    },
+    {
+     "title": "작업 5 검사 사례, 작업 6 시험장 실행, 작업 7 라이트 리뷰와 마감",
+     "done": false
+    }
+   ],
+   "notes": []
+  },
+  {
+   "title": "플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬",
+   "done": false,
+   "detail": "_pm/tasks/20260930_plugin_stage1/",
+   "subtasks": [
+    {
+     "title": "작업 1부터 7 (뼈대, doc_check, doc-check 스킬, pm_stamp와 양식, pm 스킬, 자동 실행, 금지 표현 검사)",
+     "done": true
+    },
+    {
+     "title": "작업 9 검사 사례 (eval 명령이 early access라 시험장 실제 실행으로 검증)",
+     "done": true
+    },
+    {
+     "title": "작업 10 원격 (GitHub 비공개), 최종 검토의 작은 지적 9건 반영",
+     "done": true
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "done": [],
+ "decisions": [],
+ "ideas": [],
+ "experiments": [],
+ "docs": [
+  {
+   "path": "CLAUDE.md",
+   "title": "CLAUDE.md: 이 저장소에서 작업할 때의 규칙",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "README.md",
+   "title": "AI_Assisted_Dev",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/DONE.md",
+   "title": "DONE",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/TODO.md",
+   "title": "TODO",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/20260930_plugin_stage1/20260930_plugin_stage1.md",
+   "title": "플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/20260930_plugin_stage2/20260930_plugin_stage2.md",
+   "title": "플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/20260930_plugin_stage3/20260930_plugin_stage3.md",
+   "title": "플러그인 3단계: 대시보드와 HTML 작성 가이드",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/_template/README.md",
+   "title": "tasks/ 폴더 규칙 (삭제 금지)",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/_template/decision_request.md",
+   "title": "판정요청: (주제)",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "_pm/tasks/_template/task.md",
+   "title": "(작업 제목)",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  },
+  {
+   "path": "docs/html_guide.md",
+   "title": "HTML 작성 가이드",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
+  }
+ ],
+ "profile": {
+  "exists": false,
+  "files": []
+ }
+}
