@@ -1,0 +1,8 @@
+{
+  "name": "ai-assisted-dev",
+  "version": "0.1.0",
+  "description": "기존 프로젝트를 읽어 프로파일을 만들고 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는 스킬 묶음",
+  "author": { "name": "길용성" },
+  "license": "MIT",
+  "keywords": ["documentation", "papers", "experiments", "project-management"]
+}
