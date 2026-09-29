@@ -1,0 +1,6 @@
+{
+  "ideas_files": null,
+  "experiment_logs": null,
+  "doc_dirs": ["docs", "_wiki", "_pm"],
+  "root_docs": ["README.md", "CLAUDE.md"]
+}
