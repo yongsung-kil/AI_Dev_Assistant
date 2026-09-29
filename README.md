@@ -8,7 +8,7 @@ Claude Code 플러그인 `ai-assisted-dev`를 만드는 저장소다. 기존 소
 
 ```bash
 # 이 저장소를 마켓플레이스로 등록하고 설치한다 (GitHub 주소 또는 로컬 경로)
-claude plugin marketplace add yongsung-kil/AI_Assisted_Dev
+claude plugin marketplace add <GitHub 계정 또는 조직>/AI_Assisted_Dev
 claude plugin install ai-assisted-dev@ai-assisted-dev
 
 # 이 세션에만 싣기 (개발 중)
