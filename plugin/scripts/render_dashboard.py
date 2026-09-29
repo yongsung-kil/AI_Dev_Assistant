@@ -34,7 +34,7 @@ STYLE = """:root {
           --accent: #58a6ff; --ok: #3fb950; --warn: #d29922; }
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7;
+body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere;
        font-family: "Segoe UI", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
