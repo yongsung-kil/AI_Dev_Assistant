@@ -4,6 +4,10 @@
 
 ## 작업 목록
 
+- [ ] 플러그인 7단계 배포와 8단계 소개 페이지
+  - 상세: _pm/tasks/20260930_plugin_stage7_8/
+  - [x] marketplace.json, README 설치 안내, plugin/README, docs/intro.html
+  - [ ] 라이트 리뷰 (2단계부터 8단계까지), 시험장 wiki와 dashboard 실행
 - [ ] 플러그인 6단계: plan, review, debug, test-design 스킬 이관
   - 상세: _pm/tasks/20260930_plugin_stage6/
   - [x] 스킬 넷, reviewer 에이전트, 검사 사례
