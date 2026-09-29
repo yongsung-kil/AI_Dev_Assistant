@@ -60,24 +60,35 @@ def project_dir(payload):
     return os.environ.get("CLAUDE_PROJECT_DIR") or payload.get("cwd") or os.getcwd()
 
 
+def read_stdin_utf8():
+    """표준 입력을 콘솔 인코딩과 무관하게 UTF-8로 읽는다 (테스트가 StringIO를 넣으면 그대로 읽는다)."""
+    buffer = getattr(sys.stdin, "buffer", None)
+    if buffer is not None:
+        return buffer.read().decode("utf-8", "replace")
+    return sys.stdin.read()
+
+
 def main():
     try:
-        payload = json.loads(sys.stdin.read() or "{}")
+        try:
+            payload = json.loads(read_stdin_utf8() or "{}")
+        except Exception:
+            payload = {}
+        if not isinstance(payload, dict):
+            payload = {}
+        todo = os.path.join(project_dir(payload), "_pm", "TODO.md")
+        if not os.path.isfile(todo):
+            return 0
+        with io.open(todo, encoding="utf-8", newline="") as f:
+            text = f.read()
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        with io.open(todo, "w", encoding="utf-8", newline="") as f:
+            f.write(stamp(text, now))
+        out = {"hookSpecificOutput": {"hookEventName": "SessionStart",
+                                      "additionalContext": summarize(text)}}
+        print(json.dumps(out, ensure_ascii=False))
     except Exception:
-        payload = {}
-    if not isinstance(payload, dict):
-        payload = {}
-    todo = os.path.join(project_dir(payload), "_pm", "TODO.md")
-    if not os.path.isfile(todo):
-        return 0
-    with io.open(todo, encoding="utf-8", newline="") as f:
-        text = f.read()
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with io.open(todo, "w", encoding="utf-8", newline="") as f:
-        f.write(stamp(text, now))
-    out = {"hookSpecificOutput": {"hookEventName": "SessionStart",
-                                  "additionalContext": summarize(text)}}
-    print(json.dumps(out, ensure_ascii=False))
+        return 0  # 자동 실행은 어떤 경우에도 조용히 끝난다 (UTF-8 아닌 파일, 쓰기 실패 등)
     return 0
 
 

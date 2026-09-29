@@ -51,3 +51,35 @@ def test_hook_reports_findings_for_md_only(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps({"tool_input": {"file_path": str(py)}})))
     assert doc_check_hook.main() == 0
     assert capsys.readouterr().out == ""
+
+
+import subprocess  # noqa: E402
+
+HOOK_SCRIPT = os.path.join(os.path.dirname(__file__), "..", "plugin", "scripts", "doc_check_hook.py")
+
+
+def test_hook_reads_utf8_stdin_regardless_of_console_encoding(tmp_path):
+    folder = tmp_path / "한글폴더"
+    folder.mkdir()
+    bad = folder / "문서.md"
+    bad.write_text("줄표 — 있음\n", encoding="utf-8")
+    payload = json.dumps({"tool_input": {"file_path": str(bad)}}, ensure_ascii=False).encode("utf-8")
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONIOENCODING"}
+    env["PYTHONUTF8"] = "0"
+    r = subprocess.run([sys.executable, HOOK_SCRIPT], input=payload, capture_output=True, env=env)
+    assert r.returncode == 0
+    assert "줄표" in r.stdout.decode("utf-8")
+
+
+def test_check_file_reports_non_utf8_file_as_single_finding(tmp_path):
+    p = tmp_path / "cp949.md"
+    p.write_bytes("발견 — 있음\n".encode("cp949"))
+    assert [f[2:] for f in doc_check.check_file(str(p))] == [("인코딩", "UTF-8 아님")]
+
+
+def test_hook_returns_zero_on_non_utf8_file(tmp_path, monkeypatch, capsys):
+    p = tmp_path / "cp949.md"
+    p.write_bytes("발견\n".encode("cp949"))
+    monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps({"tool_input": {"file_path": str(p)}})))
+    assert doc_check_hook.main() == 0
+    assert "인코딩" in capsys.readouterr().out

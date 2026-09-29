@@ -69,3 +69,29 @@ def test_pm_init_cli_output_is_utf8_regardless_of_console_encoding(tmp_path):
     env["PYTHONUTF8"] = "0"
     r = subprocess.run([sys.executable, INIT_SCRIPT, str(tmp_path)], capture_output=True, env=env)
     assert r.stdout.decode("utf-8").startswith("_pm 준비: 새로 복사 5개")
+
+
+STAMP_SCRIPT = os.path.join(os.path.dirname(__file__), "..", "plugin", "scripts", "pm_stamp.py")
+
+
+def test_main_returns_zero_and_stays_silent_on_non_utf8_todo(tmp_path, monkeypatch, capsys):
+    (tmp_path / "_pm").mkdir()
+    (tmp_path / "_pm" / "TODO.md").write_bytes("# TODO\n\n## 작업 목록\n".encode("cp949"))
+    monkeypatch.setenv("CLAUDE_PROJECT_DIR", str(tmp_path))
+    monkeypatch.setattr("sys.stdin", io.StringIO("{}"))
+    assert pm_stamp.main() == 0
+    assert capsys.readouterr().out == ""
+
+
+def test_main_reads_cwd_from_utf8_stdin_regardless_of_console_encoding(tmp_path):
+    project = tmp_path / "한글프로젝트"
+    (project / "_pm").mkdir(parents=True)
+    todo = project / "_pm" / "TODO.md"
+    todo.write_text("# TODO\n\n## 작업 목록\n\n- [ ] 첫 작업\n", encoding="utf-8")
+    payload = json.dumps({"cwd": str(project)}, ensure_ascii=False).encode("utf-8")
+    env = {k: v for k, v in os.environ.items() if k not in ("PYTHONIOENCODING", "CLAUDE_PROJECT_DIR")}
+    env["PYTHONUTF8"] = "0"
+    r = subprocess.run([sys.executable, STAMP_SCRIPT], input=payload, capture_output=True, env=env)
+    assert r.returncode == 0
+    assert "첫 작업" in r.stdout.decode("utf-8")
+    assert "> Claude 마지막 확인: 20" in todo.read_text(encoding="utf-8")

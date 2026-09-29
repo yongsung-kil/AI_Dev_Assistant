@@ -52,8 +52,11 @@ def check_text(text, path, base_dir, terms=()):
 
 
 def check_file(path, terms=()):
-    with io.open(path, encoding="utf-8", newline="") as f:
-        text = f.read()
+    try:
+        with io.open(path, encoding="utf-8", newline="") as f:
+            text = f.read()
+    except UnicodeDecodeError:
+        return [(path, 0, "인코딩", "UTF-8 아님")]
     return check_text(text, path, os.path.dirname(os.path.abspath(path)), terms)
 
 

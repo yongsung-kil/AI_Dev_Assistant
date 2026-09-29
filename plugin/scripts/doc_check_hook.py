@@ -15,21 +15,29 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import doc_check  # noqa: E402
 
 
+def read_stdin_utf8():
+    """표준 입력을 콘솔 인코딩과 무관하게 UTF-8로 읽는다 (테스트가 StringIO를 넣으면 그대로 읽는다)."""
+    buffer = getattr(sys.stdin, "buffer", None)
+    if buffer is not None:
+        return buffer.read().decode("utf-8", "replace")
+    return sys.stdin.read()
+
+
 def main():
     try:
-        payload = json.loads(sys.stdin.read() or "{}")
+        payload = json.loads(read_stdin_utf8() or "{}")
+        path = (payload.get("tool_input") or {}).get("file_path", "") if isinstance(payload, dict) else ""
+        if not path.endswith(".md") or not os.path.isfile(path):
+            return 0
+        findings = doc_check.check_file(path)
+        if not findings:
+            return 0
+        lines = [f"{os.path.basename(p)}:{no}: [{rule}] {msg}" for p, no, rule, msg in findings[:20]]
+        context = f"문서 검사 경고 {len(findings)}건 (doc-check 스킬로 다시 쓸 것):\n" + "\n".join(lines)
+        out = {"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": context}}
+        print(json.dumps(out, ensure_ascii=False))
     except Exception:
-        return 0
-    path = (payload.get("tool_input") or {}).get("file_path", "") if isinstance(payload, dict) else ""
-    if not path.endswith(".md") or not os.path.isfile(path):
-        return 0
-    findings = doc_check.check_file(path)
-    if not findings:
-        return 0
-    lines = [f"{os.path.basename(p)}:{no}: [{rule}] {msg}" for p, no, rule, msg in findings[:20]]
-    context = f"문서 검사 경고 {len(findings)}건 (doc-check 스킬로 다시 쓸 것):\n" + "\n".join(lines)
-    out = {"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": context}}
-    print(json.dumps(out, ensure_ascii=False))
+        return 0  # 자동 실행은 어떤 경우에도 조용히 끝난다
     return 0
 
 

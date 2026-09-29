@@ -19,3 +19,5 @@ python -m pytest tests -q
 ```
 
 필요한 것: Claude Code, Python 3 (PATH에 `python`), git.
+
+자동 실행 설정(세션 시작 때 TODO 확인, md 수정 뒤 문서 검사)은 `python` 명령으로 스크립트를 부른다. macOS와 Linux처럼 `python3`만 있는 PC에서는 `python`이 `python3`를 가리키게 연결해야 오류 없이 돈다.
