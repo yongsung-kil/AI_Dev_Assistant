@@ -31,3 +31,23 @@ def test_main_exit_code_and_summary(tmp_path, capsys):
     assert capsys.readouterr().out.strip() == "발견 0건"
     (tmp_path / "bad.md").write_text("줄표 — 있음\n", encoding="utf-8")
     assert doc_check.main([str(tmp_path)]) == 1
+
+
+import io  # noqa: E402
+import json  # noqa: E402
+import doc_check_hook  # noqa: E402
+
+
+def test_hook_reports_findings_for_md_only(tmp_path, monkeypatch, capsys):
+    bad = tmp_path / "bad.md"
+    bad.write_text("줄표 — 있음\n", encoding="utf-8")
+    payload = {"tool_name": "Write", "tool_input": {"file_path": str(bad)}}
+    monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps(payload)))
+    assert doc_check_hook.main() == 0
+    out = json.loads(capsys.readouterr().out)
+    assert "줄표" in out["hookSpecificOutput"]["additionalContext"]
+    py = tmp_path / "x.py"
+    py.write_text("s = '—'\n", encoding="utf-8")
+    monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps({"tool_input": {"file_path": str(py)}})))
+    assert doc_check_hook.main() == 0
+    assert capsys.readouterr().out == ""
