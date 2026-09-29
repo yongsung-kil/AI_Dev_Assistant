@@ -73,7 +73,7 @@ def test_hook_reads_utf8_stdin_regardless_of_console_encoding(tmp_path):
 
 def test_check_file_reports_non_utf8_file_as_single_finding(tmp_path):
     p = tmp_path / "cp949.md"
-    p.write_bytes("발견 — 있음\n".encode("cp949"))
+    p.write_bytes("발견 있음\n".encode("cp949"))
     assert [f[2:] for f in doc_check.check_file(str(p))] == [("인코딩", "UTF-8 아님")]
 
 
