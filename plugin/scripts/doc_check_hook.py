@@ -11,8 +11,11 @@ try:
 except Exception:
     pass
 
+sys.dont_write_bytecode = True  # 배포 폴더 안에 개인 경로가 든 .pyc를 남기지 않는다
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import doc_check  # noqa: E402
+
+HOOK_RULES = {"글자", "인코딩"}  # 자동 검사는 글자 규칙만 경고한다. 링크와 낱말은 doc-check 스킬에서 본다
 
 
 def read_stdin_utf8():
@@ -29,7 +32,7 @@ def main():
         path = (payload.get("tool_input") or {}).get("file_path", "") if isinstance(payload, dict) else ""
         if not path.endswith(".md") or not os.path.isfile(path):
             return 0
-        findings = doc_check.check_file(path)
+        findings = [f for f in doc_check.check_file(path) if f[2] in HOOK_RULES]
         if not findings:
             return 0
         lines = [f"{os.path.basename(p)}:{no}: [{rule}] {msg}" for p, no, rule, msg in findings[:20]]

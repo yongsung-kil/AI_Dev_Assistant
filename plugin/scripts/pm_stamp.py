@@ -18,18 +18,20 @@ STAMP_PREFIX = "> Claude 마지막 확인:"
 
 
 def stamp(text, now):
-    """확인 시각 줄을 now로 바꾼다. 없으면 첫 제목 줄 다음에 넣는다. 줄 끝 문자는 유지한다."""
+    """확인 시각 줄을 now로 바꾼다. 없으면 첫 제목 줄 다음에 넣는다. 줄 끝 문자와 맨 앞 BOM은 유지한다."""
+    bom = "﻿" if text.startswith("﻿") else ""
+    text = text[len(bom):]
     nl = "\r\n" if "\r\n" in text else "\n"
     lines = text.split(nl)
     for i, line in enumerate(lines):
         if line.startswith(STAMP_PREFIX):
             lines[i] = f"{STAMP_PREFIX} {now}"
-            return nl.join(lines)
+            return bom + nl.join(lines)
     for i, line in enumerate(lines):
         if line.startswith("# "):
             lines[i + 1:i + 1] = ["", f"{STAMP_PREFIX} {now}"]
-            return nl.join(lines)
-    return f"{STAMP_PREFIX} {now}{nl}{text}"
+            return bom + nl.join(lines)
+    return f"{bom}{STAMP_PREFIX} {now}{nl}{text}"
 
 
 def section(text, heading):

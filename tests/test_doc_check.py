@@ -83,3 +83,45 @@ def test_hook_returns_zero_on_non_utf8_file(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps({"tool_input": {"file_path": str(p)}})))
     assert doc_check_hook.main() == 0
     assert "인코딩" in capsys.readouterr().out
+
+
+def test_inline_code_link_is_not_checked(tmp_path):
+    p = tmp_path / "a.md"
+    p.write_text("규칙 문서는 `[x](없음.md)` 꼴을 인용한다. 진짜 링크 [y](진짜없음.md)\n", encoding="utf-8")
+    assert [f[3] for f in doc_check.check_file(str(p))] == ["없는 파일 '진짜없음.md'"]
+
+
+def test_tilde_and_long_backtick_fences_are_code(tmp_path):
+    p = tmp_path / "a.md"
+    p.write_text("~~~\n줄표 — 안\n~~~\n````\n```\n줄표 — 안\n```\n````\n본문 — 밖\n", encoding="utf-8")
+    assert [f[1] for f in doc_check.check_file(str(p))] == [9]
+
+
+def test_link_targets_with_title_angle_brackets_and_parentheses(tmp_path):
+    (tmp_path / "b.md").write_text("x", encoding="utf-8")
+    (tmp_path / "b c.md").write_text("x", encoding="utf-8")
+    (tmp_path / "a(1).md").write_text("x", encoding="utf-8")
+    p = tmp_path / "a.md"
+    p.write_text('[t](b.md "제목") [s](<b c.md>) [p](a(1).md) [m](없음(2).md)\n', encoding="utf-8")
+    assert [f[3] for f in doc_check.check_file(str(p))] == ["없는 파일 '없음(2).md'"]
+
+
+def test_hook_reports_only_character_and_encoding_findings(tmp_path, monkeypatch, capsys):
+    p = tmp_path / "a.md"
+    p.write_text("[y](없음.md)\n", encoding="utf-8")
+    monkeypatch.setattr("sys.stdin", io.StringIO(json.dumps({"tool_input": {"file_path": str(p)}})))
+    assert doc_check_hook.main() == 0
+    assert capsys.readouterr().out == ""
+
+
+def test_hook_does_not_write_bytecode(tmp_path):
+    cache = os.path.join(os.path.dirname(HOOK_SCRIPT), "__pycache__")
+    if os.path.isdir(cache):
+        for name in os.listdir(cache):
+            if name.startswith("doc_check"):
+                os.remove(os.path.join(cache, name))
+    p = tmp_path / "a.md"
+    p.write_text("깨끗\n", encoding="utf-8")
+    payload = json.dumps({"tool_input": {"file_path": str(p)}}).encode("utf-8")
+    subprocess.run([sys.executable, HOOK_SCRIPT], input=payload, capture_output=True)
+    assert not (os.path.isdir(cache) and any(n.startswith("doc_check") for n in os.listdir(cache)))

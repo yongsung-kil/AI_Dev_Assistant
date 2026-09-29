@@ -17,18 +17,29 @@ except Exception:
     pass
 
 BANNED_CHARS = {"—": "줄표", "·": "가운뎃점"}
-LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
+# 링크 대상: 꺾쇠로 감싼 경로, 또는 공백과 닫는 괄호를 뺀 글자들 (이름 속 괄호 한 쌍은 허용). 뒤에 "제목"이 붙어도 된다
+LINK = re.compile(r"\]\(\s*(<[^>]*>|[^\s()]+(?:\([^)]*\)[^\s()]*)*)(?:\s+\"[^\"]*\")?\s*\)")
 INLINE_CODE = re.compile(r"`[^`]*`")
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})")
 
 
 def iter_prose(text):
-    """(줄 번호, 본문 줄)을 낸다. 코드 울타리 안은 건너뛴다."""
-    fenced = False
+    """(줄 번호, 본문 줄)을 낸다. 코드 울타리 안은 건너뛴다.
+
+    울타리는 백틱이나 물결표 3개 이상으로 열리고, 같은 글자로 그 길이 이상일 때만 닫힌다.
+    """
+    fence = None  # 열린 울타리 문자열 (예: "```" 또는 "~~~~")
     for no, line in enumerate(text.splitlines(), 1):
-        if line.strip().startswith("```"):
-            fenced = not fenced
-            continue
-        if not fenced:
+        m = FENCE.match(line)
+        if m:
+            marker = m.group(1)
+            if fence is None:
+                fence = marker
+                continue
+            if marker[0] == fence[0] and len(marker) >= len(fence):
+                fence = None
+                continue
+        if fence is None:
             yield no, line
 
 
@@ -42,7 +53,10 @@ def check_text(text, path, base_dir, terms=()):
         for term in terms:
             if term and term in line:
                 findings.append((path, no, "낱말", f"금지 낱말 '{term}'"))
-        for target in LINK.findall(raw):
+        for target in LINK.findall(line):
+            target = target.strip()
+            if target.startswith("<") and target.endswith(">"):
+                target = target[1:-1]
             if re.match(r"[a-z]+:", target) or target.startswith("#"):
                 continue
             rel = unquote(target.split("#")[0])

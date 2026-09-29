@@ -96,3 +96,9 @@ def test_main_reads_cwd_from_utf8_stdin_regardless_of_console_encoding(tmp_path)
     assert r.returncode == 0
     assert "첫 작업" in r.stdout.decode("utf-8")
     assert "> Claude 마지막 확인: 20" in todo.read_text(encoding="utf-8")
+
+
+def test_stamp_keeps_bom_at_start():
+    text = "\ufeff# TODO\n\n## 작업 목록\n"
+    out = pm_stamp.stamp(text, NOW)
+    assert out.startswith("\ufeff# TODO\n\n> Claude 마지막 확인: ")
