@@ -16,14 +16,6 @@
 <nav class="sidebar">
 <a class="nav-home" href="../../index.html">대시보드</a>
 <details><summary>작업</summary>
-<ul>
-<li><a href="tasks/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
-<li><a href="tasks/20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
-<li><a href="tasks/20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
-<li><a href="tasks/20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
-<li><a href="tasks/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
-<li><a href="tasks/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
-</ul>
 </details>
 <details><summary>결정</summary>
 </details>
@@ -43,12 +35,12 @@
 <li><a href="DONE.html">DONE</a></li>
 <li><a href="TODO.html">TODO</a></li>
 <li><a href="done/20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
-<li><a href="tasks/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
-<li><a href="tasks/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
-<li><a href="tasks/20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
-<li><a href="tasks/20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
-<li><a href="tasks/20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
-<li><a href="tasks/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
+<li><a href="done/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
+<li><a href="done/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
+<li><a href="done/20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
+<li><a href="done/20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
+<li><a href="done/20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
+<li><a href="done/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
 <li><a href="tasks/_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
 <li><a href="tasks/_template/decision_request.html">판정요청: (주제)</a></li>
 <li><a href="tasks/_template/task.html">(작업 제목)</a></li>
@@ -59,6 +51,11 @@
 <li><a href="../docs/html_guide.html">HTML 작성 가이드</a></li>
 </ul>
 </details>
+<details><summary>plugin</summary>
+<ul>
+<li><a href="../plugin/README.html">ai-assisted-dev</a></li>
+</ul>
+</details>
 </details>
 </nav>
 <main class="content">
@@ -67,13 +64,31 @@
 <h3 id="2026-09-30-플러그인-1단계-저장소-뼈대-pm-스킬-doc-check-스킬">2026-09-30 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</h3>
 <p>플러그인 뼈대와 자기 관리 도구를 만들고 시험장 실제 실행과 검토자 검토로 확인했다</p>
 <ul><li><strong>배경</strong>: 다른 모든 스킬이 기대는 작업 관리와 문서 검사부터 플러그인으로 만들어 자기 관리에 썼다</li><li><strong>변경</strong>: plugin.json, pm과 doc-check 스킬, 세션 시작과 md 수정 뒤 자동 실행, 금지 표현 검사, 검사 사례 2건, 최종 검토의 지적 반영</li><li><strong>파일</strong>: plugin/skills/{pm,doc-check}, plugin/scripts/{pm_stamp,pm_init,doc_check,doc_check_hook}.py, plugin/hooks/hooks.json, _checks/, tests/</li></ul>
+<h3 id="2026-09-30-플러그인-2단계-onboard-explore-wiki-스킬과-프로젝트-프로파일">2026-09-30 플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</h3>
+<p>프로파일 양식 6편과 onboard_init, explorer 에이전트, explore와 onboard와 wiki 스킬(tech 갈래), 시험장에서 onboard 실제 실행(45분)으로 프로파일 다섯 문서가 근거와 함께 채워짐을 확인</p>
+<ul><li><strong>배경</strong>: 다른 모든 스킬이 코드 대신 읽을 프로파일과 그것을 만드는 절차가 먼저 필요했다</li><li><strong>변경</strong>: 프로파일 양식 6편과 onboard_init, explorer 에이전트, explore와 onboard와 wiki 스킬(tech 갈래), 시험장에서 onboard 실제 실행(45분)으로 프로파일 다섯 문서가 근거와 함께 채워짐을 확인</li><li><strong>파일</strong>: plugin/skills/{onboard,explore,wiki}, plugin/agents/explorer.md, plugin/scripts/{onboard_init,wiki_init}.py, plugin/templates/{profile,_wiki,CLAUDE.md,docs}</li></ul>
+<h3 id="2026-09-30-플러그인-3단계-대시보드와-html-작성-가이드">2026-09-30 플러그인 3단계: 대시보드와 HTML 작성 가이드</h3>
+<p>표준 라이브러리 md 변환기, 현황 수집(status.json), 정적 대시보드(사이드바 접기, 검색, 오른쪽 차례, 진행 중 카드, 문서 지도, 깨진 링크 검사), html_guide.md, 자기 적용과 시험장 적용</p>
+<ul><li><strong>배경</strong>: 작업 현황을 한 화면에 보이고 md가 정본인 문서를 html로 내는 틀이 필요했다</li><li><strong>변경</strong>: 표준 라이브러리 md 변환기, 현황 수집(status.json), 정적 대시보드(사이드바 접기, 검색, 오른쪽 차례, 진행 중 카드, 문서 지도, 깨진 링크 검사), html_guide.md, 자기 적용과 시험장 적용</li><li><strong>파일</strong>: plugin/scripts/{md_to_html,collect_status,render_dashboard}.py, plugin/skills/dashboard, docs/html_guide.md, dashboard/</li></ul>
+<h3 id="2026-09-30-플러그인-4단계-idea-apply-speed-opt-robustness-check-param-opt">2026-09-30 플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</h3>
+<p>아이디어 접수 스크립트와 양식, 효율화와 안정성 점검표 양식(항목 풀), 표준 라이브러리 파라미터 최적화기, 스킬 넷</p>
+<ul><li><strong>배경</strong>: 논문 기법을 붙여 실험하고, 결과를 바꾸지 않는 효율화와 경계 조건 안정성을 점검하고, 파라미터를 자동으로 고르는 절차를 옮겼다</li><li><strong>변경</strong>: 아이디어 접수 스크립트와 양식, 효율화와 안정성 점검표 양식(항목 풀), 표준 라이브러리 파라미터 최적화기, 스킬 넷</li><li><strong>파일</strong>: plugin/scripts/{idea_init,checklist_init,param_opt_init}.py, plugin/templates/{idea,checklists,param_opt}, plugin/skills/{idea-apply,speed-opt,robustness-check,param-opt}</li></ul>
+<h3 id="2026-09-30-플러그인-5단계-paper-search-paper-screen-paper-analyze">2026-09-30 플러그인 5단계: paper-search, paper-screen, paper-analyze</h3>
+<p>SQLite 논문 db, arXiv API와 내보내기 CSV 들여오기, 배치 선별과 검증과 기록, 전문 분석의 대상 목록과 JSON 기록과 카탈로그, 양식 넷, paper-reader 에이전트, 스킬 셋</p>
+<ul><li><strong>배경</strong>: 논문 아카이브의 선별과 분석 절차를 도메인 낱말 없이 일반화했다. 검색은 공개 API와 브라우저 내보내기 두 통로</li><li><strong>변경</strong>: SQLite 논문 db, arXiv API와 내보내기 CSV 들여오기, 배치 선별과 검증과 기록, 전문 분석의 대상 목록과 JSON 기록과 카탈로그, 양식 넷, paper-reader 에이전트, 스킬 셋</li><li><strong>파일</strong>: plugin/scripts/{papers_db,paper_search,paper_screen,paper_analyze}.py, plugin/templates/papers, plugin/agents/paper-reader.md, plugin/skills/paper-*</li></ul>
+<h3 id="2026-09-30-플러그인-6단계-plan-review-debug-test-design-스킬-이관">2026-09-30 플러그인 6단계: plan, review, debug, test-design 스킬 이관</h3>
+<p>홈 폴더의 병렬 에이전트 절차 넷을 스킬로 옮기고 reviewer 에이전트를 둠. 저장은 메인이, 팀 리더 역할도 메인이 맡는 꼴로 바꿈</p>
+<ul><li><strong>배경</strong>: 계획, 리뷰, 디버그, 테스트 설계 절차를 플러그인 자체 스킬로 두기로 결정했다</li><li><strong>변경</strong>: 홈 폴더의 병렬 에이전트 절차 넷을 스킬로 옮기고 reviewer 에이전트를 둠. 저장은 메인이, 팀 리더 역할도 메인이 맡는 꼴로 바꿈</li><li><strong>파일</strong>: plugin/skills/{plan,review,debug,test-design}, plugin/agents/reviewer.md</li></ul>
+<h3 id="2026-09-30-플러그인-7단계-배포와-8단계-소개-페이지">2026-09-30 플러그인 7단계 배포와 8단계 소개 페이지</h3>
+<p>마켓플레이스 파일과 설치 안내, plugin/README, 소개 페이지 docs/intro.html(카드, 다섯 단계, 흐름, 스킬 접힘, 자주 묻는 것). 2단계부터 8단계 라이트 리뷰의 Important 7건 반영</p>
+<ul><li><strong>배경</strong>: 남에게 주는 물건이라 설치 경로와 소개가 필요했다</li><li><strong>변경</strong>: 마켓플레이스 파일과 설치 안내, plugin/README, 소개 페이지 docs/intro.html(카드, 다섯 단계, 흐름, 스킬 접힘, 자주 묻는 것). 2단계부터 8단계 라이트 리뷰의 Important 7건 반영</li><li><strong>파일</strong>: .claude-plugin/marketplace.json, README.md, plugin/README.md, docs/intro.html</li></ul>
 
 </main>
 <aside class="toc"><div class="toc-title">이 페이지의 차례</div>
-<ul><li class="h3"><a href="#2026-09-30-플러그인-1단계-저장소-뼈대-pm-스킬-doc-check-스킬">2026-09-30 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li></ul>
+<ul><li class="h3"><a href="#2026-09-30-플러그인-1단계-저장소-뼈대-pm-스킬-doc-check-스킬">2026-09-30 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li><li class="h3"><a href="#2026-09-30-플러그인-2단계-onboard-explore-wiki-스킬과-프로젝트-프로파일">2026-09-30 플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li><li class="h3"><a href="#2026-09-30-플러그인-3단계-대시보드와-html-작성-가이드">2026-09-30 플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li><li class="h3"><a href="#2026-09-30-플러그인-4단계-idea-apply-speed-opt-robustness-check-param-opt">2026-09-30 플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li><li class="h3"><a href="#2026-09-30-플러그인-5단계-paper-search-paper-screen-paper-analyze">2026-09-30 플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li><li class="h3"><a href="#2026-09-30-플러그인-6단계-plan-review-debug-test-design-스킬-이관">2026-09-30 플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li><li class="h3"><a href="#2026-09-30-플러그인-7단계-배포와-8단계-소개-페이지">2026-09-30 플러그인 7단계 배포와 8단계 소개 페이지</a></li></ul>
 </aside>
 </div>
-<footer class="foot">생성: 2026-09-30 03:27:36</footer>
+<footer class="foot">생성: 2026-09-30 03:40:46</footer>
 <script>window.DASH_PREFIX = "../../";</script>
 <script src="../../assets/search.js"></script>
 <script src="../../assets/app.js"></script>

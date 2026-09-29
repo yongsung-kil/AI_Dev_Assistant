@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</title>
+<title>플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</title>
 <link rel="stylesheet" href="../../../../assets/style.css">
 </head>
 <body>
@@ -15,12 +15,7 @@
 <div class="layout">
 <nav class="sidebar">
 <a class="nav-home" href="../../../../index.html">대시보드</a>
-<details open><summary>작업</summary>
-<ul>
-<li><a href="../20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
-<li><a href="../20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
-<li><a href="20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
-</ul>
+<details><summary>작업</summary>
 </details>
 <details><summary>결정</summary>
 </details>
@@ -39,12 +34,16 @@
 <ul>
 <li><a href="../../DONE.html">DONE</a></li>
 <li><a href="../../TODO.html">TODO</a></li>
-<li><a href="20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
+<li><a href="../20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
 <li><a href="../20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
 <li><a href="../20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
-<li><a href="../_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
-<li><a href="../_template/decision_request.html">판정요청: (주제)</a></li>
-<li><a href="../_template/task.html">(작업 제목)</a></li>
+<li><a href="20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
+<li><a href="../20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
+<li><a href="../20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
+<li><a href="../20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
+<li><a href="../../tasks/_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
+<li><a href="../../tasks/_template/decision_request.html">판정요청: (주제)</a></li>
+<li><a href="../../tasks/_template/task.html">(작업 제목)</a></li>
 </ul>
 </details>
 <details><summary>docs</summary>
@@ -52,30 +51,35 @@
 <li><a href="../../../docs/html_guide.html">HTML 작성 가이드</a></li>
 </ul>
 </details>
+<details><summary>plugin</summary>
+<ul>
+<li><a href="../../../plugin/README.html">ai-assisted-dev</a></li>
+</ul>
+</details>
 </details>
 </nav>
 <main class="content">
-<h1 id="플러그인-1단계-저장소-뼈대-pm-스킬-doc-check-스킬">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</h1>
-<blockquote><p>작성: 2026-09-30 01:48:18 상태: 완료 (원격: GitHub 비공개 저장소) 변경 등급: Review</p></blockquote>
+<h1 id="플러그인-4단계-idea-apply-speed-opt-robustness-check-param-opt">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</h1>
+<blockquote><p>작성: 2026-09-30 03:08:52 상태: 진행 중 변경 등급: Review</p></blockquote>
 <h2 id="목적">목적</h2>
-<p>플러그인 뼈대와 자기 관리 도구(pm, doc-check, 세션 시작 자동 실행)를 만든다.</p>
+<p>아이디어 적용, 효율화, 안정성 검사, 파라미터 최적화 스킬 넷과 그 양식, 스크립트를 만든다.</p>
 <h2 id="배경">배경</h2>
-<p>설계와 실행 계획은 이 저장소를 만든 원 저장소의 태스크 문서에 있다 (원 저장소 <code>_pm/tasks/20260929_AI_Assisted_Dev_플러그인/</code>).</p>
+<p>원 저장소 태스크 문서의 실행계획_4.md.</p>
 <h2 id="설계">설계</h2>
-<p>실행 계획 1단계의 작업 1부터 9.</p>
+<p>idea_init.py, checklist_init.py, param_opt_init.py와 templates/param_opt/optimizer.py, 스킬 넷, 검사 사례 둘.</p>
 <h2 id="수정-대상">수정 대상</h2>
-<p><code>plugin/</code>, <code>_checks/</code>, <code>tests/</code>, <code>_pm/</code>.</p>
+<p><code>plugin/scripts/</code>, <code>plugin/skills/</code>, <code>plugin/templates/</code>, <code>plugin/evals/</code>, <code>tests/</code>.</p>
 <h2 id="안전성-체크리스트">안전성 체크리스트</h2>
-<ul><li>☑ plugin/ 금지 표현 0건</li><li>☑ validate --strict 통과</li><li>☑ 테스트 전부 통과</li></ul>
+<ul><li>☑ 테스트 통과 (65)</li><li>☑ validate --strict, 금지 표현 0, 문서 검사 0</li><li>☐ 라이트 리뷰 (5단계 뒤 2단계부터 5단계까지 한 번에)</li></ul>
 <h2 id="미결정-사항">미결정 사항</h2>
-<ul><li>㉮ <code>claude plugin eval</code>이 이 계정에서 early access라 검사 사례의 채점 파일 필드 철자를 실제 실행으로 검증하지 못했다. 명령이 열리면 <code>claude plugin eval plugin --runs 1</code>로 확인한다</li><li>㉯ 최종 검토자의 작은 지적 9건은 사용자 결정(권고대로)에 따라 1단계 마감 뒤 한 커밋으로 고쳤다</li></ul>
+<ul><li>㉮ 없음</li></ul>
 
 </main>
 <aside class="toc"><div class="toc-title">이 페이지의 차례</div>
 <ul><li class="h2"><a href="#목적">목적</a></li><li class="h2"><a href="#배경">배경</a></li><li class="h2"><a href="#설계">설계</a></li><li class="h2"><a href="#수정-대상">수정 대상</a></li><li class="h2"><a href="#안전성-체크리스트">안전성 체크리스트</a></li><li class="h2"><a href="#미결정-사항">미결정 사항</a></li></ul>
 </aside>
 </div>
-<footer class="foot">생성: 2026-09-30 02:54:42</footer>
+<footer class="foot">생성: 2026-09-30 03:40:46</footer>
 <script>window.DASH_PREFIX = "../../../../";</script>
 <script src="../../../../assets/search.js"></script>
 <script src="../../../../assets/app.js"></script>

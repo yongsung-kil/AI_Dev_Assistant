@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ai-assisted-dev</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<header class="top">
+<a class="brand" href="../../index.html">AI_Assisted_Dev</a>
+<input id="search" type="search" placeholder="검색 (제목과 본문)" autocomplete="off">
+<div id="search-results" hidden></div>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<a class="nav-home" href="../../index.html">대시보드</a>
+<details><summary>작업</summary>
+</details>
+<details><summary>결정</summary>
+</details>
+<details><summary>아이디어</summary>
+</details>
+<details><summary>실험</summary>
+</details>
+<details open><summary>문서</summary>
+<details><summary>루트</summary>
+<ul>
+<li><a href="../CLAUDE.html">CLAUDE.md: 이 저장소에서 작업할 때의 규칙</a></li>
+<li><a href="../README.html">AI_Assisted_Dev</a></li>
+</ul>
+</details>
+<details><summary>_pm</summary>
+<ul>
+<li><a href="../_pm/DONE.html">DONE</a></li>
+<li><a href="../_pm/TODO.html">TODO</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
+<li><a href="../_pm/done/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
+<li><a href="../_pm/tasks/_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
+<li><a href="../_pm/tasks/_template/decision_request.html">판정요청: (주제)</a></li>
+<li><a href="../_pm/tasks/_template/task.html">(작업 제목)</a></li>
+</ul>
+</details>
+<details><summary>docs</summary>
+<ul>
+<li><a href="../docs/html_guide.html">HTML 작성 가이드</a></li>
+</ul>
+</details>
+<details open><summary>plugin</summary>
+<ul>
+<li><a href="README.html">ai-assisted-dev</a></li>
+</ul>
+</details>
+</details>
+</nav>
+<main class="content">
+<h1 id="ai-assisted-dev">ai-assisted-dev</h1>
+<p>기존 프로젝트에 설치하면 Claude가 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 효율화와 안정성 검사, 파라미터 최적화, 작업 관리와 대시보드를 돕는다.</p>
+<p>시작: <code>/ai-assisted-dev:onboard</code> (프로파일과 뼈대 생성) → <code>docs/profile/</code> 검토 → 필요한 스킬 사용.</p>
+<p>스킬 17개: pm, doc-check, dashboard, onboard, explore, wiki, paper-search, paper-screen, paper-analyze, idea-apply, speed-opt, robustness-check, param-opt, plan, review, debug, test-design. 에이전트 3개: explorer, paper-reader, reviewer. 자동 실행 2개: 세션 시작 때 <code>_pm/TODO.md</code> 확인, md 수정 뒤 문서 검사 경고.</p>
+<p>필요한 것: Python 3 (<code>python</code> 명령), git. 스크립트는 표준 라이브러리만 쓴다.</p>
+
+</main>
+<aside class="toc"><div class="toc-title">이 페이지의 차례</div>
+<ul></ul>
+</aside>
+</div>
+<footer class="foot">생성: 2026-09-30 03:40:46</footer>
+<script>window.DASH_PREFIX = "../../";</script>
+<script src="../../assets/search.js"></script>
+<script src="../../assets/app.js"></script>
+</body>
+</html>

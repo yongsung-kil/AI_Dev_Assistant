@@ -1,109 +1,42 @@
 {
- "generated": "2026-09-30 03:27:36",
+ "generated": "2026-09-30 03:40:46",
  "project": "AI_Assisted_Dev",
- "todo": [
-  {
-   "title": "플러그인 7단계 배포와 8단계 소개 페이지",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage7_8/",
-   "subtasks": [
-    {
-     "title": "marketplace.json, README 설치 안내, plugin/README, docs/intro.html",
-     "done": true
-    },
-    {
-     "title": "라이트 리뷰 (2단계부터 8단계까지), 시험장 wiki와 dashboard 실행",
-     "done": false
-    }
-   ],
-   "notes": []
-  },
-  {
-   "title": "플러그인 6단계: plan, review, debug, test-design 스킬 이관",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage6/",
-   "subtasks": [
-    {
-     "title": "스킬 넷, reviewer 에이전트, 검사 사례",
-     "done": true
-    },
-    {
-     "title": "라이트 리뷰 (8단계 뒤)",
-     "done": false
-    }
-   ],
-   "notes": []
-  },
-  {
-   "title": "플러그인 5단계: paper-search, paper-screen, paper-analyze",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage5/",
-   "subtasks": [
-    {
-     "title": "db, 검색과 들여오기, 선별, 분석 스크립트, 양식 넷, paper-reader, 스킬 셋",
-     "done": true
-    },
-    {
-     "title": "검사 사례, 라이트 리뷰",
-     "done": false
-    }
-   ],
-   "notes": []
-  },
-  {
-   "title": "플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage4/",
-   "subtasks": [
-    {
-     "title": "스크립트 셋과 최적화기 뼈대, 양식, 스킬 넷, 검사 사례 둘",
-     "done": true
-    },
-    {
-     "title": "라이트 리뷰 (5단계 뒤)",
-     "done": false
-    }
-   ],
-   "notes": []
-  },
-  {
-   "title": "플러그인 3단계: 대시보드와 HTML 작성 가이드",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage3/",
-   "subtasks": [
-    {
-     "title": "md 변환기, 현황 수집, 렌더러, html_guide.md",
-     "done": true
-    },
-    {
-     "title": "dashboard 스킬, 자기 적용, 시험장 적용, 라이트 리뷰",
-     "done": false
-    }
-   ],
-   "notes": []
-  },
-  {
-   "title": "플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일",
-   "done": false,
-   "detail": "_pm/tasks/20260930_plugin_stage2/",
-   "subtasks": [
-    {
-     "title": "작업 1부터 4 (onboard_init와 양식, explorer와 explore, onboard, wiki_init와 wiki)",
-     "done": true
-    },
-    {
-     "title": "작업 5 검사 사례, 작업 6 시험장 실행, 작업 7 라이트 리뷰와 마감",
-     "done": false
-    }
-   ],
-   "notes": []
-  }
- ],
+ "todo": [],
  "done": [
   {
    "date": "2026-09-30",
    "title": "플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬",
    "summary": "플러그인 뼈대와 자기 관리 도구를 만들고 시험장 실제 실행과 검토자 검토로 확인했다"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일",
+   "summary": "프로파일 양식 6편과 onboard_init, explorer 에이전트, explore와 onboard와 wiki 스킬(tech 갈래), 시험장에서 onboard 실제 실행(45분)으로 프로파일 다섯 문서가 근거와 함께 채워짐을 확인"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 3단계: 대시보드와 HTML 작성 가이드",
+   "summary": "표준 라이브러리 md 변환기, 현황 수집(status.json), 정적 대시보드(사이드바 접기, 검색, 오른쪽 차례, 진행 중 카드, 문서 지도, 깨진 링크 검사), html_guide.md, 자기 적용과 시험장 적용"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt",
+   "summary": "아이디어 접수 스크립트와 양식, 효율화와 안정성 점검표 양식(항목 풀), 표준 라이브러리 파라미터 최적화기, 스킬 넷"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 5단계: paper-search, paper-screen, paper-analyze",
+   "summary": "SQLite 논문 db, arXiv API와 내보내기 CSV 들여오기, 배치 선별과 검증과 기록, 전문 분석의 대상 목록과 JSON 기록과 카탈로그, 양식 넷, paper-reader 에이전트, 스킬 셋"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 6단계: plan, review, debug, test-design 스킬 이관",
+   "summary": "홈 폴더의 병렬 에이전트 절차 넷을 스킬로 옮기고 reviewer 에이전트를 둠. 저장은 메인이, 팀 리더 역할도 메인이 맡는 꼴로 바꿈"
+  },
+  {
+   "date": "2026-09-30",
+   "title": "플러그인 7단계 배포와 8단계 소개 페이지",
+   "summary": "마켓플레이스 파일과 설치 안내, plugin/README, 소개 페이지 docs/intro.html(카드, 다섯 단계, 흐름, 스킬 접힘, 자주 묻는 것). 2단계부터 8단계 라이트 리뷰의 Important 7건 반영"
   }
  ],
  "decisions": [],
@@ -148,42 +81,42 @@
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage2/20260930_plugin_stage2.md",
+   "path": "_pm/done/20260930_plugin_stage2/20260930_plugin_stage2.md",
    "title": "플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일",
    "tags": [],
    "links_out": [],
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage3/20260930_plugin_stage3.md",
+   "path": "_pm/done/20260930_plugin_stage3/20260930_plugin_stage3.md",
    "title": "플러그인 3단계: 대시보드와 HTML 작성 가이드",
    "tags": [],
    "links_out": [],
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage4/20260930_plugin_stage4.md",
+   "path": "_pm/done/20260930_plugin_stage4/20260930_plugin_stage4.md",
    "title": "플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt",
    "tags": [],
    "links_out": [],
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage5/20260930_plugin_stage5.md",
+   "path": "_pm/done/20260930_plugin_stage5/20260930_plugin_stage5.md",
    "title": "플러그인 5단계: paper-search, paper-screen, paper-analyze",
    "tags": [],
    "links_out": [],
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage6/20260930_plugin_stage6.md",
+   "path": "_pm/done/20260930_plugin_stage6/20260930_plugin_stage6.md",
    "title": "플러그인 6단계: plan, review, debug, test-design 스킬 이관",
    "tags": [],
    "links_out": [],
    "links_in": []
   },
   {
-   "path": "_pm/tasks/20260930_plugin_stage7_8/20260930_plugin_stage7_8.md",
+   "path": "_pm/done/20260930_plugin_stage7_8/20260930_plugin_stage7_8.md",
    "title": "플러그인 7단계 배포와 8단계 소개 페이지",
    "tags": [],
    "links_out": [],
@@ -218,6 +151,13 @@
    "links_in": [
     "README.md"
    ]
+  },
+  {
+   "path": "plugin/README.md",
+   "title": "ai-assisted-dev",
+   "tags": [],
+   "links_out": [],
+   "links_in": []
   }
  ],
  "profile": {
