@@ -333,7 +333,7 @@ def index_body(status, doc_paths):
     return "\n".join(out)
 
 
-def make_rewrite(doc_path, doc_paths):
+def make_rewrite(root, doc_path, doc_paths):
     doc_dir = os.path.dirname(doc_path)
 
     def rewrite(href):
@@ -342,7 +342,14 @@ def make_rewrite(doc_path, doc_paths):
         base, _sep, anchor = href.partition("#")
         target = unquote(base)
         if not target.endswith(".md"):
-            return href
+            full = os.path.normpath(os.path.join(doc_dir, target)).replace(os.sep, "/")
+            if full.startswith("./"):
+                full = full[2:]
+            if not os.path.isfile(os.path.join(root, full)):
+                return href
+            page_dir_root = "dashboard/docs/" + doc_dir if doc_dir else "dashboard/docs"
+            rel_path = os.path.relpath(full, page_dir_root).replace(os.sep, "/")
+            return quote(rel_path, safe="/") + (f"#{anchor}" if anchor else "")
         full = os.path.normpath(os.path.join(doc_dir, target)).replace(os.sep, "/")
         if full.startswith("./"):
             full = full[2:]
@@ -379,7 +386,7 @@ def render(root, status):
         page_dir = os.path.dirname(target)
         depth = target.count("/")
         prefix = "../" * depth
-        body_html = md_to_html.md_to_html(body, make_rewrite(d["path"], doc_paths))
+        body_html = md_to_html.md_to_html(body, make_rewrite(root, d["path"], doc_paths))
         headings = md_to_html.extract_headings(body)
         html = page(status, d["title"], body_html, headings, page_dir, render_sidebar(groups, page_dir, target), prefix)
         written.append(_write(os.path.join(out_dir, target), html))

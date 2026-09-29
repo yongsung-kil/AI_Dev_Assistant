@@ -69,3 +69,13 @@ def test_main_returns_zero_without_broken_links(tmp_path):
     make_project(tmp_path)
     assert rd.main([str(tmp_path)]) == 0
     assert (tmp_path / "dashboard" / "status.json").is_file()
+
+
+def test_non_md_relative_links_point_to_original_files(tmp_path):
+    make_project(tmp_path)
+    (tmp_path / "docs" / "intro.html").write_text("<p>x</p>", encoding="utf-8")
+    (tmp_path / "README.md").write_text("# p [소개](docs/intro.html) [현황](dashboard/index.html) [b](docs/b.md)", encoding="utf-8")
+    rd.render(str(tmp_path), collect_status.collect(str(tmp_path)))
+    page = (tmp_path / "dashboard" / "docs" / "README.html").read_text(encoding="utf-8")
+    assert 'href="../../docs/intro.html"' in page and 'href="../index.html"' in page and 'href="docs/b.html"' in page
+    assert rd.check_links(str(tmp_path)) == []
