@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import md_to_html  # noqa: E402
 
 SKIP_DIRS = {".git", ".hg", ".svn", "node_modules", "__pycache__", ".venv", "venv", "env", "build", "dist",
+             "out", "obj", "third_party", "vendor", "external", "xcelium.d", ".Xil", "work",
              "Sim_Output", ".superpowers", ".pytest_cache", ".idea", ".vscode", "dashboard", "testbed"}
 DEFAULT_CONFIG = {"ideas_files": None, "experiment_logs": None,
                   "doc_dirs": ["docs", "_wiki", "_pm"], "root_docs": ["README.md", "CLAUDE.md"]}
@@ -178,15 +179,15 @@ def parse_experiments(root, files):
     out = []
     for f in files:
         for level, title, _id in md_to_html.extract_headings(read_text(os.path.join(root, f))):
-            if level == 2:
+            if level == 2 and not title.startswith("YYYY"):  # 양식의 자리표시 절은 뺀다
                 out.append({"file": f, "title": title})
     return out
 
 
-def collect_docs(root, config):
+def collect_docs(root, config, extra_files=()):
     paths = []
-    for name in config["root_docs"]:
-        if os.path.isfile(os.path.join(root, name)):
+    for name in list(config["root_docs"]) + list(extra_files):
+        if os.path.isfile(os.path.join(root, name)) and os.path.join(root, name) not in paths:
             paths.append(os.path.join(root, name))
     for d in config["doc_dirs"]:
         base = os.path.join(root, d)
@@ -195,7 +196,7 @@ def collect_docs(root, config):
         for r, dirs, files in os.walk(base):
             dirs[:] = sorted(x for x in dirs if x not in SKIP_DIRS)
             for name in sorted(files):
-                if name.endswith(".md"):
+                if name.endswith(".md") and os.path.join(r, name) not in paths:
                     paths.append(os.path.join(r, name))
     docs = {}
     for path in paths:
@@ -254,7 +255,7 @@ def collect(root, config=None):
         "decisions": parse_decisions(root),
         "ideas": parse_ideas(root, ideas_files),
         "experiments": parse_experiments(root, logs),
-        "docs": collect_docs(root, config),
+        "docs": collect_docs(root, config, list(ideas_files) + list(logs)),
         "profile": {"exists": os.path.isdir(profile_dir), "files": profile_files},
     }
 

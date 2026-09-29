@@ -10,6 +10,7 @@ import locale
 import os
 import random
 import re
+import signal
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -106,17 +107,42 @@ def _decode(data):
         return data.decode(locale.getpreferredencoding(False), errors="replace")
 
 
+def _kill_tree(proc):
+    """시간 초과 때 셸과 그 아래 프로세스를 함께 끝낸다 (Windows는 taskkill, 그 밖은 프로세스 그룹)."""
+    if os.name == "nt":
+        subprocess.run(["taskkill", "/T", "/F", "/PID", str(proc.pid)], capture_output=True)
+    else:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except Exception:
+            proc.kill()
+
+
 def evaluate(config, point):
     """명령을 돌려 지표를 읽는다. 실패(종료 코드, 시간 초과, 지표 없음)는 None."""
     ev = config["evaluate"]
     command = ev["command"].format(**point)
+    kwargs = {"shell": True, "stdout": subprocess.PIPE, "stderr": subprocess.PIPE}
+    if os.name == "nt":
+        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs["start_new_session"] = True
     try:
-        r = subprocess.run(command, shell=True, capture_output=True, timeout=ev.get("timeout_seconds", 600))
-    except (subprocess.TimeoutExpired, OSError):
+        proc = subprocess.Popen(command, **kwargs)
+    except OSError:
         return None
-    if r.returncode != 0:
+    try:
+        stdout, stderr = proc.communicate(timeout=ev.get("timeout_seconds", 600))
+    except subprocess.TimeoutExpired:
+        _kill_tree(proc)
+        try:
+            proc.communicate(timeout=5)
+        except Exception:
+            pass
         return None
-    m = re.search(ev["metric_regex"], _decode(r.stdout) + "\n" + _decode(r.stderr))
+    if proc.returncode != 0:
+        return None
+    m = re.search(ev["metric_regex"], _decode(stdout) + "\n" + _decode(stderr))
     if not m:
         return None
     try:

@@ -70,4 +70,9 @@ claude plugin validate --strict plugin
 claude plugin validate --strict .
 python _checks/check_plugin_terms.py
 python plugin/scripts/doc_check.py plugin docs _pm
+
+# 검사 사례 (스킬이 실제로 도는지). 사례가 파이썬 스크립트와 파일 쓰기를 쓰므로 도구를 허용한다
+claude plugin eval plugin --runs 1 --no-publish --allow-tools Bash Write Edit
 ```
+
+검사 사례는 `plugin/evals/` 아래 10건이다 (pm-register, doc-check-fix, onboard-profile, explore-module, wiki-cold-start, dashboard-build, idea-apply-register, param-opt-scaffold, paper-import-screen, review-light). 이 명령이 계정에서 열리지 않으면 같은 프롬프트를 `claude --plugin-dir ./plugin -p "..."`로 시험장에서 돌려 결과를 눈으로 확인한다.

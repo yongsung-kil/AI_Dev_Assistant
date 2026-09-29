@@ -17,7 +17,7 @@
 | 항목 | 선택지 | JSON 키 |
 |---|---|---|
 | 구현 설계 | O \| X | implemented |
-| 검증 수준 | 이론 \| 시뮬 \| FPGA \| ASIC \| 실측 \| 미상 | verification |
+| 검증 수준 | 이론 \| 시뮬 \| 시제품 \| 실제 구현 \| 실측 \| 미상 | verification |
 | 복잡도 | (수치와 단위 \| 미상) | complexity |
 | 병렬화 | 없음 \| 부분 \| 완전 \| 미상 | parallelism |
 | 처리량 | (수치 \| 미상) | throughput |
@@ -27,8 +27,8 @@
 | 항목 | 선택지 | JSON 키 |
 |---|---|---|
 | 성능 향상 | O \| X \| N/A | gain |
-| 개선 영역 | {프로파일의 성능 지표 영역. 예: 저잡음 \| 고잡음 \| 둘 다} \| N/A | gain_region |
-| 반복 감소 | O \| 부분 \| X \| N/A | fewer_iterations |
+| 개선 영역 | {프로파일의 성능 지표 영역을 선택지로} \| N/A | gain_region |
+| 연산량 감소 | O \| 부분 \| X \| N/A | fewer_iterations |
 | 지연 | 개선 \| 동등 \| 악화 \| N/A | latency |
 
 ## D. 프로젝트 고유 열

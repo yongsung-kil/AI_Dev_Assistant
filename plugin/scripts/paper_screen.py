@@ -56,10 +56,16 @@ def verify(conn, run_dir):
         judgments = _load_judgments(path)
     except ValueError as e:
         return {"ok": False, "errors": [f"JSON 오류: {e}"], "warnings": [], "counts": {}}
-    with io.open(os.path.join(run_dir, "manifest.json"), encoding="utf-8") as f:
+    manifest_path = os.path.join(run_dir, "manifest.json")
+    if not os.path.isfile(manifest_path):
+        return {"ok": False, "errors": [f"배치 목록 없음: {manifest_path} (batch 명령이 만든 폴더인지 확인)"], "warnings": [], "counts": {}}
+    with io.open(manifest_path, encoding="utf-8") as f:
         batch_ids = set(json.load(f)["ids"])
     errors, seen, counts = [], set(), {"in": 0, "out": 0}
     for j in judgments:
+        if not isinstance(j, dict):
+            errors.append(f"판정 항목이 객체가 아님: {j!r}")
+            continue
         pid, decision = j.get("id"), j.get("decision")
         if pid in seen:
             errors.append(f"중복 id: {pid}")

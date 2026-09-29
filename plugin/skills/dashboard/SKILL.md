@@ -23,7 +23,7 @@ description: 작업 현황 대시보드(정적 html)를 만들거나 갱신한�
 ## 절차
 
 - 1. 프로젝트 루트에서 `python "<이 스킬의 기준 폴더>/../../scripts/render_dashboard.py" .`를 돌린다. status.json 수집과 렌더를 한 번에 한다
-- 2. 출력의 "깨진 링크"가 0건이 아니면 원인 md의 링크를 고치고 다시 돌린다 (링크가 md를 가리키는데 그 md가 문서 폴더 밖에 있으면 config.json의 `doc_dirs`에 폴더를 더한다)
+- 2. 출력의 "깨진 링크"를 본다. 플러그인이 만든 문서(`_pm/`, `docs/profile/`, 아이디어 README와 실험로그)의 링크는 고치고 다시 돌린다. 사용자가 원래 갖고 있던 문서의 깨진 링크는 고치지 않고 목록으로 보고만 한다 (프로젝트 밖을 가리키는 링크는 사본이나 부분 저장소에서 정상이다). 링크가 md를 가리키는데 그 md가 문서 폴더 밖에 있으면 config.json의 `doc_dirs`에 폴더를 더한다
 - 3. `dashboard/index.html`을 연다 (Windows는 `start dashboard/index.html`, macOS는 `open`, Linux는 `xdg-open`)
 - 4. 산출물을 커밋할지는 프로젝트 규칙대로 (사이트로 올리는 저장소는 추적하고, 그렇지 않으면 `.gitignore`에 `dashboard/`)
 

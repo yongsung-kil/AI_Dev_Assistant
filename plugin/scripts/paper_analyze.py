@@ -37,7 +37,8 @@ def targets(conn, root, limit=10):
     out = []
     for r in rows:
         item = {"id": r["id"], "title": r["title"], "year": r["year"], "venue": r["venue"], "url": r["url"],
-                "pdf_url": r["pdf_url"], "text_path": None}
+                "pdf_url": r["pdf_url"], "text_path": None,
+                "expected_path": os.path.join(pdf_dir, safe_name(r["id"]) + ".pdf")}
         for ext in (".pdf", ".txt"):
             candidate = os.path.join(pdf_dir, safe_name(r["id"]) + ext)
             if os.path.isfile(candidate):

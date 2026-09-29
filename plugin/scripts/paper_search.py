@@ -69,7 +69,7 @@ def parse_arxiv_atom(text):
 def arxiv_query(query, max_results=100, since_year=None):
     params = {"search_query": f"all:{query}", "start": 0, "max_results": max_results,
               "sortBy": "submittedDate", "sortOrder": "descending"}
-    with urlopen("http://export.arxiv.org/api/query?" + urlencode(params), timeout=60) as resp:
+    with urlopen("https://export.arxiv.org/api/query?" + urlencode(params), timeout=60) as resp:
         rows = parse_arxiv_atom(resp.read().decode("utf-8"))
     if since_year:
         rows = [r for r in rows if r["year"] and r["year"] >= since_year]
@@ -87,10 +87,23 @@ def _pick(record, field):
     return ""
 
 
+def _header_start(lines):
+    """제목 열 이름이 든 줄을 머리 줄로 본다 (Google Patents 내보내기는 첫 줄이 'search URL:,...'이다)."""
+    for idx, line in enumerate(lines[:5]):
+        if not line.strip():
+            continue
+        cells = [normalize_header(c) for c in next(csv.reader([line]))]
+        if any(c in COLUMN_ALIASES["title"] for c in cells):
+            return idx
+    return 0
+
+
 def import_csv(path, source):
     rows = []
     with io.open(path, encoding="utf-8-sig", newline="") as f:
-        for raw in csv.DictReader(f):
+        lines = f.read().splitlines(keepends=True)
+    if True:
+        for raw in csv.DictReader(lines[_header_start(lines):]):
             record = {normalize_header(k): (v or "") for k, v in raw.items() if k is not None}
             title = _clean(_pick(record, "title"))
             if not title:

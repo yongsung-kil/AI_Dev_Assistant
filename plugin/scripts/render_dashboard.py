@@ -10,6 +10,7 @@ import io
 import json
 import os
 import re
+import shutil
 import sys
 from urllib.parse import quote, unquote
 
@@ -219,7 +220,8 @@ def build_groups(status):
     groups.append(("결정", [(d["title"], html_path(d["file"]), "", all(q["answered"] for q in d["questions"]))
                             for d in status["decisions"]], []))
     groups.append(("아이디어", [(f"{i['no']}. {i['title']} ({i['status']})", None, "", False) for i in status["ideas"]], []))
-    groups.append(("실험", [(e["title"], html_path(e["file"]), md_to_html.slug(e["title"]), False) for e in status["experiments"]], []))
+    groups.append(("실험", [(e["title"], html_path(e["file"]) if e["file"] in doc_paths else None,
+                            md_to_html.slug(e["title"]), False) for e in status["experiments"]], []))
     by_folder = {}
     for d in status["docs"]:
         top = d["path"].split("/")[0] if "/" in d["path"] else "루트"
@@ -277,9 +279,9 @@ def index_body(status, doc_paths):
             tag = "a" if doc else "div"
             href = f' href="{href_from("", html_path(doc))}"' if doc else ""
             notes = " ".join(t["notes"][:2])
-            out.append(f'<{tag} class="card"{href}><div class="card-title">{esc(t["title"])}</div>'
-                       f'<div class="progress"><div class="bar" style="width:{pct}%"></div></div>'
-                       f'<div class="card-meta">{done}/{total} 단계</div>'
+            progress = (f'<div class="progress"><div class="bar" style="width:{pct}%"></div></div>'
+                        f'<div class="card-meta">{done}/{total} 단계</div>') if total else '<div class="card-meta">하위 단계 없음</div>'
+            out.append(f'<{tag} class="card"{href}><div class="card-title">{esc(t["title"])}</div>' + progress
                        + (f'<div class="card-notes">{esc(notes)}</div>' if notes else "") + f"</{tag}>")
         out.append("</div>")
     out.append('<h2 id="결정-대기">결정 대기</h2>')
@@ -315,9 +317,12 @@ def index_body(status, doc_paths):
         out.append("<p>실험로그 없음</p>")
     else:
         out.append("<ul>")
-        for e in status["experiments"][-5:][::-1]:
-            out.append(f'<li><a href="{href_from("", html_path(e["file"]), md_to_html.slug(e["title"]))}">{esc(e["title"])}</a> '
-                       f'<span class="snippet">({esc(e["file"])})</span></li>')
+        for e in status["experiments"][:5]:  # 실험로그는 최신이 위
+            if e["file"] in doc_paths:
+                label = f'<a href="{href_from("", html_path(e["file"]), md_to_html.slug(e["title"]))}">{esc(e["title"])}</a>'
+            else:
+                label = esc(e["title"])
+            out.append(f'<li>{label} <span class="snippet">({esc(e["file"])})</span></li>')
         out.append("</ul>")
     out.append('<h2 id="문서-지도">문서 지도</h2>')
     if not status["docs"]:
@@ -345,7 +350,7 @@ def make_rewrite(root, doc_path, doc_paths):
             full = os.path.normpath(os.path.join(doc_dir, target)).replace(os.sep, "/")
             if full.startswith("./"):
                 full = full[2:]
-            if not os.path.isfile(os.path.join(root, full)):
+            if not os.path.exists(os.path.join(root, full)):
                 return href
             page_dir_root = "dashboard/docs/" + doc_dir if doc_dir else "dashboard/docs"
             rel_path = os.path.relpath(full, page_dir_root).replace(os.sep, "/")
@@ -369,6 +374,7 @@ def plain_text(body):
 def render(root, status):
     root = os.path.abspath(root)
     out_dir = os.path.join(root, OUT)
+    shutil.rmtree(os.path.join(out_dir, "docs"), ignore_errors=True)  # 지워지거나 옮긴 md의 옛 html을 남기지 않는다
     os.makedirs(os.path.join(out_dir, "assets"), exist_ok=True)
     written = []
     doc_paths = {d["path"] for d in status["docs"]}
@@ -419,7 +425,7 @@ def check_links(root):
                 if re.match(r"[a-z]+:", href) or href.startswith("#"):
                     continue
                 target = unquote(href.split("#")[0])
-                if target and not os.path.isfile(os.path.normpath(os.path.join(r, target))):
+                if target and not os.path.exists(os.path.normpath(os.path.join(r, target))):
                     broken.append((collect_status.rel(root, path), href))
     return broken
 

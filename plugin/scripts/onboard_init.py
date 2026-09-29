@@ -23,7 +23,8 @@ ENTRY_NAMES = {"main.py", "run.py", "app.py", "cli.py", "main.cpp", "main.c", "t
 BUILD_NAMES = {"Makefile", "CMakeLists.txt", "setup.py", "pyproject.toml", "requirements.txt", "package.json",
                "Cargo.toml", "build.gradle", "pom.xml", "meson.build", "SConstruct"}
 SKIP_DIRS = {".git", ".hg", ".svn", "node_modules", "__pycache__", ".venv", "venv", "env", "build", "dist",
-             "Sim_Output", ".superpowers", ".pytest_cache", ".idea", ".vscode"}
+             "out", "obj", "third_party", "vendor", "external", "xcelium.d", ".Xil", "work",
+             "Sim_Output", ".superpowers", ".pytest_cache", ".idea", ".vscode", "dashboard"}
 COPIES = [("profile", os.path.join("docs", "profile")), ("docs", "docs"), ("CLAUDE.md", "CLAUDE.md")]
 
 
