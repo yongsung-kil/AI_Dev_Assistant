@@ -8,6 +8,11 @@ import io
 import os
 import sys
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8")  # Windows 콘솔 기본 인코딩과 무관하게 UTF-8로 낸다
+except Exception:
+    pass
+
 SKIP_DIRS = {"results", "__pycache__", ".git"}
 
 

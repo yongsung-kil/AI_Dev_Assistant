@@ -57,3 +57,15 @@ def test_pm_init_copies_templates_once(tmp_path):
     (tmp_path / "_pm" / "TODO.md").write_text("바뀐 내용", encoding="utf-8")
     assert pm_init.main(str(tmp_path)) == 0
     assert (tmp_path / "_pm" / "TODO.md").read_text(encoding="utf-8") == "바뀐 내용"
+
+
+import subprocess  # noqa: E402
+
+INIT_SCRIPT = os.path.join(os.path.dirname(__file__), "..", "plugin", "scripts", "pm_init.py")
+
+
+def test_pm_init_cli_output_is_utf8_regardless_of_console_encoding(tmp_path):
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONIOENCODING"}
+    env["PYTHONUTF8"] = "0"
+    r = subprocess.run([sys.executable, INIT_SCRIPT, str(tmp_path)], capture_output=True, env=env)
+    assert r.stdout.decode("utf-8").startswith("_pm 준비: 새로 복사 5개")
