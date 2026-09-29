@@ -4,6 +4,10 @@
 
 ## 작업 목록
 
+- [ ] 플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일
+  - 상세: _pm/tasks/20260930_plugin_stage2/
+  - [x] 작업 1부터 4 (onboard_init와 양식, explorer와 explore, onboard, wiki_init와 wiki)
+  - [ ] 작업 5 검사 사례, 작업 6 시험장 실행, 작업 7 라이트 리뷰와 마감
 - [ ] 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬
   - 상세: _pm/tasks/20260930_plugin_stage1/
   - [x] 작업 1부터 7 (뼈대, doc_check, doc-check 스킬, pm_stamp와 양식, pm 스킬, 자동 실행, 금지 표현 검사)
