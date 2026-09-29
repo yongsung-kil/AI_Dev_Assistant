@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>(작업 제목)</title>
+<title>플러그인 6단계: plan, review, debug, test-design 스킬 이관</title>
 <link rel="stylesheet" href="../../../../assets/style.css">
 </head>
 <body>
@@ -15,10 +15,10 @@
 <div class="layout">
 <nav class="sidebar">
 <a class="nav-home" href="../../../../index.html">대시보드</a>
-<details><summary>작업</summary>
+<details open><summary>작업</summary>
 <ul>
 <li><a href="../20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
-<li><a href="../20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
+<li><a href="20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
 <li><a href="../20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
 <li><a href="../20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
 <li><a href="../20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
@@ -47,11 +47,11 @@
 <li><a href="../20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
 <li><a href="../20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
 <li><a href="../20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
-<li><a href="../20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
+<li><a href="20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
 <li><a href="../20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
-<li><a href="README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
-<li><a href="decision_request.html">판정요청: (주제)</a></li>
-<li><a href="task.html">(작업 제목)</a></li>
+<li><a href="../_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
+<li><a href="../_template/decision_request.html">판정요청: (주제)</a></li>
+<li><a href="../_template/task.html">(작업 제목)</a></li>
 </ul>
 </details>
 <details><summary>docs</summary>
@@ -62,16 +62,20 @@
 </details>
 </nav>
 <main class="content">
-<h1 id="작업-제목">(작업 제목)</h1>
-<blockquote><p>작성: YYYY-MM-DD HH:MM:SS 상태: 설계 중 | 진행 중 | 검토 대기 변경 등급: Safe | Review | Decision</p></blockquote>
+<h1 id="플러그인-6단계-plan-review-debug-test-design-스킬-이관">플러그인 6단계: plan, review, debug, test-design 스킬 이관</h1>
+<blockquote><p>작성: 2026-09-30 03:24:27 상태: 진행 중 변경 등급: Review</p></blockquote>
 <h2 id="목적">목적</h2>
+<p>계획 수립, 리뷰(딥과 라이트), 디버그, 테스트 설계의 병렬 에이전트 절차를 플러그인 스킬로 옮기고 reviewer 에이전트를 둔다.</p>
 <h2 id="배경">배경</h2>
+<p>원 저장소 태스크 문서의 실행계획_6.md. 에이전트는 파일을 쓰지 못하므로 저장은 메인이 하고, 팀 리더 역할은 메인이 맡는다.</p>
 <h2 id="설계">설계</h2>
+<p>스킬 넷과 reviewer 에이전트, 검사 사례 review-light.</p>
 <h2 id="수정-대상">수정 대상</h2>
+<p><code>plugin/skills/</code>, <code>plugin/agents/</code>, <code>plugin/evals/</code>.</p>
 <h2 id="안전성-체크리스트">안전성 체크리스트</h2>
-<ul><li>[ ]</li></ul>
+<ul><li>☑ validate --strict, 금지 표현 0, 문서 검사 0</li><li>☐ 라이트 리뷰 (8단계 뒤 한 번에)</li></ul>
 <h2 id="미결정-사항">미결정 사항</h2>
-<ul><li>㉮</li></ul>
+<ul><li>㉮ 없음</li></ul>
 
 </main>
 <aside class="toc"><div class="toc-title">이 페이지의 차례</div>
