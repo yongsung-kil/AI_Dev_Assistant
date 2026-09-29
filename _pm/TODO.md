@@ -4,6 +4,10 @@
 
 ## 작업 목록
 
+- [ ] 플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt
+  - 상세: _pm/tasks/20260930_plugin_stage4/
+  - [x] 스크립트 셋과 최적화기 뼈대, 양식, 스킬 넷, 검사 사례 둘
+  - [ ] 라이트 리뷰 (5단계 뒤)
 - [ ] 플러그인 3단계: 대시보드와 HTML 작성 가이드
   - 상세: _pm/tasks/20260930_plugin_stage3/
   - [x] md 변환기, 현황 수집, 렌더러, html_guide.md
