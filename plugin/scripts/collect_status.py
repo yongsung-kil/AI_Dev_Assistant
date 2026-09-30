@@ -245,7 +245,7 @@ def collect_papers(root, config):
     try:
         s = papers_db.stats(conn)
         sources = [r[0] for r in conn.execute("SELECT DISTINCT source FROM papers ORDER BY source")]
-        analyzed = conn.execute("SELECT COUNT(*) FROM analysis").fetchone()[0]
+        analyzed = conn.execute("SELECT COUNT(*) FROM analysis a JOIN papers p ON p.id = a.id").fetchone()[0]  # papers에 있는 것만
     finally:
         conn.close()
     return {"exists": True, "total": s["total"], "by_status": s["by_status"], "sources": sources, "analyzed": analyzed}
