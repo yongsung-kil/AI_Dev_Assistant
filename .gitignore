@@ -1,7 +1,6 @@
-testbed/
-CLAUDE.local.md
-_checks/forbidden_terms.local.txt
-plugin/evals/results/
 __pycache__/
 *.pyc
-.pytest_cache/
+testbed/
+.superpowers/
+CLAUDE.local.md
+_checks/

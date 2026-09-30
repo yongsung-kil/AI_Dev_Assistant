@@ -2,7 +2,7 @@
 
 Claude Code 플러그인 `ai-dev-assistant`를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.
 
-소개 페이지: [docs/intro.html](docs/intro.html). 작업 현황: [dashboard/index.html](dashboard/index.html). html 규격: [docs/html_guide.md](docs/html_guide.md).
+소개 페이지: [docs/intro.html](docs/intro.html). html 규격: [docs/html_guide.md](docs/html_guide.md).
 
 ## 설치
 
@@ -54,27 +54,9 @@ claude --plugin-dir ./plugin
 
 ## 폴더
 
-- ㉮ `plugin/`: 플러그인 본체. 이 폴더만 배포한다
-- ㉯ `testbed/`: 임시 시험 폴더 (git 무시). 플러그인을 실제 프로젝트에 적용한 예시는 별도 저장소 `<GitHub 계정 또는 조직>/<예시 저장소>`에 있다
-- ㉰ `_pm/`: 이 저장소의 작업 관리 (플러그인의 pm 스킬로 운영)
-- ㉱ `_checks/`: 배포 전 검사 (금지 표현)
-- ㉲ `tests/`: 스크립트 테스트
-- ㉳ `docs/`: 소개 페이지, html 규격
-- ㉴ `dashboard/`: 이 저장소의 현황 페이지 (dashboard 스킬 산출물)
+- ㉮ `plugin/`: 플러그인 본체
+- ㉯ `docs/`: 소개 페이지(`intro.html`)와 html 작성 규격(`html_guide.md`)
 
-## 개발
+## 비대화 실행
 
-```bash
-python -m pytest tests -q
-claude plugin validate --strict plugin
-claude plugin validate --strict .
-python _checks/check_plugin_terms.py
-python plugin/scripts/doc_check.py plugin docs _pm
-
-# 검사 사례 (스킬이 실제로 도는지). 사례가 파이썬 스크립트와 파일 쓰기를 쓰므로 도구를 허용한다
-claude plugin eval plugin --runs 1 --no-publish --allow-tools Bash Write Edit
-```
-
-시험장에서 스킬을 `claude -p`(비대화 실행)로 돌릴 때는 `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`을 환경 변수로 주어야 한다. 주지 않으면 뒤에서 도는 에이전트가 600초를 넘길 때 세션이 끊긴다 (wiki처럼 오래 도는 스킬에서 겪음).
-
-검사 사례는 `plugin/evals/` 아래 10건이다 (pm-register, doc-check-fix, onboard-profile, explore-module, wiki-cold-start, dashboard-build, idea-apply-register, param-opt-scaffold, paper-import-screen, review-light). 이 명령이 계정에서 열리지 않으면 같은 프롬프트를 `claude --plugin-dir ./plugin -p "..."`로 시험장에서 돌려 결과를 눈으로 확인한다.
+스킬을 `claude -p`(비대화 실행)로 돌릴 때는 `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`을 환경 변수로 준다. 없으면 뒤에서 도는 에이전트가 600초를 넘길 때 세션이 끊긴다.
