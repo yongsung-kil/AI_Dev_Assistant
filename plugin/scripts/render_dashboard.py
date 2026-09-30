@@ -449,7 +449,7 @@ SIDEBAR<main class="content">
 {toc}
 </aside>
 </div>
-<footer class="foot">생성: {generated}</footer>
+<footer class="foot">{footer}</footer>
 <script>window.DASH_PREFIX = {prefix_json};</script>
 <script src="{prefix}assets/search.js"></script>
 {scripts}<script src="{prefix}assets/app.js"></script>
@@ -697,16 +697,21 @@ def render_sidebar(nav, page_dir, current):
 
 # ---------------------------------------------------------------- 페이지
 
-def page(status, title, body, headings, page_dir, sidebar_html, prefix, scripts=""):
+def _footer(status, with_time):
+    """생성 시각은 첫 화면에만 적는다. 문서 페이지마다 적으면 다시 만들 때마다 모든 파일이 바뀌어 git 변경이 커진다."""
+    return f"생성: {esc(status['generated'])}" if with_time else f"{esc(status['project'])} 대시보드"
+
+
+def page(status, title, body, headings, page_dir, sidebar_html, prefix, scripts="", with_time=False):
     return FRAME_FULL.format(title=esc(title), project=esc(status["project"]), prefix=prefix, sidebar=sidebar_html,
-                             body=body, toc=toc_html(headings), generated=esc(status["generated"]),
+                             body=body, toc=toc_html(headings), footer=_footer(status, with_time),
                              prefix_json=json.dumps(prefix), scripts=scripts)
 
 
 def page_light(status, title, body, headings, prefix, back, back_label):
     """사이드바와 검색 없이 돌아가기 링크만 있는 페이지 (수천 편이 될 수 있는 논문 분석 문서용)."""
     return FRAME_LIGHT.format(title=esc(title), project=esc(status["project"]), prefix=prefix, body=body,
-                              toc=toc_html(headings), generated=esc(status["generated"]), prefix_json=json.dumps(prefix),
+                              toc=toc_html(headings), footer=_footer(status, False), prefix_json=json.dumps(prefix),
                               scripts="", back=back, back_label=esc(back_label))
 
 
@@ -980,8 +985,9 @@ def render(root, status, config=None):
     analysis_prefix = papers_dir + "/analysis/" if status["papers"]["exists"] else "\0"  # db가 없으면 분석 문서도 보통 문서다
     nav = build_nav(status, config)
     index = page(status, f"{status['project']} 대시보드", index_body(status, doc_paths, analysis_prefix), INDEX_HEADINGS, "",
-                 render_sidebar(nav, "", None), "")
+                 render_sidebar(nav, "", None), "", with_time=True)
     written.append(_write(os.path.join(out_dir, "index.html"), index))
+    written.append(_write(os.path.join(out_dir, ".nojekyll"), ""))  # GitHub Pages가 _pm, _wiki 같은 밑줄 폴더를 건너뛰지 않게
     if status["papers"]["exists"]:
         rows = papers_rows(root, config, doc_paths)
         facets = facet_table(rows)

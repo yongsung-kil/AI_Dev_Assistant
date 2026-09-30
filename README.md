@@ -57,6 +57,11 @@ claude --plugin-dir ./plugin
 - ㉮ `plugin/`: 플러그인 본체
 - ㉯ `docs/`: 소개 페이지(`intro.html`)와 html 작성 규격(`html_guide.md`)
 
+## GitHub Pages로 보이기
+
+- ㉮ 소개 페이지: 저장소 설정의 Pages에서 원본을 `main` 브랜치의 `/docs` 폴더로 잡는다. 주소는 `https://<계정 또는 조직>.github.io/<저장소>/` (index.html이 intro.html로 넘긴다)
+- ㉯ 프로젝트의 대시보드: dashboard 스킬이 만드는 `dashboard/` 폴더를 그대로 올린다. 폴더 안 `.nojekyll`이 `_pm`, `_wiki`처럼 밑줄로 시작하는 폴더도 서비스되게 한다. Pages 원본을 저장소 루트로 잡으면 주소는 `.../<저장소>/dashboard/`이고, 루트에도 `.nojekyll`을 둔다. 링크는 모두 상대 경로라 다른 주소 손질은 없다
+
 ## 비대화 실행
 
 스킬을 `claude -p`(비대화 실행)로 돌릴 때는 `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`을 환경 변수로 준다. 없으면 뒤에서 도는 에이전트가 600초를 넘길 때 세션이 끊긴다.
