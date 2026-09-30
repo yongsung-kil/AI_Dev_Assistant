@@ -77,8 +77,8 @@ body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; li
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 code { font-family: Consolas, "D2Coding", monospace; font-size: 0.9em; background: var(--surface); padding: 0.15em 0.4em; border-radius: 4px; }
-pre { background: color-mix(in srgb, var(--h1) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--h1) 30%, var(--border));
-      border-left: 4px solid var(--h1); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--h1); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre { background: color-mix(in srgb, var(--h1) 7%, var(--surface)); border-color: color-mix(in srgb, var(--h1) 30%, var(--border)); border-left-color: var(--h1); }
 pre code { background: none; padding: 0; }
 svg { display: inline-block; vertical-align: middle; }
 .top { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; padding: 8px 16px;
@@ -133,11 +133,13 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
-.content th { background: color-mix(in srgb, var(--h2) 10%, var(--surface)); color: var(--h2); }
+.content th { background: var(--surface); color: var(--h2); }
+.content th { background: color-mix(in srgb, var(--h2) 10%, var(--surface)); }
 .content td:first-child { color: var(--h2); font-weight: 600; }
 .content td:nth-child(2):last-child { color: var(--h3); }
 .content tr:nth-child(even) td { background: var(--surface); }
-.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--h3); color: var(--muted); background: color-mix(in srgb, var(--h3) 6%, var(--surface)); }
+.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--h3); color: var(--muted); background: var(--surface); }
+.content blockquote { background: color-mix(in srgb, var(--h3) 6%, var(--surface)); }
 .lead { color: var(--muted); margin-top: -0.4em; }
 .toc { position: sticky; top: 52px; align-self: start; font-size: 0.88em; max-height: calc(100vh - 68px); overflow-y: auto; }
 .toc-title { font-weight: 600; margin-bottom: 8px; color: var(--text); }
@@ -205,12 +207,13 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
          background: var(--surface); }
 .facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fc); padding: 0 4px; }
 .facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 3px 6px 2px 0; color: var(--text); white-space: nowrap;
-               border: 1px solid color-mix(in srgb, var(--fc) 35%, transparent); background: color-mix(in srgb, var(--fc) 10%, var(--bg));
-               border-radius: 12px; padding: 1px 9px 1px 6px; cursor: pointer; }
+               border: 1px solid var(--border); background: var(--bg); border-radius: 12px; padding: 1px 9px 1px 6px; cursor: pointer; }
+.facet label { border-color: color-mix(in srgb, var(--fc) 35%, transparent); background: color-mix(in srgb, var(--fc) 10%, var(--bg)); }
 .facet label:has(input:checked) { background: color-mix(in srgb, var(--fc) 30%, var(--bg)); border-color: var(--fc); font-weight: 600; }
 .facet .count { color: var(--muted); font-size: 11px; }
-#paper-table .chip { --fc: var(--c1); display: inline-block; border: 1px solid color-mix(in srgb, var(--fc) 40%, transparent); border-radius: 6px; padding: 0 6px;
-                     font-size: 12px; margin: 1px 4px 1px 0; color: var(--fc); background: color-mix(in srgb, var(--fc) 10%, var(--bg)); }
+#paper-table .chip { --fc: var(--c1); display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px;
+                     font-size: 12px; margin: 1px 4px 1px 0; color: var(--fc); background: var(--surface); }
+#paper-table .chip { border-color: color-mix(in srgb, var(--fc) 40%, transparent); background: color-mix(in srgb, var(--fc) 10%, var(--bg)); }
 #paper-table td .card-desc { white-space: normal; margin-top: 2px; }
 #paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
