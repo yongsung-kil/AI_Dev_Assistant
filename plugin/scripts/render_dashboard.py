@@ -637,6 +637,14 @@ def build_nav(status, config):
         root = _node(PAPERS_GROUP)
         root["children"] = explorer
         nav.append(root)
+    links = config.get("links") or []  # md가 아닌 페이지(손으로 쓴 html, txt)를 사이드바에 거는 자리. path는 프로젝트 루트 기준
+    if links:
+        root = _node(config.get("links_group") or "관련 페이지")
+        for item in links:
+            node = _node(item.get("name") or item["path"], target="../" + item["path"].strip("/"))
+            node["fixed"] = True
+            root["children"].append(node)
+        nav.append(root)
     if other:
         root = _node(OTHER_GROUP)
         for _entry, d in other:

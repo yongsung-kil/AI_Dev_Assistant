@@ -19,7 +19,7 @@ description: 작업 현황 대시보드(정적 html)를 만들거나 갱신한�
 | 문서 지도 | `docs/`, `_wiki/`, `_pm/`, `ideas/`, `papers/`, `optim/`, 루트 README와 CLAUDE.md | 머리말 `title`과 `tags`, md 링크로 들어오고 나가는 관계 |
 | 논문 | `papers/papers.db` | papers 표(출처, 연도, 상태)와 analysis 표(분석 JSON). paper 스킬들이 채운다 |
 
-파일 위치가 다르면 `dashboard/config.json`에 적는다 (양식은 플러그인의 `templates/dashboard/config.json`). 사이드바 묶음도 같은 파일의 `sidebar` 목록이 정한다: 묶음 이름과 그 묶음에 드는 폴더나 md 경로. 기본은 온보딩(`docs/usage.md`, README, CLAUDE.md, `docs/profile/`, `docs/explore/`, `docs/adr/`), 작업 관리(`_pm/`), 외부 기술문서(`papers/`, 논문 탐색기와 특허 탐색기가 맨 위), 아이디어 적용(`ideas/`), 최적화(`docs/speed_opt/`, `docs/robustness/`, `optim/`), 내부 기술문서(`_wiki/`)이고, 어디에도 들지 않는 문서는 "기타 문서"로 간다.
+파일 위치가 다르면 `dashboard/config.json`에 적는다 (양식은 플러그인의 `templates/dashboard/config.json`). 사이드바 묶음도 같은 파일의 `sidebar` 목록이 정한다: 묶음 이름과 그 묶음에 드는 폴더나 md 경로. 기본은 온보딩(`docs/usage.md`, README, CLAUDE.md, `docs/profile/`, `docs/explore/`, `docs/adr/`), 작업 관리(`_pm/`), 외부 기술문서(`papers/`, 논문 탐색기와 특허 탐색기가 맨 위), 아이디어 적용(`ideas/`), 최적화(`docs/speed_opt/`, `docs/robustness/`, `optim/`), 내부 기술문서(`_wiki/`)이고, 어디에도 들지 않는 문서는 "기타 문서"로 간다. md가 아닌 페이지(손으로 쓴 html, txt)를 사이드바에 걸려면 같은 파일의 `links` 목록에 `{"name": 이름표, "path": 프로젝트 루트 기준 경로}`를 적는다 (묶음 이름은 `links_group`, 기본 "관련 페이지").
 
 ## 절차
 
