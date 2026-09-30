@@ -9,7 +9,7 @@ description: 변경사항을 리뷰 작업자들이 관점별로 병렬 검토�
 - ㉯ 라이트 리뷰: 1라운드 + 2라운드에서 끝낸다
 - ㉰ 자동 진행: 라운드 사이에 사용자에게 묻지 않는다. lv, 작업자 수, 3라운드 진행 여부는 메인이 정하고 바로 다음으로 간다. 라운드 보고는 파일에만 적고, 사용자 보고는 끝에 한 번 한다
 
-작업자는 `ai-assisted-dev:reviewer`(읽기 전용, git diff 허용). 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/review/`, 없으면 `_pm/tasks/{YYYYMMDD}_review/`. pm 스킬로 TODO에 등록한다.
+작업자는 `ai-dev-assistant:reviewer`(읽기 전용, git diff 허용). 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/review/`, 없으면 `_pm/tasks/{YYYYMMDD}_review/`. pm 스킬로 TODO에 등록한다.
 
 ## 라운드 폴더
 

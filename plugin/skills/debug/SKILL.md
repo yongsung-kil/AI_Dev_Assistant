@@ -9,7 +9,7 @@ description: 원인을 모르는 문제(오류, 잘못된 결과, 빌드 실패,
 증상 정리 -> 가설 병렬 탐색(4) -> 취합 -> 진단 교차 검증(4) -> 최종 취합
 ```
 
-작업자는 `ai-assisted-dev:explorer`(읽기 전용) 4명. 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/debug/`, 없으면 `_pm/tasks/{YYYYMMDD}_debug_{주제}/debug/`. 라운드 폴더는 `debug/r{N}_{이름}/`. pm 스킬로 TODO에 등록한다.
+작업자는 `ai-dev-assistant:explorer`(읽기 전용) 4명. 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/debug/`, 없으면 `_pm/tasks/{YYYYMMDD}_debug_{주제}/debug/`. 라운드 폴더는 `debug/r{N}_{이름}/`. pm 스킬로 TODO에 등록한다.
 
 ## 1단계: 증상 정리 (메인)
 

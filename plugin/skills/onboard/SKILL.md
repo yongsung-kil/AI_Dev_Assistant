@@ -11,7 +11,7 @@ description: 기존 프로젝트에 이 플러그인을 처음 쓸 때. 코드�
 
 - 1. 훑기. 프로젝트 루트에서 `python "<이 스킬의 기준 폴더>/../../scripts/onboard_init.py" . --summary-only`를 돌려 언어별 파일 수, 최상위 폴더, 진입점 후보, 빌드 파일, README를 받는다. README와 빌드 파일을 읽는다. 이미 `docs/profile/`이 있으면 채워진 정도를 보고 4단계에서 빈 곳만 채운다
 - 2. 탐색. explore 스킬을 "프로젝트 전체, 목적은 프로파일 작성" 모드로 돈다. 관점 넷은 아키텍처, 데이터 흐름, 컨벤션과 패턴, 의존성이다. 언어가 하드웨어 설계(verilog, systemverilog, vhdl)면 아키텍처 관점에 "모듈 계층과 신호 인터페이스", 데이터 흐름 관점에 "클록과 리셋, 파이프라인 단계"를 더한다. 이 호출에서는 사용자 피드백 대기 없이 끝까지 간다
-- 3. 양식 복사. `python "<이 스킬의 기준 폴더>/../../scripts/onboard_init.py" .`로 `docs/profile/` 여섯 문서, `CLAUDE.md`, `docs/usage.md`(이 프로젝트에서 플러그인 쓰는 법), `docs/adr/README.md`, `docs/explore/`를 만든다 (있는 파일은 건드리지 않는다)
+- 3. 양식 복사. `python "<이 스킬의 기준 폴더>/../../scripts/onboard_init.py" .`로 `docs/profile/` 여섯 문서, `CLAUDE.md`, `docs/usage.md`(AI-Dev-Assistant 사용법), `docs/adr/README.md`, `docs/explore/`를 만든다 (있는 파일은 건드리지 않는다)
 - 4. 프로파일 채우기. 탐색 문서와 코드를 근거로 다섯 문서를 채운다. 문서마다 채우는 규칙은 양식의 괄호 안에 있다. 지킬 것:
   - ㉮ 코드를 직접 읽고 확인한 것만 적고 근거 파일과 줄을 붙인다. 모르면 "미확인"
   - ㉯ 언어에 기대지 않는 낱말로 적는다 (모듈, 인터페이스, 교체 지점, 신호)

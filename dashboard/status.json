@@ -1,6 +1,6 @@
 {
- "generated": "2026-09-30 13:52:12",
- "project": "AI_Assisted_Dev",
+ "generated": "2026-09-30 15:20:22",
+ "project": "AI_Dev_Assistant",
  "todo": [
   {
    "title": "라이트 리뷰 잔여 작은 지적 5건 (2026-09-30 검토)",
@@ -143,7 +143,7 @@
   },
   {
    "path": "README.md",
-   "title": "AI_Assisted_Dev",
+   "title": "AI-Dev-Assistant",
    "tags": [],
    "links_out": [
     "docs/html_guide.md"
@@ -245,7 +245,7 @@
   },
   {
    "path": "plugin/README.md",
-   "title": "ai-assisted-dev",
+   "title": "ai-dev-assistant",
    "tags": [],
    "links_out": [],
    "links_in": []

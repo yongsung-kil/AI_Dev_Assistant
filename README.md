@@ -1,6 +1,6 @@
-# AI_Assisted_Dev
+# AI-Dev-Assistant
 
-Claude Code 플러그인 `ai-assisted-dev`를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.
+Claude Code 플러그인 `ai-dev-assistant`를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.
 
 소개 페이지: [docs/intro.html](docs/intro.html). 작업 현황: [dashboard/index.html](dashboard/index.html). html 규격: [docs/html_guide.md](docs/html_guide.md).
 
@@ -8,8 +8,8 @@ Claude Code 플러그인 `ai-assisted-dev`를 만드는 저장소다. 기존 소
 
 ```bash
 # 이 저장소를 마켓플레이스로 등록하고 설치한다 (GitHub 주소 또는 로컬 경로)
-claude plugin marketplace add <GitHub 계정 또는 조직>/AI_Assisted_Dev
-claude plugin install ai-assisted-dev@ai-assisted-dev
+claude plugin marketplace add <GitHub 계정 또는 조직>/AI_Dev_Assistant
+claude plugin install ai-dev-assistant@ai-dev-assistant
 
 # 이 세션에만 싣기 (개발 중)
 claude --plugin-dir ./plugin
@@ -19,9 +19,9 @@ claude --plugin-dir ./plugin
 
 ## 처음 쓰는 법
 
-- 1. 프로젝트 루트에서 Claude Code를 열고 `/ai-assisted-dev:onboard`를 부른다. 코드를 읽어 `docs/profile/` 다섯 문서, `CLAUDE.md`, `_pm/`을 만든다
+- 1. 프로젝트 루트에서 Claude Code를 열고 `/ai-dev-assistant:onboard`를 부른다. 코드를 읽어 `docs/profile/` 다섯 문서, `CLAUDE.md`, `_pm/`을 만든다
 - 2. `docs/profile/`을 읽고 틀린 곳을 고친다. 이 문서가 다른 모든 스킬이 읽는 정본이다
-- 3. `/ai-assisted-dev:dashboard`로 현황 페이지를 만든다
+- 3. `/ai-dev-assistant:dashboard`로 현황 페이지를 만든다
 - 4. 필요한 스킬을 골라 쓴다 (아래 표)
 
 ## 스킬
@@ -33,7 +33,7 @@ claude --plugin-dir ./plugin
 | 관리 | dashboard | 작업 현황 정적 html |
 | 문서화 | onboard | 프로젝트 프로파일과 뼈대 생성 |
 | 문서화 | explore | 관점 4개 병렬 탐색과 교차 검증 |
-| 문서화 | wiki | 결정, 시도, 자산, 기술 문서 축적 |
+| 문서화 | wiki | 결정, 시도, 재사용 패턴, 기술 문서 축적 |
 | 조사 | paper-search | arXiv API와 브라우저 내보내기 CSV로 논문과 특허 수집 |
 | 조사 | paper-screen | 초록 기준 병렬 선별 (in, out) |
 | 조사 | paper-analyze | 전문 분석 (분류표, 요약, 모듈 대응, JSON) |

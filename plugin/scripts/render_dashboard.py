@@ -44,7 +44,7 @@ DEFAULT_SIDEBAR = [
 PAPERS_GROUP = "외부 기술문서"  # config의 어느 묶음도 논문 폴더를 담지 않을 때 탐색기가 들어갈 묶음 이름
 OTHER_GROUP = "기타 문서"
 FOLDER_LABELS = {"profile": "프로파일", "explore": "탐색 결과", "adr": "설계 기록", "tasks": "진행 중 작업", "done": "완료 작업",
-                 "decisions": "결정", "trials": "시도", "assets": "자산", "tech": "기술", "background": "배경 지식",
+                 "decisions": "결정", "trials": "시도", "assets": "재사용 패턴", "tech": "기술", "background": "배경 지식",
                  "_templates": "양식", "_template": "양식", "_inbox": "대기함",
                  "speed_opt": "속도 최적화", "robustness": "안정성 검사", "optim": "최적화 도구",
                  "analysis": "분석 문서", "screened": "선별 결과", "criteria": "기준서", "catalogs": "카탈로그"}
@@ -77,12 +77,13 @@ body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; li
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 code { font-family: Consolas, "D2Coding", monospace; font-size: 0.9em; background: var(--surface); padding: 0.15em 0.4em; border-radius: 4px; }
-pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre { background: color-mix(in srgb, var(--h1) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--h1) 30%, var(--border));
+      border-left: 4px solid var(--h1); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
 pre code { background: none; padding: 0; }
 svg { display: inline-block; vertical-align: middle; }
 .top { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; padding: 8px 16px;
        background: var(--surface); border-bottom: 1px solid var(--border); }
-.brand { font-weight: 700; white-space: nowrap; color: var(--text); }
+.brand { font-weight: 800; font-size: 18px; letter-spacing: 0.02em; white-space: nowrap; color: var(--h1); text-transform: uppercase; }
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border);
             border-radius: 6px; background: var(--bg); color: var(--muted); cursor: pointer; padding: 0; }
 .icon-btn:hover { color: var(--text); border-color: var(--muted); }
@@ -103,7 +104,7 @@ html.nav-closed .layout { grid-template-columns: minmax(0, 880px) 220px; }
 html.nav-closed .sidebar { display: none; }
 .sidebar { position: sticky; top: 52px; align-self: start; max-height: calc(100vh - 68px); overflow-y: auto; padding-right: 6px; font-size: 13px; }
 .sidebar .nav-top { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.sidebar .nav-top a { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; color: var(--text); }
+.sidebar .nav-top a { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; color: var(--h1); }
 .sidebar a:hover, .sidebar summary:hover { background: var(--surface); text-decoration: none; }
 .sidebar details { margin: 1px 0; }
 .sidebar summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; cursor: pointer;
@@ -116,9 +117,9 @@ html.nav-closed .sidebar { display: none; }
 .sidebar li { margin: 0; }
 .sidebar li > a, .sidebar li > span { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; color: var(--muted);
                                        line-height: 1.35; }
-details.nav-l1 > summary { font-size: 15px; font-weight: 700; color: var(--text); }
+details.nav-l1 > summary { font-size: 15px; font-weight: 700; color: var(--h2); }
 details.nav-l2 > summary, li.nav-l2 { font-size: 14px; font-weight: 500; }
-details.nav-l2 > summary { color: var(--text); }
+details.nav-l2 > summary { color: var(--h3); }
 details.nav-l3 > summary, li.nav-l3 { font-size: 13.5px; font-weight: 400; }
 details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, details.nav-l6 > summary, li.nav-l6 { font-size: 13px; font-weight: 400; }
 .sidebar a.current, .sidebar summary.current { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
@@ -132,9 +133,11 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
-.content th { background: var(--surface); }
+.content th { background: color-mix(in srgb, var(--h2) 10%, var(--surface)); color: var(--h2); }
+.content td:first-child { color: var(--h2); font-weight: 600; }
+.content td:nth-child(2):last-child { color: var(--h3); }
 .content tr:nth-child(even) td { background: var(--surface); }
-.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--border); color: var(--muted); background: var(--surface); }
+.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--h3); color: var(--muted); background: color-mix(in srgb, var(--h3) 6%, var(--surface)); }
 .lead { color: var(--muted); margin-top: -0.4em; }
 .toc { position: sticky; top: 52px; align-self: start; font-size: 0.88em; max-height: calc(100vh - 68px); overflow-y: auto; }
 .toc-title { font-weight: 600; margin-bottom: 8px; color: var(--text); }
@@ -822,7 +825,7 @@ def _column(cls, icon, label, cards, empty):
 
 
 def index_body(status, doc_paths, analysis_prefix=""):
-    out = [f"<h1 id=\"대시보드\">{esc(status['project'])} 대시보드</h1>",
+    out = [f"<h1 id=\"대시보드\">{esc(status['project'].upper())} 대시보드</h1>",  # 프로젝트 이름은 대문자로 보인다
            '<p class="lead">계획, 진행 중, 완료를 한눈에. 카드를 누르면 그 작업의 문서로 간다.</p>',
            '<h2 id="작업-보드">작업 보드</h2>']
     open_items = [t for t in status["todo"] if not t["done"]]
@@ -876,7 +879,7 @@ def index_body(status, doc_paths, analysis_prefix=""):
     else:
         out.append("<table><thead><tr><th>문서</th><th>태그</th><th>들어오는 링크</th><th>나가는 링크</th></tr></thead><tbody>")
         for d in map_docs:
-            orphan = ' <span class="orphan">(고아)</span>' if not d["links_in"] else ""
+            orphan = ' <span class="orphan">(연결 없음)</span>' if not d["links_in"] else ""
             out.append(f'<tr><td><a href="{href_from("", html_path(d["path"]))}">{esc(d["title"])}</a>'
                        f'<br><code>{esc(d["path"])}</code></td><td>{esc(", ".join(d["tags"]))}</td>'
                        f'<td>{len(d["links_in"])}{orphan}</td><td>{len(d["links_out"])}</td></tr>')

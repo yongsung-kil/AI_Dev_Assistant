@@ -11,7 +11,7 @@ description: db에 쌓인 논문을 초록만 보고 기준서대로 포함(in)�
 
 - 1. 기준서 확정. `papers/criteria/selection_criteria.md`에 자리표시(중괄호)가 남아 있으면 프로파일(`overview.md`의 문제 정의, `structure.md`의 부품 사슬, `techniques.md`의 보유 기법)로 채우고 사용자 검토를 받는다 (자동 진행이면 채운 내용을 보고만 한다)
 - 2. 배치 분할. `python "<이 스킬의 기준 폴더>/../../scripts/paper_screen.py" batch -n 100 --per 10 [--year 연도] [--tag 이름]`. 출력의 `RUN_DIR`과 에이전트 수 N을 기억한다. 0편이면 선별 완료를 보고하고 끝낸다
-- 3. 병렬 판정. `ai-assisted-dev:paper-reader` 에이전트 N명을 background로 부른다. 각자에게: 기준서 경로, 자기 파일 `RUN_DIR/agent_NN.json` 경로, 반환 꼴(`judgments`: 담당 논문 전부의 `{id, decision, reason}`, `criteria_suggestions`: 문장 목록). 돌아온 것을 모아 `RUN_DIR/judgments.json`에 저장한다
+- 3. 병렬 판정. `ai-dev-assistant:paper-reader` 에이전트 N명을 background로 부른다. 각자에게: 기준서 경로, 자기 파일 `RUN_DIR/agent_NN.json` 경로, 반환 꼴(`judgments`: 담당 논문 전부의 `{id, decision, reason}`, `criteria_suggestions`: 문장 목록). 돌아온 것을 모아 `RUN_DIR/judgments.json`에 저장한다
 - 4. 검증. `paper_screen.py verify RUN_DIR`. 오류(없는 id, 배치 밖 id, decision 값 오류, 중복)가 있으면 기록하지 않고 보고한다. 누락은 다음 청크에서 다시 나오므로 보고만 한다
 - 5. 기록. in과 out 수와 표본 몇 건을 보고하고 사용자 확인 뒤 `paper_screen.py apply RUN_DIR/judgments.json` (자동 진행이면 바로)
 - 6. 기준 변경 제안은 모아서 최종 보고에 적는다. 기준서 본문은 사용자가 고친다

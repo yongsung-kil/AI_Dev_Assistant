@@ -9,7 +9,7 @@ description: 무엇을 어떻게 테스트해야 하는지를 탐색 작업자 4
 대상 분석 -> 케이스 병렬 도출(4) -> 취합 -> 교차 검증(4) -> 최종 테스트 계획
 ```
 
-작업자는 `ai-assisted-dev:explorer` 4명. 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/test/`, 없으면 `_pm/tasks/{YYYYMMDD}_test_{주제}/test/`. 라운드 폴더는 `test/r{N}_{이름}/`. pm 스킬로 TODO에 등록한다.
+작업자는 `ai-dev-assistant:explorer` 4명. 파일 저장은 메인이 한다. 기록 위치는 진행 중인 작업이 있으면 `_pm/tasks/{작업}/test/`, 없으면 `_pm/tasks/{YYYYMMDD}_test_{주제}/test/`. 라운드 폴더는 `test/r{N}_{이름}/`. pm 스킬로 TODO에 등록한다.
 
 ## 1단계: 대상 분석 (메인)
 

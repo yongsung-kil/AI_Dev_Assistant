@@ -1,6 +1,6 @@
 ---
 name: wiki
-description: 대화, 커밋, 완료 작업, 탐색 문서, 프로파일에서 결정(decisions), 시도(trials), 자산(assets), 기술 문서(tech)를 뽑아 _wiki/에 쌓고 갱신한다. 사용자가 "위키화", "wiki", "위키 갱신"이라고 하면 쓴다
+description: 대화, 커밋, 완료 작업, 탐색 문서, 프로파일에서 결정(decisions), 시도(trials), 재사용 패턴(assets), 기술 문서(tech)를 뽑아 _wiki/에 쌓고 갱신한다. 사용자가 "위키화", "wiki", "위키 갱신"이라고 하면 쓴다
 ---
 
 # 위키 만들기와 갱신
@@ -32,7 +32,7 @@ description: 대화, 커밋, 완료 작업, 탐색 문서, 프로파일에서 �
 
 ## 2. 병렬 수집 (explorer 에이전트 N명, background)
 
-원재료를 출처별로 나눠 `ai-assisted-dev:explorer`에게 준다. 각 작업자는 담당 출처에서 위키화할 항목을 뽑고 갈래(decisions, trials, assets, tech, uncertain)를 제안한다. 대화 원문을 그대로 베끼지 않고 핵심만, 출처(커밋 해시, 세션 파일과 구간, 문서 경로)를 붙인다. 메인이 결과를 `_wiki/_inbox/{출처}_extract.md`에 저장한다.
+원재료를 출처별로 나눠 `ai-dev-assistant:explorer`에게 준다. 각 작업자는 담당 출처에서 위키화할 항목을 뽑고 갈래(decisions, trials, assets, tech, uncertain)를 제안한다. 대화 원문을 그대로 베끼지 않고 핵심만, 출처(커밋 해시, 세션 파일과 구간, 문서 경로)를 붙인다. 메인이 결과를 `_wiki/_inbox/{출처}_extract.md`에 저장한다.
 
 ## 3. 취합과 분류 (메인)
 
@@ -68,6 +68,6 @@ description: 대화, 커밋, 완료 작업, 탐색 문서, 프로파일에서 �
 
 ## 품질 유지
 
-- ㉮ 실행 때마다 고아 문서(어디서도 가리키지 않음), 오래된 문서(last_verified가 코드 변경보다 앞섬), 깨진 링크를 찾아 보고한다
+- ㉮ 실행 때마다 연결 없는 문서(어디서도 가리키지 않음), 오래된 문서(last_verified가 코드 변경보다 앞섬), 깨진 링크를 찾아 보고한다
 - ㉯ 양식 필드가 부족하거나 남으면 보고한다
 - ㉰ tech 문서는 근거 파일이 바뀐 커밋이 있으면 "다시 대조 필요"로 표시한다

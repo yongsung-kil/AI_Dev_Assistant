@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI_Assisted_Dev</title>
+<title>AI-Dev-Assistant</title>
 <link rel="stylesheet" href="../assets/style.css">
 <script>try { var t = localStorage.getItem("dash-theme"); if (t) document.documentElement.setAttribute("data-theme", t);
 if (localStorage.getItem("dash-nav") === "closed") document.documentElement.classList.add("nav-closed"); } catch (e) {}</script>
@@ -11,7 +11,7 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <body>
 <header class="top">
 <button id="nav-toggle" class="icon-btn" type="button" title="사이드바 접기와 펴기" aria-label="사이드바 접기와 펴기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/></svg></button>
-<a class="brand" href="../index.html">AI_Assisted_Dev</a>
+<a class="brand" href="../index.html">AI_Dev_Assistant</a>
 <div class="search-wrap"><svg class="lens" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg><input id="search" type="search" placeholder="검색 (제목과 본문, Ctrl K)" autocomplete="off">
 <div id="search-results" hidden></div></div>
 <div id="theme-toggle" class="seg" title="테마">
@@ -26,7 +26,7 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 </div>
 <details class="nav-l1" open><summary><span><span class="lbl">온보딩</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li class="nav-l2"><a class="current" href="README.html"><span class="lbl">AI_Assisted_Dev</span></a></li>
+<li class="nav-l2"><a class="current" href="README.html"><span class="lbl">AI-Dev-Assistant</span></a></li>
 <li class="nav-l2"><a href="CLAUDE.html"><span class="lbl">CLAUDE.md: 이 저장소에서 작업할 때의 규칙</span></a></li>
 </ul></details>
 <details class="nav-l1" open><summary><span><span class="lbl">작업 관리</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
@@ -54,7 +54,7 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 </ul></details>
 <details class="nav-l1" open><summary><span><span class="lbl">기타 문서</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li class="nav-l2"><a href="plugin/README.html"><span class="lbl">ai-assisted-dev</span></a></li>
+<li class="nav-l2"><a href="plugin/README.html"><span class="lbl">ai-dev-assistant</span></a></li>
 <li><details class="nav-l2"><summary><span><span class="lbl">docs</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
 <li class="nav-l3"><a href="docs/html_guide.html"><span class="lbl">HTML 작성 가이드</span></a></li>
@@ -62,21 +62,21 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 </ul></details>
 </nav>
 <main class="content">
-<h1 id="ai_assisted_dev">AI_Assisted_Dev</h1>
-<p>Claude Code 플러그인 <code>ai-assisted-dev</code>를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.</p>
+<h1 id="ai-dev-assistant">AI-Dev-Assistant</h1>
+<p>Claude Code 플러그인 <code>ai-dev-assistant</code>를 만드는 저장소다. 기존 소스코드와 문서가 있는 프로젝트에 설치하면 Claude가 그 코드를 읽어 프로파일을 만들고, 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는다.</p>
 <p>소개 페이지: <a href="../../docs/intro.html">docs/intro.html</a>. 작업 현황: <a href="../index.html">dashboard/index.html</a>. html 규격: <a href="docs/html_guide.html">docs/html_guide.md</a>.</p>
 <h2 id="설치">설치</h2>
 <pre><code># 이 저장소를 마켓플레이스로 등록하고 설치한다 (GitHub 주소 또는 로컬 경로)
-claude plugin marketplace add &lt;GitHub 계정 또는 조직&gt;/AI_Assisted_Dev
-claude plugin install ai-assisted-dev@ai-assisted-dev
+claude plugin marketplace add &lt;GitHub 계정 또는 조직&gt;/AI_Dev_Assistant
+claude plugin install ai-dev-assistant@ai-dev-assistant
 
 # 이 세션에만 싣기 (개발 중)
 claude --plugin-dir ./plugin</code></pre>
 <p>필요한 것: Claude Code, Python 3 (PATH에 <code>python</code>), git. 자동 실행 설정(세션 시작 때 TODO 확인, md 수정 뒤 문서 검사)은 <code>python</code> 명령으로 스크립트를 부른다. macOS와 Linux처럼 <code>python3</code>만 있는 PC에서는 <code>python</code>이 <code>python3</code>를 가리키게 연결해야 오류 없이 돈다.</p>
 <h2 id="처음-쓰는-법">처음 쓰는 법</h2>
-<ul><li>1. 프로젝트 루트에서 Claude Code를 열고 <code>/ai-assisted-dev:onboard</code>를 부른다. 코드를 읽어 <code>docs/profile/</code> 다섯 문서, <code>CLAUDE.md</code>, <code>_pm/</code>을 만든다</li><li>2. <code>docs/profile/</code>을 읽고 틀린 곳을 고친다. 이 문서가 다른 모든 스킬이 읽는 정본이다</li><li>3. <code>/ai-assisted-dev:dashboard</code>로 현황 페이지를 만든다</li><li>4. 필요한 스킬을 골라 쓴다 (아래 표)</li></ul>
+<ul><li>1. 프로젝트 루트에서 Claude Code를 열고 <code>/ai-dev-assistant:onboard</code>를 부른다. 코드를 읽어 <code>docs/profile/</code> 다섯 문서, <code>CLAUDE.md</code>, <code>_pm/</code>을 만든다</li><li>2. <code>docs/profile/</code>을 읽고 틀린 곳을 고친다. 이 문서가 다른 모든 스킬이 읽는 정본이다</li><li>3. <code>/ai-dev-assistant:dashboard</code>로 현황 페이지를 만든다</li><li>4. 필요한 스킬을 골라 쓴다 (아래 표)</li></ul>
 <h2 id="스킬">스킬</h2>
-<table><thead><tr><th>갈래</th><th>스킬</th><th>하는 일</th></tr></thead><tbody><tr><td>관리</td><td>pm</td><td><code>_pm/</code>으로 작업 등록, 진행, 완료, 판정요청</td></tr><tr><td>관리</td><td>doc-check</td><td>문서 규칙 검사 (줄표, 가운뎃점, 깨진 링크, 금지 낱말)</td></tr><tr><td>관리</td><td>dashboard</td><td>작업 현황 정적 html</td></tr><tr><td>문서화</td><td>onboard</td><td>프로젝트 프로파일과 뼈대 생성</td></tr><tr><td>문서화</td><td>explore</td><td>관점 4개 병렬 탐색과 교차 검증</td></tr><tr><td>문서화</td><td>wiki</td><td>결정, 시도, 자산, 기술 문서 축적</td></tr><tr><td>조사</td><td>paper-search</td><td>arXiv API와 브라우저 내보내기 CSV로 논문과 특허 수집</td></tr><tr><td>조사</td><td>paper-screen</td><td>초록 기준 병렬 선별 (in, out)</td></tr><tr><td>조사</td><td>paper-analyze</td><td>전문 분석 (분류표, 요약, 모듈 대응, JSON)</td></tr><tr><td>실험</td><td>idea-apply</td><td>아이디어 접수, 지표 계획, 교체 지점에 붙이기, 비교, 기록</td></tr><tr><td>최적화</td><td>speed-opt</td><td>결과를 바꾸지 않는 효율화 (점검표, 한 항목씩)</td></tr><tr><td>최적화</td><td>robustness-check</td><td>안정성 검사 (재현, 영향 범위, 수정, 회귀 테스트)</td></tr><tr><td>최적화</td><td>param-opt</td><td>표준 라이브러리 파라미터 최적화기</td></tr><tr><td>절차</td><td>plan</td><td>병렬 계획 수립 3라운드</td></tr><tr><td>절차</td><td>review</td><td>리뷰 (관점 도출, 분석, 검증)</td></tr><tr><td>절차</td><td>debug</td><td>병렬 가설 탐색 진단</td></tr><tr><td>절차</td><td>test-design</td><td>테스트 케이스 설계</td></tr></tbody></table>
+<table><thead><tr><th>갈래</th><th>스킬</th><th>하는 일</th></tr></thead><tbody><tr><td>관리</td><td>pm</td><td><code>_pm/</code>으로 작업 등록, 진행, 완료, 판정요청</td></tr><tr><td>관리</td><td>doc-check</td><td>문서 규칙 검사 (줄표, 가운뎃점, 깨진 링크, 금지 낱말)</td></tr><tr><td>관리</td><td>dashboard</td><td>작업 현황 정적 html</td></tr><tr><td>문서화</td><td>onboard</td><td>프로젝트 프로파일과 뼈대 생성</td></tr><tr><td>문서화</td><td>explore</td><td>관점 4개 병렬 탐색과 교차 검증</td></tr><tr><td>문서화</td><td>wiki</td><td>결정, 시도, 재사용 패턴, 기술 문서 축적</td></tr><tr><td>조사</td><td>paper-search</td><td>arXiv API와 브라우저 내보내기 CSV로 논문과 특허 수집</td></tr><tr><td>조사</td><td>paper-screen</td><td>초록 기준 병렬 선별 (in, out)</td></tr><tr><td>조사</td><td>paper-analyze</td><td>전문 분석 (분류표, 요약, 모듈 대응, JSON)</td></tr><tr><td>실험</td><td>idea-apply</td><td>아이디어 접수, 지표 계획, 교체 지점에 붙이기, 비교, 기록</td></tr><tr><td>최적화</td><td>speed-opt</td><td>결과를 바꾸지 않는 효율화 (점검표, 한 항목씩)</td></tr><tr><td>최적화</td><td>robustness-check</td><td>안정성 검사 (재현, 영향 범위, 수정, 회귀 테스트)</td></tr><tr><td>최적화</td><td>param-opt</td><td>표준 라이브러리 파라미터 최적화기</td></tr><tr><td>절차</td><td>plan</td><td>병렬 계획 수립 3라운드</td></tr><tr><td>절차</td><td>review</td><td>리뷰 (관점 도출, 분석, 검증)</td></tr><tr><td>절차</td><td>debug</td><td>병렬 가설 탐색 진단</td></tr><tr><td>절차</td><td>test-design</td><td>테스트 케이스 설계</td></tr></tbody></table>
 <p>에이전트: explorer(읽기 전용 탐색), paper-reader(논문 1편 읽기), reviewer(리뷰 작업자). 자동 실행: 세션 시작 때 <code>_pm/TODO.md</code> 확인 시각 기록과 요약 주입, md 수정 뒤 문서 검사 경고.</p>
 <h2 id="다른-플러그인과-겹칠-때">다른 플러그인과 겹칠 때</h2>
 <p>계획, 리뷰, 디버그 스킬이 다른 플러그인(예: superpowers)과 겹치면 한쪽을 끈다: <code>claude plugin disable &lt;플러그인 이름&gt;</code> 또는 <code>/plugin</code>에서 해당 플러그인을 끈다. 이 플러그인의 절차는 한국어와 <code>_pm/</code> 규약에 맞춰져 있다.</p>
@@ -99,7 +99,7 @@ claude plugin eval plugin --runs 1 --no-publish --allow-tools Bash Write Edit</c
 <ul><li class="h2"><a href="#설치">설치</a></li><li class="h2"><a href="#처음-쓰는-법">처음 쓰는 법</a></li><li class="h2"><a href="#스킬">스킬</a></li><li class="h2"><a href="#다른-플러그인과-겹칠-때">다른 플러그인과 겹칠 때</a></li><li class="h2"><a href="#폴더">폴더</a></li><li class="h2"><a href="#개발">개발</a></li></ul>
 </aside>
 </div>
-<footer class="foot">생성: 2026-09-30 13:52:12</footer>
+<footer class="foot">생성: 2026-09-30 15:20:22</footer>
 <script>window.DASH_PREFIX = "../";</script>
 <script src="../assets/search.js"></script>
 <script src="../assets/app.js"></script>

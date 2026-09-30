@@ -1,5 +1,5 @@
 ---
-summary: (한 줄: 이 자산이 무엇인지)
+summary: (한 줄: 이 패턴이나 조각이 무엇인지)
 type: antipattern | pattern | prompt | snippet
 tags: []
 date:

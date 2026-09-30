@@ -1,10 +1,10 @@
 {
-  "name": "ai-assisted-dev",
+  "name": "ai-dev-assistant",
   "description": "기존 프로젝트를 읽어 프로파일을 만들고 문서화, 논문과 특허 조사, 아이디어 적용 실험, 최적화, 프로젝트 관리를 돕는 플러그인",
   "owner": { "name": "길용성" },
   "plugins": [
     {
-      "name": "ai-assisted-dev",
+      "name": "ai-dev-assistant",
       "source": "./plugin",
       "description": "프로젝트 프로파일, 문서화, 논문과 특허 조사, 아이디어 실험, 효율화와 안정성, 파라미터 최적화, 작업 관리, 대시보드",
       "version": "0.1.0"

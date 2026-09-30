@@ -4,34 +4,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ai-assisted-dev 소개</title>
+<title>AI-Dev-Assistant 소개</title>
 <style>
 :root {
   --bg: #ffffff; --surface: #f6f8fa; --text: #24292f; --muted: #57606a; --border: #d0d7de;
   --accent: #0969da; --accent-soft: #ddf4ff; --ok: #1a7f37; --warn: #bf8700;
   --planned: #2563eb; --doing: #7c3aed;
   --h1: #0b5cad; --h2: #0f766e; --h3: #6d28d9; --strong: #b45309;
+  --c1: #2563eb; --c2: #0f766e; --c3: #7c3aed; --c4: #b45309; --c5: #be123c; --c6: #4d7c0f; --c7: #0e7490; --c8: #a21caf;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
   --planned: #60a5fa; --doing: #c084fc;
-  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; } }
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24;
+  --c1: #60a5fa; --c2: #5eead4; --c3: #c4b5fd; --c4: #fbbf24; --c5: #fb7185; --c6: #a3e635; --c7: #22d3ee; --c8: #f0abfc; } }
 :root[data-theme="dark"] { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
   --planned: #60a5fa; --doing: #c084fc;
-  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; }
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24;
+  --c1: #60a5fa; --c2: #5eead4; --c3: #c4b5fd; --c4: #fbbf24; --c5: #fb7185; --c6: #a3e635; --c7: #22d3ee; --c8: #f0abfc; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere;
        font-family: "Segoe UI", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 code { font-family: Consolas, "D2Coding", monospace; font-size: 0.9em; background: var(--surface); padding: 0.15em 0.4em; border-radius: 4px; }
-pre { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
+pre { background: color-mix(in srgb, var(--h1) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--h1) 30%, var(--border));
+      border-left: 4px solid var(--h1); border-radius: 6px; padding: 12px 16px; overflow-x: auto; }
 pre code { background: none; padding: 0; }
 svg { display: inline-block; vertical-align: middle; }
 .top { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; padding: 8px 16px;
        background: var(--surface); border-bottom: 1px solid var(--border); }
-.brand { font-weight: 700; white-space: nowrap; color: var(--text); }
+.brand { font-weight: 800; font-size: 18px; letter-spacing: 0.02em; white-space: nowrap; color: var(--h1); text-transform: uppercase; }
 .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px solid var(--border);
             border-radius: 6px; background: var(--bg); color: var(--muted); cursor: pointer; padding: 0; }
 .icon-btn:hover { color: var(--text); border-color: var(--muted); }
@@ -52,7 +56,7 @@ html.nav-closed .layout { grid-template-columns: minmax(0, 880px) 220px; }
 html.nav-closed .sidebar { display: none; }
 .sidebar { position: sticky; top: 52px; align-self: start; max-height: calc(100vh - 68px); overflow-y: auto; padding-right: 6px; font-size: 13px; }
 .sidebar .nav-top { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.sidebar .nav-top a { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; color: var(--text); }
+.sidebar .nav-top a { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font-weight: 600; font-size: 14.5px; color: var(--h1); }
 .sidebar a:hover, .sidebar summary:hover { background: var(--surface); text-decoration: none; }
 .sidebar details { margin: 1px 0; }
 .sidebar summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 6px; cursor: pointer;
@@ -65,9 +69,9 @@ html.nav-closed .sidebar { display: none; }
 .sidebar li { margin: 0; }
 .sidebar li > a, .sidebar li > span { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; color: var(--muted);
                                        line-height: 1.35; }
-details.nav-l1 > summary { font-size: 15px; font-weight: 700; color: var(--text); }
+details.nav-l1 > summary { font-size: 15px; font-weight: 700; color: var(--h2); }
 details.nav-l2 > summary, li.nav-l2 { font-size: 14px; font-weight: 500; }
-details.nav-l2 > summary { color: var(--text); }
+details.nav-l2 > summary { color: var(--h3); }
 details.nav-l3 > summary, li.nav-l3 { font-size: 13.5px; font-weight: 400; }
 details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, details.nav-l6 > summary, li.nav-l6 { font-size: 13px; font-weight: 400; }
 .sidebar a.current, .sidebar summary.current { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
@@ -81,9 +85,11 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
-.content th { background: var(--surface); }
+.content th { background: color-mix(in srgb, var(--h2) 10%, var(--surface)); color: var(--h2); }
+.content td:first-child { color: var(--h2); font-weight: 600; }
+.content td:nth-child(2):last-child { color: var(--h3); }
 .content tr:nth-child(even) td { background: var(--surface); }
-.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--border); color: var(--muted); background: var(--surface); }
+.content blockquote { margin: 0.8em 0; padding: 0.4em 1em; border-left: 4px solid var(--h3); color: var(--muted); background: color-mix(in srgb, var(--h3) 6%, var(--surface)); }
 .lead { color: var(--muted); margin-top: -0.4em; }
 .toc { position: sticky; top: 52px; align-self: start; font-size: 0.88em; max-height: calc(100vh - 68px); overflow-y: auto; }
 .toc-title { font-weight: 600; margin-bottom: 8px; color: var(--text); }
@@ -140,17 +146,23 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .change ul { margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--muted); }
 .layout.light { grid-template-columns: minmax(0, 880px) 220px; }
 .back { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
-.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px;
-            padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
-.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-left: 4px solid var(--accent);
+            border-radius: 10px; padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
+.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--accent); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls input[type="search"]:focus { outline: 3px solid var(--accent-soft); }
 .controls input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
-.controls label { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.controls label { color: var(--h2); font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
 .facets { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-.facet { border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0; background: var(--bg); }
-.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
-.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 2px 8px 2px 0; color: var(--text); white-space: nowrap; }
+.facet { --fc: var(--c1); border: 1px solid var(--border); border-left: 4px solid var(--fc); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0;
+         background: var(--surface); }
+.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fc); padding: 0 4px; }
+.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 3px 6px 2px 0; color: var(--text); white-space: nowrap;
+               border: 1px solid color-mix(in srgb, var(--fc) 35%, transparent); background: color-mix(in srgb, var(--fc) 10%, var(--bg));
+               border-radius: 12px; padding: 1px 9px 1px 6px; cursor: pointer; }
+.facet label:has(input:checked) { background: color-mix(in srgb, var(--fc) 30%, var(--bg)); border-color: var(--fc); font-weight: 600; }
 .facet .count { color: var(--muted); font-size: 11px; }
-#paper-table .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: 12px; margin: 1px 4px 1px 0; color: var(--muted); background: var(--surface); }
+#paper-table .chip { --fc: var(--c1); display: inline-block; border: 1px solid color-mix(in srgb, var(--fc) 40%, transparent); border-radius: 6px; padding: 0 6px;
+                     font-size: 12px; margin: 1px 4px 1px 0; color: var(--fc); background: color-mix(in srgb, var(--fc) 10%, var(--bg)); }
 #paper-table td .card-desc { white-space: normal; margin-top: 2px; }
 #paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
@@ -163,18 +175,18 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .top .links { margin-left: 4px; }
 .top .links a { margin-left: 12px; color: var(--muted); font-size: 14px; }
 .content .cards { margin: 12px 0; }
-.content .card { background: var(--surface); }
+.content .card { background: color-mix(in srgb, var(--h1) 5%, var(--surface)); border-color: color-mix(in srgb, var(--h1) 25%, var(--border)); }
 .content .card p { margin: 0; color: var(--muted); font-size: 0.92em; }
 .content .card-title code { font-size: 0.95em; }
 .flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; margin: 12px 0; }
-.step { flex: 1 1 150px; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; background: var(--surface); position: relative; }
+.step { flex: 1 1 150px; border: 1px solid color-mix(in srgb, var(--h2) 30%, var(--border)); border-radius: 8px; padding: 10px 12px; background: color-mix(in srgb, var(--h2) 6%, var(--surface)); position: relative; }
 .step .n { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 11px; background: var(--accent); color: #fff; font-size: 0.8em; margin-right: 6px; }
 .step p { margin: 4px 0 0; color: var(--muted); font-size: 0.9em; }
 .steps { counter-reset: s; list-style: none; padding-left: 0; }
 .steps li { counter-increment: s; margin: 10px 0; padding-left: 36px; position: relative; }
 .steps li::before { content: counter(s); position: absolute; left: 0; top: 2px; width: 26px; height: 26px; line-height: 26px; text-align: center; border-radius: 13px; background: var(--accent); color: #fff; font-size: 0.85em; }
-.content details { border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; margin: 8px 0; background: var(--surface); }
-.content summary { cursor: pointer; font-weight: 600; }
+.content details { border: 1px solid color-mix(in srgb, var(--h3) 30%, var(--border)); border-radius: 6px; padding: 6px 12px; margin: 8px 0; background: color-mix(in srgb, var(--h3) 5%, var(--surface)); }
+.content summary { cursor: pointer; font-weight: 600; color: var(--h3); }
 .content .badge { background: var(--ok); }
 .muted { color: var(--muted); }
 </style>
@@ -184,7 +196,7 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <body>
 <header class="top">
 <button id="nav-toggle" class="icon-btn" type="button" title="사이드바 접기와 펴기" aria-label="사이드바 접기와 펴기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/></svg></button>
-<a class="brand" href="intro.html">ai-assisted-dev</a>
+<a class="brand" href="intro.html">AI-Dev-Assistant</a>
 <div id="theme-toggle" class="seg" title="테마">
 <button type="button" data-theme="" title="시스템 설정 따름"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg></button><button type="button" data-theme="light" title="밝게"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="7" y2="7"/><line x1="17" y1="17" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="7" y2="17"/><line x1="17" y1="7" x2="19.1" y2="4.9"/></svg></button><button type="button" data-theme="dark" title="어둡게"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
 </div>
@@ -196,52 +208,54 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 </div>
 <details class="nav-l1" open><summary><span><span class="lbl">이 페이지</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li class="nav-l2"><a href="#무엇인가"><span class="lbl">무엇인가</span></a></li>
+<li class="nav-l2"><a href="#구성"><span class="lbl">구성</span></a></li>
 <li class="nav-l2"><a href="#빠른-시작"><span class="lbl">빠른 시작</span></a></li>
-<li class="nav-l2"><a href="#흐름"><span class="lbl">흐름</span></a></li>
+<li class="nav-l2"><a href="#작업-흐름"><span class="lbl">작업 흐름</span></a></li>
 <li class="nav-l2"><a href="#프로파일"><span class="lbl">프로파일</span></a></li>
-<li class="nav-l2"><a href="#스킬"><span class="lbl">스킬 17개</span></a></li>
+<li class="nav-l2"><a href="#스킬"><span class="lbl">AI-Dev-Assistant Skills</span></a></li>
 <li class="nav-l2"><a href="#에이전트와-자동-실행"><span class="lbl">에이전트와 자동 실행</span></a></li>
 <li class="nav-l2"><a href="#작업-관리"><span class="lbl">작업 관리와 대시보드</span></a></li>
-<li class="nav-l2"><a href="#자주-묻는-것"><span class="lbl">자주 묻는 것</span></a></li>
+<li class="nav-l2"><a href="#사용-시-주의사항"><span class="lbl">사용 시 주의사항</span></a></li>
 </ul></details>
 </nav>
 <main class="content">
 
-<h1 id="소개">ai-assisted-dev</h1>
-<p>기존 소스코드와 문서가 있는 프로젝트에 설치하는 Claude Code 플러그인. Claude가 코드를 읽어 프로젝트 프로파일을 만들고, 그 프로파일을 바탕으로 문서화, 논문과 특허 조사, 아이디어 적용 실험, 효율화와 안정성 검사, 파라미터 최적화, 작업 관리를 한다.</p>
+<h1 id="소개">AI-DEV-ASSISTANT</h1>
+<p>기존 소스코드와 문서가 있는 프로젝트에 설치하는 Claude Code 플러그인. Claude가 코드를 읽어 프로젝트 프로파일을 만들고, 그 프로파일을 바탕으로 문서화, 논문과 특허 조사, 기법 실험, 효율화와 안정성 검사, 파라미터 최적화, 작업 관리를 맡는다.</p>
 
-<h2 id="무엇인가">무엇인가</h2>
+<h2 id="구성">구성</h2>
 <div class="cards">
-<div class="card"><div class="card-title">프로파일이 정본</div><p>코드를 매번 넓게 읽는 대신 다섯 문서(개요, 구조, 교체 지점, 보유 기법, 제약)를 읽는다. 언어와 무관한 낱말로 적혀 C++, Python, Verilog 프로젝트에 같은 절차가 돈다.</p></div>
-<div class="card"><div class="card-title">스킬은 절차서</div><p>스킬 17개가 각각 한 가지 일의 절차를 담는다. 읽을 것이 많은 단계는 읽기 전용 작업자(에이전트)에게 나눠 준다.</p></div>
-<div class="card"><div class="card-title">기록이 남는다</div><p>작업은 <code>_pm/</code>에, 결정은 판정요청 문서에, 실험은 실험로그에, 지식은 위키에 쌓인다. 대시보드가 이것을 한 화면에 보인다.</p></div>
-<div class="card"><div class="card-title">설치 없이 돈다</div><p>스크립트는 Python 표준 라이브러리만 쓴다. html은 정적 파일이라 인터넷이 막힌 자리에서도 열린다.</p></div>
+<div class="card"><div class="card-title">프로젝트 프로파일</div><p>개요, 구조, 교체 지점, 보유 기법, 제약의 다섯 문서. 모든 스킬이 코드 대신 먼저 읽는 정본. 언어와 무관한 낱말로 적혀 C++, Python, Verilog 프로젝트에 같은 절차가 돈다.</p></div>
+<div class="card"><div class="card-title">스킬 17개</div><p>한 스킬이 한 가지 일의 절차서. 관리 3, 문서화 3, 조사 3, 실험과 최적화 4, 절차 4.</p></div>
+<div class="card"><div class="card-title">에이전트 3명</div><p>읽기 전용 작업자. explorer(코드 탐색), paper-reader(논문 한 편), reviewer(변경 검토). 읽을 것이 많은 단계를 나눠 맡는다.</p></div>
+<div class="card"><div class="card-title">자동 실행 2개</div><p>세션 시작 때 TODO 확인, md 파일 수정 뒤 문서 검사. 막지 않고 알리기만 한다.</p></div>
+<div class="card"><div class="card-title">작업 관리 <code>_pm/</code></div><p>작업 목록, 완료 이력, 작업별 문서, 판정요청. 사용자만 정할 수 있는 것은 판정요청 문서로 모아 한 번에 묻는다.</p></div>
+<div class="card"><div class="card-title">대시보드</div><p>작업 보드, 변경 이력, 논문 탐색기, 문서 지도를 정적 html로. Python 표준 라이브러리만 쓰고, 인터넷이 막힌 자리에서도 열린다.</p></div>
 </div>
 
 <h2 id="빠른-시작">빠른 시작</h2>
 <ol class="steps">
-<li>설치한다. <code>claude plugin marketplace add &lt;GitHub 계정 또는 조직&gt;/AI_Assisted_Dev</code> 뒤 <code>claude plugin install ai-assisted-dev@ai-assisted-dev</code>. 개발 중이면 <code>claude --plugin-dir ./plugin</code>.</li>
-<li>프로젝트 루트에서 Claude Code를 열고 <code>/ai-assisted-dev:onboard</code>를 부른다. 탐색 작업자 4명이 코드를 읽고 <code>docs/profile/</code> 다섯 문서, <code>CLAUDE.md</code>, <code>_pm/</code>이 생긴다.</li>
-<li><code>docs/profile/</code>을 읽고 틀린 곳을 고친다. "미확인"으로 남은 칸을 채운다.</li>
-<li><code>/ai-assisted-dev:dashboard</code>로 현황 페이지를 만들고 <code>dashboard/index.html</code>을 연다.</li>
-<li>필요한 스킬을 골라 쓴다. 다음 세션부터는 시작할 때 <code>_pm/TODO.md</code> 요약이 자동으로 들어온다.</li>
+<li>설치: <code>claude plugin marketplace add &lt;GitHub 계정 또는 조직&gt;/AI_Dev_Assistant</code>, 그다음 <code>claude plugin install ai-dev-assistant@ai-dev-assistant</code>. 개발 중에는 <code>claude --plugin-dir ./plugin</code>.</li>
+<li>온보딩: 프로젝트 루트에서 Claude Code를 열고 <code>/ai-dev-assistant:onboard</code>. 탐색 작업자 4명이 코드를 읽고 <code>docs/profile/</code> 다섯 문서, <code>docs/usage.md</code>, <code>CLAUDE.md</code>, <code>_pm/</code>을 만든다.</li>
+<li>프로파일 검토: <code>docs/profile/</code>에서 틀린 곳과 "미확인" 칸을 고친다.</li>
+<li>대시보드: <code>/ai-dev-assistant:dashboard</code> 뒤 <code>dashboard/index.html</code>을 연다.</li>
+<li>일상 사용: 필요한 스킬을 골라 부른다. 다음 세션부터는 시작할 때 <code>_pm/TODO.md</code> 요약이 자동으로 들어온다.</li>
 </ol>
 
-<h2 id="흐름">흐름</h2>
+<h2 id="작업-흐름">작업 흐름</h2>
 <div class="flow">
-<div class="step"><span class="n">1</span>onboard<p>프로파일, CLAUDE.md, _pm</p></div>
+<div class="step"><span class="n">1</span>onboard<p>프로파일, 사용법, CLAUDE.md, _pm</p></div>
 <div class="step"><span class="n">2</span>explore, wiki<p>탐색 문서, 결정과 기술 문서</p></div>
 <div class="step"><span class="n">3</span>dashboard<p>현황 한 화면</p></div>
 <div class="step"><span class="n">4</span>paper-search, screen, analyze<p>논문과 특허 수집, 선별, 분석</p></div>
 <div class="step"><span class="n">5</span>idea-apply<p>교체 지점에 붙여 실험, 기록</p></div>
 <div class="step"><span class="n">6</span>speed-opt, robustness, param-opt<p>효율화, 안정성, 파라미터</p></div>
 </div>
-<p class="muted">plan, review, debug, test-design은 어느 단계에서나 부른다. pm과 doc-check는 모든 단계가 쓴다.</p>
+<p class="muted">plan, review, debug, test-design은 어느 단계에서나 부르는 절차 스킬. pm과 doc-check는 모든 단계가 쓰는 관리 스킬.</p>
 
 <h2 id="프로파일">프로파일</h2>
 <table>
-<thead><tr><th>문서</th><th>담는 것</th><th>누가 쓰는가</th></tr></thead>
+<thead><tr><th>문서</th><th>담는 것</th><th>읽는 스킬</th></tr></thead>
 <tbody>
 <tr><td><code>overview.md</code></td><td>문제 정의, 입력과 출력, 성능 지표, 실행 환경</td><td>모든 스킬</td></tr>
 <tr><td><code>structure.md</code></td><td>모듈 지도, 호출 관계, 데이터 흐름</td><td>explore, paper-analyze의 모듈 대응</td></tr>
@@ -250,20 +264,20 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <tr><td><code>constraints.md</code></td><td>변경 금지 대상, 기밀 규칙, 용어</td><td>모든 스킬</td></tr>
 </tbody>
 </table>
-<p>규칙: 코드를 직접 읽고 확인한 것만 적고 근거(파일:줄)를 붙인다. 모르면 "미확인". 코드가 바뀌면 프로파일을 먼저 고친다.</p>
+<p>작성 규칙: 코드를 직접 읽고 확인한 것만 근거(파일:줄)와 함께 적는다. 모르는 칸은 "미확인". 코드가 바뀌면 프로파일을 먼저 고친다.</p>
 
-<h2 id="스킬">스킬 17개</h2>
+<h2 id="스킬">AI-Dev-Assistant Skills</h2>
 <details open><summary>관리 (3)</summary>
 <div class="cards">
-<div class="card"><div class="card-title"><code>pm</code></div><p>작업 등록, 진행 메모, 완료 처리, 판정요청. 변경 등급 Safe, Review, Decision.</p></div>
-<div class="card"><div class="card-title"><code>doc-check</code></div><p>줄표와 가운뎃점, 깨진 링크, 금지 낱말을 찾고 문장을 다시 쓴다.</p></div>
-<div class="card"><div class="card-title"><code>dashboard</code></div><p>TODO, 완료, 결정 대기, 아이디어 현황, 실험, 문서 지도를 정적 html로.</p></div>
+<div class="card"><div class="card-title"><code>pm</code></div><p>작업 등록, 진행 메모, 완료 처리, 판정요청. 변경 등급은 Safe, Review, Decision.</p></div>
+<div class="card"><div class="card-title"><code>doc-check</code></div><p>줄표와 가운뎃점, 깨진 링크, 금지 낱말 검사와 문장 다시 쓰기.</p></div>
+<div class="card"><div class="card-title"><code>dashboard</code></div><p>작업 보드, 결정 대기, 변경 이력, 논문 탐색기, 문서 지도의 정적 html.</p></div>
 </div></details>
 <details><summary>문서화 (3)</summary>
 <div class="cards">
-<div class="card"><div class="card-title"><code>onboard</code></div><p>프로젝트를 읽어 프로파일과 뼈대를 만든다. 다시 돌리면 바뀐 모듈만 고친다.</p></div>
-<div class="card"><div class="card-title"><code>explore</code></div><p>관점 4개로 병렬 탐색하고 4개 관점으로 교차 검증해 이해 문서를 만든다.</p></div>
-<div class="card"><div class="card-title"><code>wiki</code></div><p>대화, 커밋, 완료 작업, 탐색 문서에서 결정, 시도, 자산, 기술 문서를 뽑아 쌓는다.</p></div>
+<div class="card"><div class="card-title"><code>onboard</code></div><p>프로젝트를 읽어 프로파일, 사용법 문서, 뼈대 생성. 다시 돌리면 바뀐 모듈만 갱신.</p></div>
+<div class="card"><div class="card-title"><code>explore</code></div><p>관점 4개의 병렬 탐색과 4개 관점의 교차 검증으로 이해 문서 작성.</p></div>
+<div class="card"><div class="card-title"><code>wiki</code></div><p>대화, 커밋, 완료 작업, 탐색 문서에서 결정, 시도, 재사용 패턴, 기술 문서를 뽑아 축적.</p></div>
 </div></details>
 <details><summary>조사 (3)</summary>
 <div class="cards">
@@ -276,13 +290,13 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <div class="card"><div class="card-title"><code>idea-apply</code></div><p>접수, 지표 계획, 교체 지점에 붙이기, 기준 실험과 비교, README와 실험로그와 현황표 기록.</p></div>
 <div class="card"><div class="card-title"><code>speed-opt</code></div><p>결과를 바꾸지 않는 효율화. 점검표, 한 항목 = 한 커밋, 항목 문서, 결과 동일성 근거.</p></div>
 <div class="card"><div class="card-title"><code>robustness-check</code></div><p>안정성 검사. 항목 풀에서 고르고 재현, 영향 범위 분석, 수정, 회귀 테스트.</p></div>
-<div class="card"><div class="card-title"><code>param-opt</code></div><p>평가 명령과 파라미터 공간을 설정하면 최적값을 찾는 표준 라이브러리 최적화기.</p></div>
+<div class="card"><div class="card-title"><code>param-opt</code></div><p>평가 명령과 파라미터 공간을 설정하면 최적값을 찾는 표준 라이브러리 최적화기. 도구를 만드는 순서 안내 포함.</p></div>
 </div></details>
 <details><summary>절차 (4)</summary>
 <div class="cards">
-<div class="card"><div class="card-title"><code>plan</code></div><p>작업자 4명이 재료를 모으고 취합, 검토계획, 검토 세 라운드로 실행 계획을 확정.</p></div>
-<div class="card"><div class="card-title"><code>review</code></div><p>관점 도출, 분석, 검증 세 라운드. 거짓 양성을 거르고 최종 보고 한 번.</p></div>
-<div class="card"><div class="card-title"><code>debug</code></div><p>가설 4개를 병렬 추적하고 반증, 영향 범위, 수정 방향, 대안 원인으로 교차 검증.</p></div>
+<div class="card"><div class="card-title"><code>plan</code></div><p>작업자 4명의 재료 수집, 취합, 검토 계획, 검토의 세 라운드로 실행 계획 확정.</p></div>
+<div class="card"><div class="card-title"><code>review</code></div><p>관점 도출, 분석, 검증의 세 라운드. 거짓 양성을 거르고 최종 보고 한 번.</p></div>
+<div class="card"><div class="card-title"><code>debug</code></div><p>가설 4개의 병렬 추적과 반증, 영향 범위, 수정 방향, 대안 원인의 교차 검증.</p></div>
 <div class="card"><div class="card-title"><code>test-design</code></div><p>관점별 테스트 케이스 도출과 교차 검증. P0부터 P3까지 우선순위.</p></div>
 </div></details>
 
@@ -290,40 +304,41 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <table>
 <thead><tr><th>이름</th><th>역할</th><th>도구</th></tr></thead>
 <tbody>
-<tr><td><code>explorer</code></td><td>한 관점에서 코드를 읽고 근거를 붙여 보고</td><td>Read, Grep, Glob</td></tr>
+<tr><td><code>explorer</code></td><td>한 관점에서 코드를 읽고 근거를 붙여 보고</td><td>Read, Grep, Glob, git log와 diff</td></tr>
 <tr><td><code>paper-reader</code></td><td>논문 1편과 프로파일만 읽고 판정이나 분석</td><td>Read, Grep, Glob</td></tr>
 <tr><td><code>reviewer</code></td><td>변경 범위를 한 관점에서 읽고 파일:줄과 심각도로 보고</td><td>Read, Grep, Glob, git diff</td></tr>
 </tbody>
 </table>
 <table>
-<thead><tr><th>자동 실행</th><th>언제</th><th>무엇을</th></tr></thead>
+<thead><tr><th>자동 실행</th><th>시점</th><th>동작</th></tr></thead>
 <tbody>
-<tr><td>TODO 확인</td><td>세션 시작</td><td><code>_pm/TODO.md</code>에 확인 시각을 적고 미완 작업 요약을 문맥에 넣는다</td></tr>
-<tr><td>문서 검사</td><td>md 파일을 고친 뒤</td><td>줄표와 가운뎃점을 찾아 경고만 낸다 (막지 않는다)</td></tr>
+<tr><td>TODO 확인</td><td>세션 시작</td><td><code>_pm/TODO.md</code>에 확인 시각 기록, 미완 작업 요약을 문맥에 주입</td></tr>
+<tr><td>문서 검사</td><td>md 파일 수정 뒤</td><td>줄표와 가운뎃점 경고 (막지 않음)</td></tr>
 </tbody>
 </table>
 
 <h2 id="작업-관리">작업 관리와 대시보드</h2>
 <div class="cards">
-<div class="card"><div class="card-title"><code>_pm/TODO.md</code></div><p>작업 목록. 항목마다 상세 폴더 링크와 하위 단계 상자. 대시보드의 진행 중 카드가 된다.</p></div>
+<div class="card"><div class="card-title"><code>_pm/TODO.md</code></div><p>작업 목록. 항목마다 상세 폴더 링크와 하위 단계 상자. 대시보드 작업 보드의 카드.</p></div>
 <div class="card"><div class="card-title"><code>_pm/tasks/</code></div><p>작업마다 폴더 하나. 태스크 문서(목적, 배경, 설계, 수정 대상, 안전성 체크리스트, 미결정)와 판정요청.</p></div>
-<div class="card"><div class="card-title">판정요청</div><p>사용자만 정할 수 있는 것을 예시와 선택지와 권고로 묻는 문서. <code>%</code> 줄에 번호로 답한다.</p></div>
-<div class="card"><div class="card-title"><code>_pm/DONE.md</code></div><p>완료 이력. 작업 단위 변경 이력이 된다 (커밋 단위가 아니다).</p></div>
+<div class="card"><div class="card-title">판정요청</div><p>사용자만 정할 수 있는 것을 예시, 선택지, 권고로 묻는 문서. <code>%</code> 줄에 번호로 답한다.</p></div>
+<div class="card"><div class="card-title"><code>_pm/DONE.md</code></div><p>완료 이력. 대시보드의 변경 이력 페이지가 된다 (커밋 단위가 아니라 작업 단위).</p></div>
 </div>
 
-<h2 id="자주-묻는-것">자주 묻는 것</h2>
-<details><summary>다른 언어나 하드웨어 설계 프로젝트에도 되는가</summary><p>된다. 프로파일은 언어와 무관한 낱말(모듈, 인터페이스, 교체 지점, 신호)로 적고, onboard가 언어별 탐색 방법을 고른다. 하드웨어 설계면 모듈 계층과 신호 인터페이스, 클록과 리셋을 관점에 더한다. 안정성 검사의 항목 풀에는 리셋 값, 비트 폭, 클록 영역 넘김이 있다.</p></details>
-<details><summary>교체 지점이 없는 코드는</summary><p>idea-apply가 붙이기 전에 멈추고 "교체 지점 만들기" 작업을 등록한다. 프로파일 <code>replacement_points.md</code>에 후보 자리가 "만들어야 함" 상태로 적혀 있다.</p></details>
-<details><summary>인터넷이 막혀 있으면</summary><p>arXiv 검색도 브라우저에서 하고 내보내기 CSV를 들여온다. html은 외부 자원을 쓰지 않으므로 그대로 열린다.</p></details>
-<details><summary>다른 플러그인의 계획이나 리뷰 스킬과 겹치면</summary><p>한쪽을 끈다. <code>claude plugin disable &lt;이름&gt;</code> 또는 <code>/plugin</code>에서 끈다. 이 플러그인의 절차는 한국어와 <code>_pm/</code> 규약에 맞춰져 있다.</p></details>
-<details><summary>macOS나 Linux에서 자동 실행 오류가 뜨면</summary><p>스크립트를 <code>python</code> 명령으로 부르기 때문이다. <code>python</code>이 <code>python3</code>를 가리키게 연결하면 사라진다.</p></details>
+<h2 id="사용-시-주의사항">사용 시 주의사항</h2>
+<details><summary>다른 언어와 하드웨어 설계 프로젝트</summary><p>프로파일은 언어와 무관한 낱말(모듈, 인터페이스, 교체 지점, 신호)로 적히고, onboard가 언어별 탐색 방법을 고른다. 하드웨어 설계는 모듈 계층과 신호 인터페이스, 클록과 리셋을 관점에 더한다. 안정성 검사의 항목 풀에도 RTL 항목이 있다.</p></details>
+<details><summary>교체 지점이 없는 코드</summary><p>idea-apply는 붙이기 전에 멈추고 "교체 지점 만들기" 작업을 등록한다. 프로파일 <code>replacement_points.md</code>에 후보 자리가 "만들어야 함" 상태로 적힌다.</p></details>
+<details><summary>인터넷이 막힌 환경</summary><p>arXiv 검색도 브라우저에서 하고 내보내기 CSV를 들여온다. html은 외부 자원을 쓰지 않으므로 그대로 열린다.</p></details>
+<details><summary>다른 플러그인의 계획이나 리뷰 스킬과 겹칠 때</summary><p>한쪽을 끈다: <code>claude plugin disable &lt;이름&gt;</code> 또는 <code>/plugin</code>. 이 플러그인의 절차는 한국어와 <code>_pm/</code> 규약에 맞춰져 있다.</p></details>
+<details><summary>macOS와 Linux의 자동 실행 오류</summary><p>스크립트를 <code>python</code> 명령으로 부르기 때문에 생긴다. <code>python</code>이 <code>python3</code>를 가리키게 연결하면 사라진다.</p></details>
+<details><summary>비대화 실행(<code>claude -p</code>)에서 오래 도는 스킬</summary><p>환경 변수 <code>CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0</code>이 없으면 뒤에서 도는 에이전트가 600초를 넘길 때 세션이 끊긴다.</p></details>
 
 </main>
 <aside class="toc"><div class="toc-title">이 페이지의 차례</div>
-<ul><li class="h2"><a href="#무엇인가">무엇인가</a></li><li class="h2"><a href="#빠른-시작">빠른 시작</a></li><li class="h2"><a href="#흐름">흐름</a></li><li class="h2"><a href="#프로파일">프로파일</a></li><li class="h2"><a href="#스킬">스킬 17개</a></li><li class="h2"><a href="#에이전트와-자동-실행">에이전트와 자동 실행</a></li><li class="h2"><a href="#작업-관리">작업 관리와 대시보드</a></li><li class="h2"><a href="#자주-묻는-것">자주 묻는 것</a></li></ul>
+<ul><li class="h2"><a href="#구성">구성</a></li><li class="h2"><a href="#빠른-시작">빠른 시작</a></li><li class="h2"><a href="#작업-흐름">작업 흐름</a></li><li class="h2"><a href="#프로파일">프로파일</a></li><li class="h2"><a href="#스킬">AI-Dev-Assistant Skills</a></li><li class="h2"><a href="#에이전트와-자동-실행">에이전트와 자동 실행</a></li><li class="h2"><a href="#작업-관리">작업 관리와 대시보드</a></li><li class="h2"><a href="#사용-시-주의사항">사용 시 주의사항</a></li></ul>
 </aside>
 </div>
-<footer class="foot">ai-assisted-dev 0.1.0</footer>
+<footer class="foot">ai-dev-assistant 0.1.0</footer>
 <script>
 (function () {
   var prefix = window.DASH_PREFIX || "";
@@ -434,11 +449,16 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
       return sel;
     }
     function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    var colors = window.PAPER_FACET_COLORS || {};
     function rowHtml(p) {
       var href = p.doc ? prefix + p.doc : (/^https?:\/\//.test(p.url || "") ? p.url : "");
       var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
       var chips = "";
-      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      for (var k in p.facets) {
+        if (k !== "source" && k !== "status") {
+          chips += '<span class="chip" style="--fc: var(--c' + (colors[k] || 1) + ')" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>";
+        }
+      }
       return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
         "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
     }
