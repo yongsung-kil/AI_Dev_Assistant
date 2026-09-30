@@ -56,3 +56,7 @@ def test_cli_prints_utf8_json_with_korean_dirs(tmp_path):
     data = json.loads(r.stdout.decode("utf-8"))
     assert data["top_dirs"] == ["한글폴더"] and data["languages"] == {"python": 1}
     assert not (tmp_path / "docs").exists()
+
+def test_init_docs_copies_usage_guide(tmp_path):
+    onboard_init.init_docs(str(tmp_path))
+    assert (tmp_path / "docs" / "usage.md").is_file()

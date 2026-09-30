@@ -20,12 +20,14 @@ except Exception:
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import md_to_html  # noqa: E402
+import papers_db  # noqa: E402
 
 SKIP_DIRS = {".git", ".hg", ".svn", "node_modules", "__pycache__", ".venv", "venv", "env", "build", "dist",
              "out", "obj", "third_party", "vendor", "external", "xcelium.d", ".Xil", "work",
              "Sim_Output", ".superpowers", ".pytest_cache", ".idea", ".vscode", "dashboard", "testbed"}
 DEFAULT_CONFIG = {"ideas_files": None, "experiment_logs": None,
-                  "doc_dirs": ["docs", "_wiki", "_pm", "ideas", "papers", "optim"], "root_docs": ["README.md", "CLAUDE.md"]}
+                  "doc_dirs": ["docs", "_wiki", "_pm", "ideas", "papers", "optim"], "root_docs": ["README.md", "CLAUDE.md"],
+                  "papers_dir": "papers"}
 TODO_ITEM = re.compile(r"^- \[( |x|X)\] (.*)$")
 DONE_HEAD = re.compile(r"^### (\d{4}-\d{2}-\d{2})\s+(.*)$")
 QUESTION = re.compile(r"^## 물음 (\d+)\.\s*(.*)$")
@@ -234,6 +236,21 @@ def collect_docs(root, config, extra_files=()):
     return [docs[k] for k in sorted(docs)]
 
 
+def collect_papers(root, config):
+    """papers/papers.db 요약: 전체 수, 상태별 수, 출처 목록, 분석 수. db가 없으면 exists False."""
+    path = os.path.join(root, config.get("papers_dir") or "papers", "papers.db")
+    if not os.path.isfile(path):
+        return {"exists": False, "total": 0, "by_status": {}, "sources": [], "analyzed": 0}
+    conn = papers_db.connect(path)
+    try:
+        s = papers_db.stats(conn)
+        sources = [r[0] for r in conn.execute("SELECT DISTINCT source FROM papers ORDER BY source")]
+        analyzed = conn.execute("SELECT COUNT(*) FROM analysis").fetchone()[0]
+    finally:
+        conn.close()
+    return {"exists": True, "total": s["total"], "by_status": s["by_status"], "sources": sources, "analyzed": analyzed}
+
+
 def load_config(root):
     config = dict(DEFAULT_CONFIG)
     path = os.path.join(root, "dashboard", "config.json")
@@ -262,6 +279,7 @@ def collect(root, config=None):
         "ideas": parse_ideas(root, ideas_files),
         "experiments": parse_experiments(root, logs),
         "docs": collect_docs(root, config, list(ideas_files) + list(logs)),
+        "papers": collect_papers(root, config),
         "profile": {"exists": os.path.isdir(profile_dir), "files": profile_files},
     }
 

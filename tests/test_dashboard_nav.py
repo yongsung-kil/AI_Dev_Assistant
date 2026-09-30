@@ -34,14 +34,14 @@ def test_nav_groups_follow_default_order_and_nest_folders(tmp_path):
     status = collect_status.collect(str(tmp_path))
     nav = rd.build_nav(status, collect_status.load_config(str(tmp_path)))
     labels = [g["label"] for g in nav]
-    assert labels == ["온보딩", "작업 관리", "논문", "아이디어 적용", "최적화", "위키", "기타 문서"]
+    assert labels == ["온보딩", "작업 관리", "외부 기술문서", "아이디어 적용", "최적화", "내부 기술문서", "기타 문서"]
     profile = find(find(nav, "온보딩")["children"], "프로파일")
     assert profile["children"][0]["target"] == "docs/docs/profile/overview.html"
     pm = find(nav, "작업 관리")["children"]
     assert [c["label"] for c in pm[:2]] == ["TODO", "DONE"]
     first = find(find(pm, "진행 중 작업")["children"], "첫 작업")
     assert first["target"] == "docs/_pm/tasks/20260930_first/20260930_first.html"
-    tech = find(find(nav, "위키")["children"], "기술")
+    tech = find(find(nav, "내부 기술문서")["children"], "기술")
     assert tech["children"][0]["label"] == "기술 x"
     assert find(find(nav, "아이디어 적용")["children"], "아이디어 a")["target"] == "docs/ideas/001_a/README.html"
     other = find(nav, "기타 문서")["children"]
@@ -74,6 +74,7 @@ def test_sidebar_html_has_levels_changelog_link_and_toggles(tmp_path):
     index = (tmp_path / "dashboard" / "index.html").read_text(encoding="utf-8")
     assert 'class="nav-l1"' in index and 'class="nav-l2"' in index and 'class="nav-l3"' in index
     assert 'href="changelog.html"' in index and 'id="nav-toggle"' in index and 'id="theme-toggle"' in index
+    assert 'assets/search.js' in index  # 전역 검색 색인은 모든 보통 페이지가 싣는다
     page = (tmp_path / "dashboard" / "docs" / "_wiki" / "tech" / "20260930_x.html").read_text(encoding="utf-8")
     assert 'href="../../../changelog.html"' in page and 'href="20260930_x.html"' in page
 
@@ -125,7 +126,7 @@ def test_moc_rule_matches_only_moc_files(tmp_path):
     (tmp_path / "_wiki" / "tech" / "MOC-tech.md").write_text("# 기술 문서 목록" + chr(10), encoding="utf-8")
     status = collect_status.collect(str(tmp_path))
     nav = rd.build_nav(status, collect_status.load_config(str(tmp_path)))
-    tech = find(find(nav, "위키")["children"], "기술")
+    tech = find(find(nav, "내부 기술문서")["children"], "기술")
     assert tech["target"].endswith("MOC-tech.html") and [c["label"] for c in tech["children"]] == ["가짜 자료"]
 
 
@@ -149,3 +150,9 @@ def test_changelog_details_render_bold_labels(tmp_path):
     rd.render(str(tmp_path), collect_status.collect(str(tmp_path)))
     page = (tmp_path / "dashboard" / "changelog.html").read_text(encoding="utf-8")
     assert "<li><strong>배경</strong>: b</li>" in page
+
+def test_onboarding_group_lists_usage_guide_first(tmp_path):
+    make_project(tmp_path)
+    (tmp_path / "docs" / "usage.md").write_text("# 이 프로젝트에서 플러그인 쓰는 법" + chr(10), encoding="utf-8")
+    nav = rd.build_nav(collect_status.collect(str(tmp_path)), collect_status.load_config(str(tmp_path)))
+    assert find(nav, "온보딩")["children"][0]["label"] == "이 프로젝트에서 플러그인 쓰는 법"

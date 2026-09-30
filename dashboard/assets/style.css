@@ -2,13 +2,16 @@
   --bg: #ffffff; --surface: #f6f8fa; --text: #24292f; --muted: #57606a; --border: #d0d7de;
   --accent: #0969da; --accent-soft: #ddf4ff; --ok: #1a7f37; --warn: #bf8700;
   --planned: #2563eb; --doing: #7c3aed;
+  --h1: #0b5cad; --h2: #0f766e; --h3: #6d28d9; --strong: #b45309;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
-  --planned: #60a5fa; --doing: #c084fc; } }
+  --planned: #60a5fa; --doing: #c084fc;
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; } }
 :root[data-theme="dark"] { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
-  --planned: #60a5fa; --doing: #c084fc; }
+  --planned: #60a5fa; --doing: #c084fc;
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere;
        font-family: "Segoe UI", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif; }
@@ -62,9 +65,12 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .sidebar a.current, .sidebar summary.current { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 .sidebar .done { opacity: 0.7; }
 .content { min-width: 0; }
-.content h1 { font-size: 1.9em; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
-.content h2 { font-size: 1.45em; border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
-.content h3 { font-size: 1.15em; }
+.content h1 { font-size: 1.9em; color: var(--h1); border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+.content h1 { border-bottom-color: color-mix(in srgb, var(--h1) 35%, transparent); }
+.content h2 { font-size: 1.45em; color: var(--h2); border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
+.content h2 { border-bottom-color: color-mix(in srgb, var(--h2) 40%, transparent); }
+.content h3 { font-size: 1.15em; color: var(--h3); }
+.content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
 .content th { background: var(--surface); }
@@ -124,6 +130,21 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .change-title { font-weight: 600; margin-bottom: 4px; }
 .change p { margin: 0 0 6px; color: var(--muted); font-size: 0.92em; }
 .change ul { margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--muted); }
+.layout.light { grid-template-columns: minmax(0, 880px) 220px; }
+.back { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px;
+            padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
+.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
+.controls label { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.facets { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.facet { border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0; background: var(--bg); }
+.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
+.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 2px 8px 2px 0; color: var(--text); white-space: nowrap; }
+.facet .count { color: var(--muted); font-size: 11px; }
+#paper-table .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: 12px; margin: 1px 4px 1px 0; color: var(--muted); background: var(--surface); }
+#paper-table td .card-desc { white-space: normal; margin-top: 2px; }
+#paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
 .orphan { color: var(--warn); }
 .foot { color: var(--muted); font-size: 0.85em; padding: 16px; border-top: 1px solid var(--border); }

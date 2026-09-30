@@ -10,13 +10,16 @@
   --bg: #ffffff; --surface: #f6f8fa; --text: #24292f; --muted: #57606a; --border: #d0d7de;
   --accent: #0969da; --accent-soft: #ddf4ff; --ok: #1a7f37; --warn: #bf8700;
   --planned: #2563eb; --doing: #7c3aed;
+  --h1: #0b5cad; --h2: #0f766e; --h3: #6d28d9; --strong: #b45309;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
-  --planned: #60a5fa; --doing: #c084fc; } }
+  --planned: #60a5fa; --doing: #c084fc;
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; } }
 :root[data-theme="dark"] { --bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
-  --planned: #60a5fa; --doing: #c084fc; }
+  --planned: #60a5fa; --doing: #c084fc;
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; word-break: keep-all; overflow-wrap: anywhere;
        font-family: "Segoe UI", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif; }
@@ -70,9 +73,12 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .sidebar a.current, .sidebar summary.current { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 .sidebar .done { opacity: 0.7; }
 .content { min-width: 0; }
-.content h1 { font-size: 1.9em; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
-.content h2 { font-size: 1.45em; border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
-.content h3 { font-size: 1.15em; }
+.content h1 { font-size: 1.9em; color: var(--h1); border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+.content h1 { border-bottom-color: color-mix(in srgb, var(--h1) 35%, transparent); }
+.content h2 { font-size: 1.45em; color: var(--h2); border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
+.content h2 { border-bottom-color: color-mix(in srgb, var(--h2) 40%, transparent); }
+.content h3 { font-size: 1.15em; color: var(--h3); }
+.content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
 .content th { background: var(--surface); }
@@ -132,6 +138,21 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .change-title { font-weight: 600; margin-bottom: 4px; }
 .change p { margin: 0 0 6px; color: var(--muted); font-size: 0.92em; }
 .change ul { margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--muted); }
+.layout.light { grid-template-columns: minmax(0, 880px) 220px; }
+.back { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px;
+            padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
+.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
+.controls label { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.facets { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.facet { border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0; background: var(--bg); }
+.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
+.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 2px 8px 2px 0; color: var(--text); white-space: nowrap; }
+.facet .count { color: var(--muted); font-size: 11px; }
+#paper-table .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: 12px; margin: 1px 4px 1px 0; color: var(--muted); background: var(--surface); }
+#paper-table td .card-desc { white-space: normal; margin-top: 2px; }
+#paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
 .orphan { color: var(--warn); }
 .foot { color: var(--muted); font-size: 0.85em; padding: 16px; border-top: 1px solid var(--border); }
@@ -397,6 +418,79 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
       });
     }
     applyFilter();
+  }
+  var table = document.getElementById("paper-table");
+  if (table && window.PAPERS) {
+    var papers = window.PAPERS, labels = window.PAPER_LABELS || {};
+    var q = document.getElementById("paper-search"), yMin = document.getElementById("year-min"), yMax = document.getElementById("year-max");
+    var countBox = document.getElementById("paper-count"), more = document.getElementById("paper-more"), tbody = table.querySelector("tbody");
+    var facetBoxes = document.querySelectorAll(".facet"), shownRows = 0, matched = [], PAGE = 100;
+    function checked() {
+      var sel = {};
+      for (var i = 0; i < facetBoxes.length; i++) {
+        var key = facetBoxes[i].getAttribute("data-facet"), boxes = facetBoxes[i].querySelectorAll("input:checked");
+        if (boxes.length) { sel[key] = {}; for (var j = 0; j < boxes.length; j++) { sel[key][boxes[j].value] = true; } }
+      }
+      return sel;
+    }
+    function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    function rowHtml(p) {
+      var href = p.doc ? prefix + p.doc : (/^https?:\/\//.test(p.url || "") ? p.url : "");
+      var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
+      var chips = "";
+      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
+        "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
+    }
+    function renderMore() {
+      var end = Math.min(matched.length, shownRows + PAGE), html = "";
+      for (var i = shownRows; i < end; i++) { html += rowHtml(matched[i]); }
+      tbody.insertAdjacentHTML("beforeend", html);
+      shownRows = end;
+      more.classList.toggle("hidden", shownRows >= matched.length);
+      countBox.textContent = matched.length + "편 중 " + shownRows + "편 표시";
+    }
+    function applyPapers() {
+      var text = (q.value || "").trim().toLowerCase(), lo = parseInt(yMin.value, 10), hi = parseInt(yMax.value, 10), sel = checked();
+      matched = [];
+      for (var i = 0; i < papers.length; i++) {
+        var p = papers[i], ok = true;
+        if (text) { ok = ((p.title || "") + " " + (p.desc || "") + " " + (p.abstract || "")).toLowerCase().indexOf(text) >= 0; }
+        if (ok && (!isNaN(lo) || !isNaN(hi)) && !p.year) { ok = false; }  // 연도 조건이 있으면 연도 없는 논문은 빠진다
+        if (ok && !isNaN(lo) && p.year < lo) { ok = false; }
+        if (ok && !isNaN(hi) && p.year > hi) { ok = false; }
+        for (var key in sel) { if (ok && !sel[key][p.facets[key]]) { ok = false; } }
+        if (ok) { matched.push(p); }
+      }
+      tbody.innerHTML = "";
+      shownRows = 0;
+      renderMore();
+    }
+    function applyPreset() {  // 주소의 #source=값: 그 글자가 든 출처를 모두 체크한다 (patent, google_patent 등)
+      var preset = /source=([^&]+)/.exec(location.hash || "");
+      if (!preset) { return; }
+      var want = preset[1];
+      try { want = decodeURIComponent(want); } catch (e) {}
+      var boxes = document.querySelectorAll('.facet[data-facet="source"] input');
+      for (var i = 0; i < boxes.length; i++) { boxes[i].checked = boxes[i].value.indexOf(want) >= 0; }
+    }
+    applyPreset();
+    window.addEventListener("hashchange", function () { applyPreset(); applyPapers(); });
+    q.addEventListener("input", applyPapers);
+    yMin.addEventListener("input", applyPapers);
+    yMax.addEventListener("input", applyPapers);
+    for (var f = 0; f < facetBoxes.length; f++) { facetBoxes[f].addEventListener("change", applyPapers); }
+    more.addEventListener("click", renderMore);
+    var reset = document.getElementById("paper-reset");
+    if (reset) {
+      reset.addEventListener("click", function () {
+        q.value = ""; yMin.value = ""; yMax.value = "";
+        var all = document.querySelectorAll(".facet input:checked");
+        for (var i = 0; i < all.length; i++) { all[i].checked = false; }
+        applyPapers();
+      });
+    }
+    applyPapers();
   }
 })();
 </script>

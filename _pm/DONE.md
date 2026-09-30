@@ -2,6 +2,12 @@
 
 > 완료 이력. 최근 것이 위.
 
+### 2026-09-30 논문 탐색기 페이지, 사이드바 묶음 이름 변경, 온보딩 사용법 문서, 최적화 도구 안내
+papers.db 기반 논문 탐색기(검색어, 연도, 갈래 체크박스), 묶음 이름을 외부 기술문서와 내부 기술문서로, docs/usage.md 양식, 최적화 도구 만드는 순서, 제목과 굵은 글의 색
+- **배경**: 사용자가 기존 논문 분석 사이트의 검색 기능을 대시보드 안에 같은 틀로 넣고, 위키(내부)와 논문(외부)의 경계를 출처로 나누고, 온보딩에 플러그인 사용법을, 최적화에 도구 제작 방법을 두자고 했다. 페이지가 건조하다는 지적으로 제목과 굵은 글에 색을 넣었다
+- **변경**: collect_papers(상태 요약), papers_rows와 facet_table과 papers_body(탐색기 자료와 갈래, config facet_labels), explorer_nodes(논문과 특허 탐색기 항목), FRAME_FULL과 FRAME_LIGHT(분석 문서는 사이드바 없는 틀, 검색 색인에서 본문 제외), MAX_FOLDER_ITEMS 상한, 묶음 기본 이름과 폴더 이름표, templates/docs/usage.md, param_opt README를 제작 순서 중심으로, 제목 색 토큰(h1, h2, h3, strong)
+- **파일**: plugin/scripts/render_dashboard.py, plugin/scripts/collect_status.py, plugin/templates/docs/usage.md, plugin/templates/param_opt/README.md, plugin/templates/dashboard/config.json, plugin/skills/dashboard/SKILL.md, plugin/skills/onboard/SKILL.md, docs/html_guide.md, tests/test_papers_page.py, tests/test_dashboard_nav.py, tests/test_onboard_init.py
+
 ### 2026-09-30 대시보드 사이드바를 일 갈래 묶음으로 바꾸고 작업 보드와 변경 이력 페이지를 더함
 사이드바는 config의 묶음(온보딩, 작업 관리, 논문, 아이디어 적용, 최적화, 위키)과 그 안의 폴더로 단계별 접기, 첫 화면은 계획, 진행 중, 완료 보드, 완료 작업 단위의 변경 이력 페이지
 - **배경**: 사용자가 참고 사이트(Storyblok 사이드바 단계, Greptile과 Railway 문서의 접기와 차례, Railway 로드맵 보드, Handsontable 변경 이력)처럼 바꾸자고 했고, 옛 사이드바는 대시보드 요약 칸을 그대로 옮긴 꼴이라 갈래가 맞지 않았다

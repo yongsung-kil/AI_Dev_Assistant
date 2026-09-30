@@ -4,11 +4,11 @@
   "doc_dirs": ["docs", "_wiki", "_pm", "ideas", "papers", "optim"],
   "root_docs": ["README.md", "CLAUDE.md"],
   "sidebar": [
-    {"name": "온보딩", "paths": ["README.md", "CLAUDE.md", "docs/profile", "docs/explore", "docs/adr"]},
+    {"name": "온보딩", "paths": ["docs/usage.md", "README.md", "CLAUDE.md", "docs/profile", "docs/explore", "docs/adr"]},
     {"name": "작업 관리", "paths": ["_pm"]},
-    {"name": "논문", "paths": ["papers"]},
+    {"name": "외부 기술문서", "paths": ["papers"]},
     {"name": "아이디어 적용", "paths": ["ideas"]},
     {"name": "최적화", "paths": ["docs/speed_opt", "docs/robustness", "optim"]},
-    {"name": "위키", "paths": ["_wiki"]}
+    {"name": "내부 기술문서", "paths": ["_wiki"]}
   ]
 }

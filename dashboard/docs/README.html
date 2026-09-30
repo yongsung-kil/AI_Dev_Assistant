@@ -81,7 +81,7 @@ claude --plugin-dir ./plugin</code></pre>
 <h2 id="다른-플러그인과-겹칠-때">다른 플러그인과 겹칠 때</h2>
 <p>계획, 리뷰, 디버그 스킬이 다른 플러그인(예: superpowers)과 겹치면 한쪽을 끈다: <code>claude plugin disable &lt;플러그인 이름&gt;</code> 또는 <code>/plugin</code>에서 해당 플러그인을 끈다. 이 플러그인의 절차는 한국어와 <code>_pm/</code> 규약에 맞춰져 있다.</p>
 <h2 id="폴더">폴더</h2>
-<ul><li>㉮ <code>plugin/</code>: 플러그인 본체. 이 폴더만 배포한다</li><li>㉯ <code>testbed/</code>: 시험장. 실제 프로젝트 사본을 두고 플러그인을 돌려 본다 (git 무시)</li><li>㉰ <code>_pm/</code>: 이 저장소의 작업 관리 (플러그인의 pm 스킬로 운영)</li><li>㉱ <code>_checks/</code>: 배포 전 검사 (금지 표현)</li><li>㉲ <code>tests/</code>: 스크립트 테스트</li><li>㉳ <code>docs/</code>: 소개 페이지, html 규격</li><li>㉴ <code>dashboard/</code>: 이 저장소의 현황 페이지 (dashboard 스킬 산출물)</li></ul>
+<ul><li>㉮ <code>plugin/</code>: 플러그인 본체. 이 폴더만 배포한다</li><li>㉯ <code>testbed/</code>: 임시 시험 폴더 (git 무시). 플러그인을 실제 프로젝트에 적용한 예시는 별도 저장소 <code>&lt;GitHub 계정 또는 조직&gt;/&lt;예시 저장소&gt;</code>에 있다</li><li>㉰ <code>_pm/</code>: 이 저장소의 작업 관리 (플러그인의 pm 스킬로 운영)</li><li>㉱ <code>_checks/</code>: 배포 전 검사 (금지 표현)</li><li>㉲ <code>tests/</code>: 스크립트 테스트</li><li>㉳ <code>docs/</code>: 소개 페이지, html 규격</li><li>㉴ <code>dashboard/</code>: 이 저장소의 현황 페이지 (dashboard 스킬 산출물)</li></ul>
 <h2 id="개발">개발</h2>
 <pre><code>python -m pytest tests -q
 claude plugin validate --strict plugin
@@ -99,7 +99,7 @@ claude plugin eval plugin --runs 1 --no-publish --allow-tools Bash Write Edit</c
 <ul><li class="h2"><a href="#설치">설치</a></li><li class="h2"><a href="#처음-쓰는-법">처음 쓰는 법</a></li><li class="h2"><a href="#스킬">스킬</a></li><li class="h2"><a href="#다른-플러그인과-겹칠-때">다른 플러그인과 겹칠 때</a></li><li class="h2"><a href="#폴더">폴더</a></li><li class="h2"><a href="#개발">개발</a></li></ul>
 </aside>
 </div>
-<footer class="foot">생성: 2026-09-30 12:24:37</footer>
+<footer class="foot">생성: 2026-09-30 13:38:00</footer>
 <script>window.DASH_PREFIX = "../";</script>
 <script src="../assets/search.js"></script>
 <script src="../assets/app.js"></script>

@@ -92,4 +92,77 @@
     }
     applyFilter();
   }
+  var table = document.getElementById("paper-table");
+  if (table && window.PAPERS) {
+    var papers = window.PAPERS, labels = window.PAPER_LABELS || {};
+    var q = document.getElementById("paper-search"), yMin = document.getElementById("year-min"), yMax = document.getElementById("year-max");
+    var countBox = document.getElementById("paper-count"), more = document.getElementById("paper-more"), tbody = table.querySelector("tbody");
+    var facetBoxes = document.querySelectorAll(".facet"), shownRows = 0, matched = [], PAGE = 100;
+    function checked() {
+      var sel = {};
+      for (var i = 0; i < facetBoxes.length; i++) {
+        var key = facetBoxes[i].getAttribute("data-facet"), boxes = facetBoxes[i].querySelectorAll("input:checked");
+        if (boxes.length) { sel[key] = {}; for (var j = 0; j < boxes.length; j++) { sel[key][boxes[j].value] = true; } }
+      }
+      return sel;
+    }
+    function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    function rowHtml(p) {
+      var href = p.doc ? prefix + p.doc : (/^https?:\/\//.test(p.url || "") ? p.url : "");
+      var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
+      var chips = "";
+      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
+        "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
+    }
+    function renderMore() {
+      var end = Math.min(matched.length, shownRows + PAGE), html = "";
+      for (var i = shownRows; i < end; i++) { html += rowHtml(matched[i]); }
+      tbody.insertAdjacentHTML("beforeend", html);
+      shownRows = end;
+      more.classList.toggle("hidden", shownRows >= matched.length);
+      countBox.textContent = matched.length + "편 중 " + shownRows + "편 표시";
+    }
+    function applyPapers() {
+      var text = (q.value || "").trim().toLowerCase(), lo = parseInt(yMin.value, 10), hi = parseInt(yMax.value, 10), sel = checked();
+      matched = [];
+      for (var i = 0; i < papers.length; i++) {
+        var p = papers[i], ok = true;
+        if (text) { ok = ((p.title || "") + " " + (p.desc || "") + " " + (p.abstract || "")).toLowerCase().indexOf(text) >= 0; }
+        if (ok && (!isNaN(lo) || !isNaN(hi)) && !p.year) { ok = false; }  // 연도 조건이 있으면 연도 없는 논문은 빠진다
+        if (ok && !isNaN(lo) && p.year < lo) { ok = false; }
+        if (ok && !isNaN(hi) && p.year > hi) { ok = false; }
+        for (var key in sel) { if (ok && !sel[key][p.facets[key]]) { ok = false; } }
+        if (ok) { matched.push(p); }
+      }
+      tbody.innerHTML = "";
+      shownRows = 0;
+      renderMore();
+    }
+    function applyPreset() {  // 주소의 #source=값: 그 글자가 든 출처를 모두 체크한다 (patent, google_patent 등)
+      var preset = /source=([^&]+)/.exec(location.hash || "");
+      if (!preset) { return; }
+      var want = preset[1];
+      try { want = decodeURIComponent(want); } catch (e) {}
+      var boxes = document.querySelectorAll('.facet[data-facet="source"] input');
+      for (var i = 0; i < boxes.length; i++) { boxes[i].checked = boxes[i].value.indexOf(want) >= 0; }
+    }
+    applyPreset();
+    window.addEventListener("hashchange", function () { applyPreset(); applyPapers(); });
+    q.addEventListener("input", applyPapers);
+    yMin.addEventListener("input", applyPapers);
+    yMax.addEventListener("input", applyPapers);
+    for (var f = 0; f < facetBoxes.length; f++) { facetBoxes[f].addEventListener("change", applyPapers); }
+    more.addEventListener("click", renderMore);
+    var reset = document.getElementById("paper-reset");
+    if (reset) {
+      reset.addEventListener("click", function () {
+        q.value = ""; yMin.value = ""; yMax.value = "";
+        var all = document.querySelectorAll(".facet input:checked");
+        for (var i = 0; i < all.length; i++) { all[i].checked = false; }
+        applyPapers();
+      });
+    }
+    applyPapers();
+  }
 })();

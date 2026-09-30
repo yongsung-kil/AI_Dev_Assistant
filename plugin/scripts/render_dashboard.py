@@ -25,6 +25,8 @@ except Exception:
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import collect_status  # noqa: E402
 import md_to_html  # noqa: E402
+import paper_analyze  # noqa: E402
+import papers_db  # noqa: E402
 
 OUT = "dashboard"
 HREF = re.compile(r'(?:href|src)="([^"]+)"')
@@ -32,28 +34,38 @@ HREF = re.compile(r'(?:href|src)="([^"]+)"')
 # 사이드바 묶음: 이름과 그 묶음에 드는 경로(폴더 또는 md 파일). 폴더 경로가 하나뿐인 묶음은 그 폴더의 내용이 묶음 바로 아래에 오고,
 # 폴더 경로가 둘 이상이면 폴더마다 항목이 된다. 어느 묶음에도 들지 않는 문서는 "기타 문서"로 간다.
 DEFAULT_SIDEBAR = [
-    {"name": "온보딩", "paths": ["README.md", "CLAUDE.md", "docs/profile", "docs/explore", "docs/adr"]},
+    {"name": "온보딩", "paths": ["docs/usage.md", "README.md", "CLAUDE.md", "docs/profile", "docs/explore", "docs/adr"]},
     {"name": "작업 관리", "paths": ["_pm"]},
-    {"name": "논문", "paths": ["papers"]},
+    {"name": "외부 기술문서", "paths": ["papers"]},
     {"name": "아이디어 적용", "paths": ["ideas"]},
     {"name": "최적화", "paths": ["docs/speed_opt", "docs/robustness", "optim"]},
-    {"name": "위키", "paths": ["_wiki"]},
+    {"name": "내부 기술문서", "paths": ["_wiki"]},
 ]
+PAPERS_GROUP = "외부 기술문서"  # config의 어느 묶음도 논문 폴더를 담지 않을 때 탐색기가 들어갈 묶음 이름
 OTHER_GROUP = "기타 문서"
 FOLDER_LABELS = {"profile": "프로파일", "explore": "탐색 결과", "adr": "설계 기록", "tasks": "진행 중 작업", "done": "완료 작업",
-                 "decisions": "결정", "trials": "시도", "assets": "자산", "tech": "기술", "_templates": "양식", "_template": "양식",
-                 "_inbox": "대기함", "speed_opt": "속도 최적화", "robustness": "안정성 검사", "optim": "파라미터 최적화",
-                 "analysis": "분석 문서", "screened": "선별 결과"}
-FIRST_FILES = ["README.md", "TODO.md", "DONE.md", "manual.md", "MOC.md", "checklist.md", "overview.md"]
+                 "decisions": "결정", "trials": "시도", "assets": "자산", "tech": "기술", "background": "배경 지식",
+                 "_templates": "양식", "_template": "양식", "_inbox": "대기함",
+                 "speed_opt": "속도 최적화", "robustness": "안정성 검사", "optim": "최적화 도구",
+                 "analysis": "분석 문서", "screened": "선별 결과", "criteria": "기준서", "catalogs": "카탈로그"}
+FIRST_FILES = ["usage.md", "README.md", "TODO.md", "DONE.md", "manual.md", "MOC.md", "checklist.md", "overview.md"]
+MAX_FOLDER_ITEMS = 40  # 사이드바 한 폴더에 보이는 문서 수 상한. 넘치면 "외 n편"
+FACET_MAX_VALUES = 12  # 분석 JSON 항목이 탐색기 갈래가 되려면 서로 다른 값이 이 수 이하
+FACET_MAX_LEN = 24  # 갈래 값의 최대 글자 수 (더 길면 자유 글로 본다)
+FREE_TEXT_KEYS = {"key_contribution", "limitation", "followup", "summary", "notes", "caveat", "reason"}
+STATUS_LABELS = {"new": "새 항목", "in": "선별 통과", "out": "제외", "analyzed": "분석 완료"}
 
 DARK_VARS = """--bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
-  --planned: #60a5fa; --doing: #c084fc;"""
+  --planned: #60a5fa; --doing: #c084fc;
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24;"""
 
+# 제목 색: h1은 파랑, h2는 청록, h3는 보라, 본문의 굵은 글은 호박색 (밝은 모드와 어두운 모드에서 같은 계열)
 STYLE = """:root {
   --bg: #ffffff; --surface: #f6f8fa; --text: #24292f; --muted: #57606a; --border: #d0d7de;
   --accent: #0969da; --accent-soft: #ddf4ff; --ok: #1a7f37; --warn: #bf8700;
   --planned: #2563eb; --doing: #7c3aed;
+  --h1: #0b5cad; --h2: #0f766e; --h3: #6d28d9; --strong: #b45309;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { DARK } }
 :root[data-theme="dark"] { DARK }
@@ -110,9 +122,12 @@ details.nav-l4 > summary, li.nav-l4, details.nav-l5 > summary, li.nav-l5, detail
 .sidebar a.current, .sidebar summary.current { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 .sidebar .done { opacity: 0.7; }
 .content { min-width: 0; }
-.content h1 { font-size: 1.9em; border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
-.content h2 { font-size: 1.45em; border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
-.content h3 { font-size: 1.15em; }
+.content h1 { font-size: 1.9em; color: var(--h1); border-bottom: 2px solid var(--border); padding-bottom: 0.3em; margin-top: 0.4em; }
+.content h1 { border-bottom-color: color-mix(in srgb, var(--h1) 35%, transparent); }
+.content h2 { font-size: 1.45em; color: var(--h2); border-bottom: 1px solid var(--border); padding-bottom: 0.25em; margin-top: 1.6em; }
+.content h2 { border-bottom-color: color-mix(in srgb, var(--h2) 40%, transparent); }
+.content h3 { font-size: 1.15em; color: var(--h3); }
+.content strong { color: var(--strong); font-weight: 600; }
 .content table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; }
 .content th, .content td { border: 1px solid var(--border); padding: 6px 12px; text-align: left; vertical-align: top; }
 .content th { background: var(--surface); }
@@ -172,6 +187,21 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .change-title { font-weight: 600; margin-bottom: 4px; }
 .change p { margin: 0 0 6px; color: var(--muted); font-size: 0.92em; }
 .change ul { margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--muted); }
+.layout.light { grid-template-columns: minmax(0, 880px) 220px; }
+.back { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px;
+            padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
+.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
+.controls label { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.facets { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+.facet { border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0; background: var(--bg); }
+.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
+.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 2px 8px 2px 0; color: var(--text); white-space: nowrap; }
+.facet .count { color: var(--muted); font-size: 11px; }
+#paper-table .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: 12px; margin: 1px 4px 1px 0; color: var(--muted); background: var(--surface); }
+#paper-table td .card-desc { white-space: normal; margin-top: 2px; }
+#paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
 .orphan { color: var(--warn); }
 .foot { color: var(--muted); font-size: 0.85em; padding: 16px; border-top: 1px solid var(--border); }
@@ -274,6 +304,79 @@ APP_JS = """(function () {
     }
     applyFilter();
   }
+  var table = document.getElementById("paper-table");
+  if (table && window.PAPERS) {
+    var papers = window.PAPERS, labels = window.PAPER_LABELS || {};
+    var q = document.getElementById("paper-search"), yMin = document.getElementById("year-min"), yMax = document.getElementById("year-max");
+    var countBox = document.getElementById("paper-count"), more = document.getElementById("paper-more"), tbody = table.querySelector("tbody");
+    var facetBoxes = document.querySelectorAll(".facet"), shownRows = 0, matched = [], PAGE = 100;
+    function checked() {
+      var sel = {};
+      for (var i = 0; i < facetBoxes.length; i++) {
+        var key = facetBoxes[i].getAttribute("data-facet"), boxes = facetBoxes[i].querySelectorAll("input:checked");
+        if (boxes.length) { sel[key] = {}; for (var j = 0; j < boxes.length; j++) { sel[key][boxes[j].value] = true; } }
+      }
+      return sel;
+    }
+    function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    function rowHtml(p) {
+      var href = p.doc ? prefix + p.doc : (/^https?:\\/\\//.test(p.url || "") ? p.url : "");
+      var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
+      var chips = "";
+      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
+        "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
+    }
+    function renderMore() {
+      var end = Math.min(matched.length, shownRows + PAGE), html = "";
+      for (var i = shownRows; i < end; i++) { html += rowHtml(matched[i]); }
+      tbody.insertAdjacentHTML("beforeend", html);
+      shownRows = end;
+      more.classList.toggle("hidden", shownRows >= matched.length);
+      countBox.textContent = matched.length + "편 중 " + shownRows + "편 표시";
+    }
+    function applyPapers() {
+      var text = (q.value || "").trim().toLowerCase(), lo = parseInt(yMin.value, 10), hi = parseInt(yMax.value, 10), sel = checked();
+      matched = [];
+      for (var i = 0; i < papers.length; i++) {
+        var p = papers[i], ok = true;
+        if (text) { ok = ((p.title || "") + " " + (p.desc || "") + " " + (p.abstract || "")).toLowerCase().indexOf(text) >= 0; }
+        if (ok && (!isNaN(lo) || !isNaN(hi)) && !p.year) { ok = false; }  // 연도 조건이 있으면 연도 없는 논문은 빠진다
+        if (ok && !isNaN(lo) && p.year < lo) { ok = false; }
+        if (ok && !isNaN(hi) && p.year > hi) { ok = false; }
+        for (var key in sel) { if (ok && !sel[key][p.facets[key]]) { ok = false; } }
+        if (ok) { matched.push(p); }
+      }
+      tbody.innerHTML = "";
+      shownRows = 0;
+      renderMore();
+    }
+    function applyPreset() {  // 주소의 #source=값: 그 글자가 든 출처를 모두 체크한다 (patent, google_patent 등)
+      var preset = /source=([^&]+)/.exec(location.hash || "");
+      if (!preset) { return; }
+      var want = preset[1];
+      try { want = decodeURIComponent(want); } catch (e) {}
+      var boxes = document.querySelectorAll('.facet[data-facet="source"] input');
+      for (var i = 0; i < boxes.length; i++) { boxes[i].checked = boxes[i].value.indexOf(want) >= 0; }
+    }
+    applyPreset();
+    window.addEventListener("hashchange", function () { applyPreset(); applyPapers(); });
+    q.addEventListener("input", applyPapers);
+    yMin.addEventListener("input", applyPapers);
+    yMax.addEventListener("input", applyPapers);
+    for (var f = 0; f < facetBoxes.length; f++) { facetBoxes[f].addEventListener("change", applyPapers); }
+    more.addEventListener("click", renderMore);
+    var reset = document.getElementById("paper-reset");
+    if (reset) {
+      reset.addEventListener("click", function () {
+        q.value = ""; yMin.value = ""; yMax.value = "";
+        var all = document.querySelectorAll(".facet input:checked");
+        for (var i = 0; i < all.length; i++) { all[i].checked = false; }
+        applyPapers();
+      });
+    }
+    applyPapers();
+  }
 })();
 """
 
@@ -317,19 +420,13 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 </head>
 <body>
 <header class="top">
-<button id="nav-toggle" class="icon-btn" type="button" title="사이드바 접기와 펴기" aria-label="사이드바 접기와 펴기">PANEL</button>
-<a class="brand" href="{prefix}index.html">{project}</a>
-<div class="search-wrap">LENS<input id="search" type="search" placeholder="검색 (제목과 본문, Ctrl K)" autocomplete="off">
-<div id="search-results" hidden></div></div>
-<div id="theme-toggle" class="seg" title="테마">
+NAVBTN<a class="brand" href="{prefix}index.html">{project}</a>
+SEARCHBOX<div id="theme-toggle" class="seg" title="테마">
 <button type="button" data-theme="" title="시스템 설정 따름">SYSTEM</button><button type="button" data-theme="light" title="밝게">SUN</button><button type="button" data-theme="dark" title="어둡게">MOON</button>
 </div>
 </header>
-<div class="layout">
-<nav class="sidebar">
-{sidebar}
-</nav>
-<main class="content">
+<div class="layout LAYOUTCLS">
+SIDEBAR<main class="content">
 {body}
 </main>
 <aside class="toc"><div class="toc-title">이 페이지의 차례</div>
@@ -339,10 +436,20 @@ if (localStorage.getItem("dash-nav") === "closed") document.documentElement.clas
 <footer class="foot">생성: {generated}</footer>
 <script>window.DASH_PREFIX = {prefix_json};</script>
 <script src="{prefix}assets/search.js"></script>
-<script src="{prefix}assets/app.js"></script>
+{scripts}<script src="{prefix}assets/app.js"></script>
 </body>
 </html>
-""".replace("PANEL", ICON_PANEL).replace("LENS", ICON_LENS).replace("SYSTEM", ICON_SYSTEM).replace("SUN", ICON_SUN).replace("MOON", ICON_MOON)
+""".replace("SYSTEM", ICON_SYSTEM).replace("SUN", ICON_SUN).replace("MOON", ICON_MOON)
+
+NAV_BUTTON = ('<button id="nav-toggle" class="icon-btn" type="button" title="사이드바 접기와 펴기" aria-label="사이드바 접기와 펴기">'
+              + ICON_PANEL + "</button>\n")
+SEARCH_BOX = ('<div class="search-wrap">' + ICON_LENS + '<input id="search" type="search" placeholder="검색 (제목과 본문, Ctrl K)" autocomplete="off">\n'
+              '<div id="search-results" hidden></div></div>\n')
+# 보통 페이지: 사이드바, 검색, 본문, 차례. 가벼운 페이지(논문 분석 문서처럼 수천 편인 것): 사이드바와 검색 없이 돌아가기 링크만
+FRAME_FULL = (FRAME.replace("NAVBTN", NAV_BUTTON).replace("SEARCHBOX", SEARCH_BOX).replace(" LAYOUTCLS", "")
+              .replace("SIDEBAR", '<nav class="sidebar">\n{sidebar}\n</nav>\n'))
+FRAME_LIGHT = (FRAME.replace("NAVBTN", "").replace("SEARCHBOX", '<a class="back" href="{back}">{back_label}</a>\n')
+               .replace("LAYOUTCLS", "light").replace("SIDEBAR", ""))
 
 
 def esc(text):
@@ -446,6 +553,9 @@ def _finalize(folder, is_group):
                 folder["label"] = rep["label"]
             folder["doc"], folder["target"] = rep["doc"], rep["target"]
             folder["badge"], folder["done"] = rep["badge"], rep["done"]
+    if len(docs) > MAX_FOLDER_ITEMS:
+        rest = len(docs) - MAX_FOLDER_ITEMS
+        docs = docs[:MAX_FOLDER_ITEMS] + [_node(f"외 {rest}편 (검색으로 찾기)")]
     folder["children"] = docs + folders
 
 
@@ -473,9 +583,13 @@ def build_nav(status, config):
             other.append(("", d))
         else:
             buckets[hit[0]].append((hit[1], d))
+    explorer = explorer_nodes(status)
+    papers_dir = (config.get("papers_dir") or "papers").strip("/")
+    hit = _match(papers_dir + "/papers.db", groups) if explorer else None
+    explorer_gi = hit[0] if hit else None
     nav = []
     for gi, g in enumerate(groups):
-        if not buckets[gi]:
+        if not buckets[gi] and gi != explorer_gi:
             continue
         folder_entries = [p.strip("/") for p in g.get("paths", []) if not p.endswith(".md")]
         merge = len(folder_entries) <= 1
@@ -497,6 +611,12 @@ def build_nav(status, config):
                 root["children"].append(child)
             _insert(child, parts, d, decisions)
         _finalize(root, True)
+        if gi == explorer_gi:
+            root["children"] = explorer + root["children"]
+        nav.append(root)
+    if explorer and explorer_gi is None:  # config의 어느 묶음도 논문 폴더를 담지 않으면 묶음을 하나 더 둔다
+        root = _node(PAPERS_GROUP)
+        root["children"] = explorer
         nav.append(root)
     if other:
         root = _node(OTHER_GROUP)
@@ -505,6 +625,19 @@ def build_nav(status, config):
         _finalize(root, True)
         nav.append(root)
     return nav
+
+
+def explorer_nodes(status):
+    """papers.db가 있으면 논문 탐색기 항목, 출처에 특허가 있으면 특허 탐색기 항목도."""
+    papers = status.get("papers") or {}
+    if not papers.get("exists"):
+        return []
+    nodes = [_node("논문 탐색기", target="papers.html")]
+    if any("patent" in (s or "") for s in papers.get("sources", [])):
+        patent = _node("특허 탐색기", target="papers.html")
+        patent["anchor"] = "source=patent"
+        nodes.append(patent)
+    return nodes
 
 
 def _contains(node, current):
@@ -516,7 +649,7 @@ def _contains(node, current):
 
 
 def _label_html(node, page_dir, current):
-    cls = ' class="current"' if node["target"] and node["target"] == current else ""
+    cls = ' class="current"' if node["target"] and node["target"] == current and not node["anchor"] else ""
     badge = f' <span class="badge warn">{esc(node["badge"])}</span>' if node["badge"] else ""
     if node["target"]:
         return f'<a{cls} href="{href_from(page_dir, node["target"], node["anchor"])}"><span class="lbl">{esc(node["label"])}</span>{badge}</a>'
@@ -548,10 +681,99 @@ def render_sidebar(nav, page_dir, current):
 
 # ---------------------------------------------------------------- 페이지
 
-def page(status, title, body, headings, page_dir, sidebar_html, prefix):
-    return FRAME.format(title=esc(title), project=esc(status["project"]), prefix=prefix, sidebar=sidebar_html,
-                        body=body, toc=toc_html(headings), generated=esc(status["generated"]),
-                        prefix_json=json.dumps(prefix))
+def page(status, title, body, headings, page_dir, sidebar_html, prefix, scripts=""):
+    return FRAME_FULL.format(title=esc(title), project=esc(status["project"]), prefix=prefix, sidebar=sidebar_html,
+                             body=body, toc=toc_html(headings), generated=esc(status["generated"]),
+                             prefix_json=json.dumps(prefix), scripts=scripts)
+
+
+def page_light(status, title, body, headings, prefix, back, back_label):
+    """사이드바와 검색 없이 돌아가기 링크만 있는 페이지 (수천 편이 될 수 있는 논문 분석 문서용)."""
+    return FRAME_LIGHT.format(title=esc(title), project=esc(status["project"]), prefix=prefix, body=body,
+                              toc=toc_html(headings), generated=esc(status["generated"]), prefix_json=json.dumps(prefix),
+                              scripts="", back=back, back_label=esc(back_label))
+
+
+# ---------------------------------------------------------------- 논문 탐색기
+
+FACET_LABELS = {"source": "출처", "status": "상태", "analysis": "분석"}
+
+
+def papers_rows(root, config, doc_paths):
+    """papers.db의 논문을 탐색기 자료(제목, 연도, 출처, 상태, 분석 문서 경로, 한 줄, 갈래 값)로 만든다."""
+    papers_dir = (config.get("papers_dir") or "papers").strip("/")
+    conn = papers_db.connect(os.path.join(root, papers_dir, "papers.db"))
+    try:
+        analyses = {}
+        for r in conn.execute("SELECT id, json FROM analysis"):
+            try:
+                analyses[r["id"]] = json.loads(r["json"] or "{}")
+            except ValueError:
+                analyses[r["id"]] = {}
+        rows = []
+        for r in conn.execute("SELECT id, source, title, abstract, year, venue, url, status FROM papers ORDER BY year DESC, id"):
+            data = analyses.get(r["id"])
+            md = f"{papers_dir}/analysis/{paper_analyze.safe_name(r['id'])}.md"
+            facets = {"source": r["source"] or "other", "status": r["status"] or "new"}
+            desc = ""
+            if data:
+                for key, value in data.items():
+                    if key in facets or key in FREE_TEXT_KEYS:
+                        continue
+                    if isinstance(value, bool):
+                        value = "O" if value else "X"
+                    elif isinstance(value, (int, float)):
+                        value = str(value)
+                    if isinstance(value, str) and value.strip() and len(value.strip()) <= FACET_MAX_LEN:
+                        facets[key] = value.strip()
+                desc = str(data.get("key_contribution") or data.get("summary") or "")
+            rows.append({"id": r["id"], "title": r["title"] or r["id"], "year": r["year"], "venue": r["venue"] or "",
+                         "url": r["url"] or "", "abstract": (r["abstract"] or "")[:300],
+                         "doc": html_path(md) if md in doc_paths else None, "desc": desc, "facets": facets})
+    finally:
+        conn.close()
+    return rows
+
+
+def facet_table(rows):
+    """갈래별 값과 건수. 서로 다른 값이 FACET_MAX_VALUES를 넘는 갈래는 빼고 자료에서도 지운다 (출처, 상태, 분석은 항상 둔다)."""
+    counts = {}
+    for p in rows:
+        for key, value in p["facets"].items():
+            counts.setdefault(key, {}).setdefault(value, 0)
+            counts[key][value] += 1
+    fixed = ("source", "status")
+    keep = {k: v for k, v in counts.items() if k in fixed or len(v) <= FACET_MAX_VALUES}
+    for p in rows:
+        p["facets"] = {k: v for k, v in p["facets"].items() if k in keep}
+    order = list(fixed) + sorted(k for k in keep if k not in fixed)
+    return [(k, keep[k]) for k in order if k in keep]
+
+
+def papers_body(status, facets, labels=None):
+    labels = dict(FACET_LABELS, **(labels or {}))  # config의 facet_labels로 갈래 이름(JSON 키)을 사람 말로 바꾼다
+    papers = status["papers"]
+    by = ", ".join(f"{STATUS_LABELS.get(k, k)} {v}편" for k, v in papers["by_status"].items())
+    out = ['<h1 id="논문-탐색기">논문 탐색기</h1>',
+           f'<p class="lead">전체 {papers["total"]}편 ({by}), 분석 {papers["analyzed"]}편. 검색어, 연도, 갈래로 거른다. '
+           '제목을 누르면 분석 문서로, 분석이 없으면 원문 주소로 간다.</p>',
+           '<h2 id="거르기">거르기</h2>',
+           '<div class="controls"><input id="paper-search" type="search" placeholder="제목, 초록, 핵심 기여" autocomplete="off">'
+           '<label>연도 <input id="year-min" type="number" placeholder="시작"> ~ <input id="year-max" type="number" placeholder="끝"></label>'
+           '<button id="paper-reset" class="tab" type="button">초기화</button></div>',
+           '<div class="facets">']
+    for key, values in facets:
+        out.append(f'<fieldset class="facet" data-facet="{esc(key)}"><legend>{esc(labels.get(key, key))}</legend>')
+        for value, n in sorted(values.items(), key=lambda kv: (-kv[1], kv[0])):
+            shown = STATUS_LABELS.get(value, value) if key == "status" else value
+            out.append(f'<label><input type="checkbox" value="{esc(value)}"> {esc(shown)} <span class="count">{n}</span></label>')
+        out.append("</fieldset>")
+    out.append("</div>")
+    out.append('<h2 id="목록">목록</h2><div id="paper-count" class="card-meta"></div>')
+    out.append('<table id="paper-table"><thead><tr><th>제목</th><th>연도</th><th>출처</th><th>상태</th><th>갈래</th></tr></thead><tbody></tbody></table>')
+    out.append('<button id="paper-more" class="tab" type="button">더 보기</button>')
+    out.append("<script>window.PAPER_LABELS = " + json.dumps({"status": STATUS_LABELS}, ensure_ascii=False) + ";</script>")
+    return "\n".join(out), [(2, "거르기", "거르기"), (2, "목록", "목록")]
 
 
 def _todo_card(t, doc_paths):
@@ -583,7 +805,7 @@ def _column(cls, icon, label, cards, empty):
             f'{body}</div>')
 
 
-def index_body(status, doc_paths):
+def index_body(status, doc_paths, analysis_prefix=""):
     out = [f"<h1 id=\"대시보드\">{esc(status['project'])} 대시보드</h1>",
            '<p class="lead">계획, 진행 중, 완료를 한눈에. 카드를 누르면 그 작업의 문서로 간다.</p>',
            '<h2 id="작업-보드">작업 보드</h2>']
@@ -630,11 +852,14 @@ def index_body(status, doc_paths):
             out.append(f'<li>{label} <span class="snippet">({esc(e["file"])})</span></li>')
         out.append("</ul>")
     out.append('<h2 id="문서-지도">문서 지도</h2>')
-    if not status["docs"]:
+    map_docs = [d for d in status["docs"] if not (analysis_prefix and d["path"].startswith(analysis_prefix))]
+    if len(map_docs) < len(status["docs"]):
+        out.append(f'<p class="card-meta">논문 분석 문서 {len(status["docs"]) - len(map_docs)}편은 <a href="papers.html">논문 탐색기</a>에서 찾는다.</p>')
+    if not map_docs:
         out.append("<p>문서 없음</p>")
     else:
         out.append("<table><thead><tr><th>문서</th><th>태그</th><th>들어오는 링크</th><th>나가는 링크</th></tr></thead><tbody>")
-        for d in status["docs"]:
+        for d in map_docs:
             orphan = ' <span class="orphan">(고아)</span>' if not d["links_in"] else ""
             out.append(f'<tr><td><a href="{href_from("", html_path(d["path"]))}">{esc(d["title"])}</a>'
                        f'<br><code>{esc(d["path"])}</code></td><td>{esc(", ".join(d["tags"]))}</td>'
@@ -731,10 +956,21 @@ def render(root, status, config=None):
     os.makedirs(os.path.join(out_dir, "assets"), exist_ok=True)
     written = []
     doc_paths = {d["path"] for d in status["docs"]}
+    status.setdefault("papers", {"exists": False, "total": 0, "by_status": {}, "sources": [], "analyzed": 0})
+    papers_dir = (config.get("papers_dir") or "papers").strip("/")
+    analysis_prefix = papers_dir + "/analysis/" if status["papers"]["exists"] else "\0"  # db가 없으면 분석 문서도 보통 문서다
     nav = build_nav(status, config)
-    index = page(status, f"{status['project']} 대시보드", index_body(status, doc_paths), INDEX_HEADINGS, "",
+    index = page(status, f"{status['project']} 대시보드", index_body(status, doc_paths, analysis_prefix), INDEX_HEADINGS, "",
                  render_sidebar(nav, "", None), "")
     written.append(_write(os.path.join(out_dir, "index.html"), index))
+    if status["papers"]["exists"]:
+        rows = papers_rows(root, config, doc_paths)
+        facets = facet_table(rows)
+        body, headings = papers_body(status, facets, config.get("facet_labels"))
+        explorer_page = page(status, f"{status['project']} 논문 탐색기", body, headings, "", render_sidebar(nav, "", "papers.html"), "",
+                             scripts='<script src="assets/papers.js"></script>\n')
+        written.append(_write(os.path.join(out_dir, "papers.html"), explorer_page))
+        written.append(_write(os.path.join(out_dir, "assets", "papers.js"), "window.PAPERS = " + json.dumps(rows, ensure_ascii=False) + ";\n"))
     log_body, log_headings = changelog_body(status)
     changelog = page(status, f"{status['project']} 변경 이력", log_body, log_headings, "",
                      render_sidebar(nav, "", "changelog.html"), "")
@@ -749,9 +985,13 @@ def render(root, status, config=None):
         prefix = "../" * depth
         body_html = md_to_html.md_to_html(body, make_rewrite(root, d["path"], doc_paths))
         headings = md_to_html.extract_headings(body)
-        html = page(status, d["title"], body_html, headings, page_dir, render_sidebar(nav, page_dir, target), prefix)
+        is_analysis = d["path"].startswith(analysis_prefix)
+        if is_analysis:  # 논문 분석 문서는 수천 편일 수 있어 사이드바 없는 가벼운 틀로
+            html = page_light(status, d["title"], body_html, headings, prefix, href_from(page_dir, "papers.html"), "논문 탐색기로")
+        else:
+            html = page(status, d["title"], body_html, headings, page_dir, render_sidebar(nav, page_dir, target), prefix)
         written.append(_write(os.path.join(out_dir, target), html))
-        search_index.append({"title": d["title"], "path": quote(target, safe="/"), "text": plain_text(body)[:2000]})
+        search_index.append({"title": d["title"], "path": quote(target, safe="/"), "text": "" if is_analysis else plain_text(body)[:2000]})
     written.append(_write(os.path.join(out_dir, "assets", "style.css"), STYLE))
     written.append(_write(os.path.join(out_dir, "assets", "app.js"), APP_JS))
     written.append(_write(os.path.join(out_dir, "assets", "search.js"),
