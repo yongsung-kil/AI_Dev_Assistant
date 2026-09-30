@@ -120,3 +120,27 @@ def test_analysis_docs_without_db_use_normal_frame_and_no_explorer_links(tmp_pat
     page = (tmp_path / "dashboard" / "docs" / "papers" / "analysis" / "x.html").read_text(encoding="utf-8")
     index = (tmp_path / "dashboard" / "index.html").read_text(encoding="utf-8")
     assert '<nav class="sidebar">' in page and "papers.html" not in index and rd.check_links(str(tmp_path)) == []
+
+def test_render_waits_out_a_writer_that_holds_the_db_for_seconds(tmp_path):
+    """반입 스크립트가 커밋하는 동안 db가 7초쯤 잠겨도 렌더는 기다렸다가 읽는다 (기본 대기 5초로는 실패한다)."""
+    import sqlite3
+    import threading
+    import time
+    make_project(tmp_path)
+    make_papers(tmp_path)
+    db = str(tmp_path / "papers" / "papers.db")
+    def hold():
+        writer = sqlite3.connect(db)
+        writer.execute("BEGIN EXCLUSIVE")
+        time.sleep(7)
+        writer.rollback()
+        writer.close()
+    th = threading.Thread(target=hold)
+    th.start()
+    time.sleep(0.5)
+    try:
+        status = collect_status.collect(str(tmp_path))
+        rd.render(str(tmp_path), status)
+    finally:
+        th.join()
+    assert status["papers"]["total"] == 2 and (tmp_path / "dashboard" / "papers.html").is_file()

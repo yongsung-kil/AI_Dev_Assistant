@@ -715,7 +715,7 @@ FACET_LABELS = {"source": "출처", "status": "상태", "analysis": "분석"}
 def papers_rows(root, config, doc_paths):
     """papers.db의 논문을 탐색기 자료(제목, 연도, 출처, 상태, 분석 문서 경로, 한 줄, 갈래 값)로 만든다."""
     papers_dir = (config.get("papers_dir") or "papers").strip("/")
-    conn = papers_db.connect(os.path.join(root, papers_dir, "papers.db"))
+    conn = papers_db.connect_readonly(os.path.join(root, papers_dir, "papers.db"))
     try:
         analyses = {}
         for r in conn.execute("SELECT id, json FROM analysis"):

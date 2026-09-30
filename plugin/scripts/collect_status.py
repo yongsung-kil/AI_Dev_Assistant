@@ -241,7 +241,7 @@ def collect_papers(root, config):
     path = os.path.join(root, config.get("papers_dir") or "papers", "papers.db")
     if not os.path.isfile(path):
         return {"exists": False, "total": 0, "by_status": {}, "sources": [], "analyzed": 0}
-    conn = papers_db.connect(path)
+    conn = papers_db.connect_readonly(path)
     try:
         s = papers_db.stats(conn)
         sources = [r[0] for r in conn.execute("SELECT DISTINCT source FROM papers ORDER BY source")]

@@ -33,6 +33,14 @@ def connect(path):
     return conn
 
 
+def connect_readonly(path):
+    """읽기 전용 연결. 스키마를 만들지 않으므로 다른 프로세스가 쓰는 중이어도 열린다 (잠금은 30초까지 기다린다)."""
+    uri = "file:" + os.path.abspath(path).replace(os.sep, "/") + "?mode=ro"
+    conn = sqlite3.connect(uri, uri=True, timeout=30)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
 def normalize_title(title):
     return re.sub(r"\s+", " ", re.sub(r"[^\w]+", " ", (title or "").lower())).strip()
 
