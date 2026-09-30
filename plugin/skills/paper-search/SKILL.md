@@ -11,7 +11,7 @@ description: 주제로 논문과 특허를 찾아 papers/papers.db에 쌓는다.
 
 - 1. `papers/`가 없으면 `python "<이 스킬의 기준 폴더>/../../scripts/paper_search.py" init`으로 폴더, 기준서 양식, db를 만든다
 - 2. 질의를 만든다. 프로파일 `overview.md`의 문제 정의와 `techniques.md`의 기법 이름에서 핵심 낱말을 뽑아 질의 두세 개를 사용자에게 보인다 (예: 기법 이름 + 개선, 문제 이름 + 알고리즘)
-- 3. arXiv: `paper_search.py search arxiv "질의" --max 200 --since 연도`. 사내 망이 바깥을 막으면 4의 브라우저 방식으로 arXiv도 검색한다
+- 3. arXiv: `paper_search.py search arxiv "질의" --max 200 --since 연도`. 인터넷이 막혀 있으면 4의 브라우저 방식으로 arXiv도 검색한다
 - 4. IEEE Xplore와 Google Patents: 브라우저에서 검색하고 결과를 CSV로 내보낸다
   - ㉮ Claude Code의 브라우저 도구(Claude in Chrome 또는 내장 브라우저)가 있으면 스킬이 직접 한다: 검색 페이지를 열고, 질의를 넣고, 연도 범위를 잡고, 내보내기(Export)를 눌러 CSV를 받고, 받은 파일 경로를 확인한다. 라이선스가 있는 PC에서는 전문 PDF도 받아 `papers/pdfs/{id 안전화}.pdf`에 둔다
   - ㉯ 브라우저 도구가 없으면 사용자에게 같은 절차를 안내하고 CSV 파일 경로를 받는다
