@@ -58,7 +58,8 @@ STATUS_LABELS = {"new": "새 항목", "in": "선별 통과", "out": "제외", "a
 DARK_VARS = """--bg: #0d1117; --surface: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d;
   --accent: #58a6ff; --accent-soft: rgba(88, 166, 255, 0.16); --ok: #3fb950; --warn: #d29922;
   --planned: #60a5fa; --doing: #c084fc;
-  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24;"""
+  --h1: #79b8ff; --h2: #5eead4; --h3: #c4b5fd; --strong: #fbbf24;
+  --c1: #60a5fa; --c2: #5eead4; --c3: #c4b5fd; --c4: #fbbf24; --c5: #fb7185; --c6: #a3e635; --c7: #22d3ee; --c8: #f0abfc;"""
 
 # 제목 색: h1은 파랑, h2는 청록, h3는 보라, 본문의 굵은 글은 호박색 (밝은 모드와 어두운 모드에서 같은 계열)
 STYLE = """:root {
@@ -66,6 +67,7 @@ STYLE = """:root {
   --accent: #0969da; --accent-soft: #ddf4ff; --ok: #1a7f37; --warn: #bf8700;
   --planned: #2563eb; --doing: #7c3aed;
   --h1: #0b5cad; --h2: #0f766e; --h3: #6d28d9; --strong: #b45309;
+  --c1: #2563eb; --c2: #0f766e; --c3: #7c3aed; --c4: #b45309; --c5: #be123c; --c6: #4d7c0f; --c7: #0e7490; --c8: #a21caf;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { DARK } }
 :root[data-theme="dark"] { DARK }
@@ -189,17 +191,23 @@ a.card:hover { border-color: var(--accent); text-decoration: none; }
 .change ul { margin: 0; padding-left: 18px; font-size: 0.85em; color: var(--muted); }
 .layout.light { grid-template-columns: minmax(0, 880px) 220px; }
 .back { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
-.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 10px;
-            padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
-.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border: 1px solid var(--border); border-left: 4px solid var(--accent);
+            border-radius: 10px; padding: 12px 16px; background: var(--surface); margin: 16px 0 12px; }
+.controls input[type="search"] { flex: 1 1 260px; padding: 8px 10px; border: 1px solid var(--accent); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 15px; }
+.controls input[type="search"]:focus { outline: 3px solid var(--accent-soft); }
 .controls input[type="number"] { width: 84px; padding: 6px 8px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
-.controls label { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
+.controls label { color: var(--h2); font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; }
 .facets { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-.facet { border: 1px solid var(--border); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0; background: var(--bg); }
-.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding: 0 4px; }
-.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 2px 8px 2px 0; color: var(--text); white-space: nowrap; }
+.facet { --fc: var(--c1); border: 1px solid var(--border); border-left: 4px solid var(--fc); border-radius: 10px; padding: 6px 10px 8px; margin: 0; min-width: 0;
+         background: var(--surface); }
+.facet legend { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fc); padding: 0 4px; }
+.facet label { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; margin: 3px 6px 2px 0; color: var(--text); white-space: nowrap;
+               border: 1px solid color-mix(in srgb, var(--fc) 35%, transparent); background: color-mix(in srgb, var(--fc) 10%, var(--bg));
+               border-radius: 12px; padding: 1px 9px 1px 6px; cursor: pointer; }
+.facet label:has(input:checked) { background: color-mix(in srgb, var(--fc) 30%, var(--bg)); border-color: var(--fc); font-weight: 600; }
 .facet .count { color: var(--muted); font-size: 11px; }
-#paper-table .chip { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; font-size: 12px; margin: 1px 4px 1px 0; color: var(--muted); background: var(--surface); }
+#paper-table .chip { --fc: var(--c1); display: inline-block; border: 1px solid color-mix(in srgb, var(--fc) 40%, transparent); border-radius: 6px; padding: 0 6px;
+                     font-size: 12px; margin: 1px 4px 1px 0; color: var(--fc); background: color-mix(in srgb, var(--fc) 10%, var(--bg)); }
 #paper-table td .card-desc { white-space: normal; margin-top: 2px; }
 #paper-table td.num { white-space: nowrap; }
 .hidden { display: none !important; }
@@ -319,11 +327,16 @@ APP_JS = """(function () {
       return sel;
     }
     function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    var colors = window.PAPER_FACET_COLORS || {};
     function rowHtml(p) {
       var href = p.doc ? prefix + p.doc : (/^https?:\\/\\//.test(p.url || "") ? p.url : "");
       var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
       var chips = "";
-      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      for (var k in p.facets) {
+        if (k !== "source" && k !== "status") {
+          chips += '<span class="chip" style="--fc: var(--c' + (colors[k] || 1) + ')" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>";
+        }
+      }
       return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
         "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
     }
@@ -757,13 +770,15 @@ def papers_body(status, facets, labels=None):
     out = ['<h1 id="논문-탐색기">논문 탐색기</h1>',
            f'<p class="lead">전체 {papers["total"]}편 ({by}), 분석 {papers["analyzed"]}편. 검색어, 연도, 갈래로 거른다. '
            '제목을 누르면 분석 문서로, 분석이 없으면 원문 주소로 간다.</p>',
-           '<h2 id="거르기">거르기</h2>',
+           '<h2 id="검색-도구">검색 도구</h2>',
            '<div class="controls"><input id="paper-search" type="search" placeholder="제목, 초록, 핵심 기여" autocomplete="off">'
            '<label>연도 <input id="year-min" type="number" placeholder="시작"> ~ <input id="year-max" type="number" placeholder="끝"></label>'
            '<button id="paper-reset" class="tab" type="button">초기화</button></div>',
            '<div class="facets">']
-    for key, values in facets:
-        out.append(f'<fieldset class="facet" data-facet="{esc(key)}"><legend>{esc(labels.get(key, key))}</legend>')
+    colors = {}  # 갈래마다 색 (팔레트 8색을 돌려 쓴다). 표의 갈래 칩도 같은 색
+    for i, (key, values) in enumerate(facets):
+        colors[key] = i % 8 + 1
+        out.append(f'<fieldset class="facet" data-facet="{esc(key)}" style="--fc: var(--c{colors[key]})"><legend>{esc(labels.get(key, key))}</legend>')
         for value, n in sorted(values.items(), key=lambda kv: (-kv[1], kv[0])):
             shown = STATUS_LABELS.get(value, value) if key == "status" else value
             out.append(f'<label><input type="checkbox" value="{esc(value)}"> {esc(shown)} <span class="count">{n}</span></label>')
@@ -772,8 +787,9 @@ def papers_body(status, facets, labels=None):
     out.append('<h2 id="목록">목록</h2><div id="paper-count" class="card-meta"></div>')
     out.append('<table id="paper-table"><thead><tr><th>제목</th><th>연도</th><th>출처</th><th>상태</th><th>갈래</th></tr></thead><tbody></tbody></table>')
     out.append('<button id="paper-more" class="tab" type="button">더 보기</button>')
-    out.append("<script>window.PAPER_LABELS = " + json.dumps({"status": STATUS_LABELS}, ensure_ascii=False) + ";</script>")
-    return "\n".join(out), [(2, "거르기", "거르기"), (2, "목록", "목록")]
+    out.append("<script>window.PAPER_LABELS = " + json.dumps({"status": STATUS_LABELS}, ensure_ascii=False)
+               + "; window.PAPER_FACET_COLORS = " + json.dumps(colors) + ";</script>")
+    return "\n".join(out), [(2, "검색 도구", "검색-도구"), (2, "목록", "목록")]
 
 
 def _todo_card(t, doc_paths):

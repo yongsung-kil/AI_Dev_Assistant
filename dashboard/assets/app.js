@@ -107,11 +107,16 @@
       return sel;
     }
     function label(key, value) { return (labels[key] && labels[key][value]) || value; }
+    var colors = window.PAPER_FACET_COLORS || {};
     function rowHtml(p) {
       var href = p.doc ? prefix + p.doc : (/^https?:\/\//.test(p.url || "") ? p.url : "");
       var title = href ? '<a href="' + esc(href) + '">' + esc(p.title) + "</a>" : esc(p.title);
       var chips = "";
-      for (var k in p.facets) { if (k !== "source" && k !== "status" && k !== "analysis") { chips += '<span class="chip" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>"; } }
+      for (var k in p.facets) {
+        if (k !== "source" && k !== "status") {
+          chips += '<span class="chip" style="--fc: var(--c' + (colors[k] || 1) + ')" title="' + esc(k) + '">' + esc(label(k, p.facets[k])) + "</span>";
+        }
+      }
       return "<tr><td>" + title + (p.desc ? '<div class="card-desc">' + esc(p.desc) + "</div>" : "") + '</td><td class="num">' + (p.year || "") +
         "</td><td>" + esc(label("source", p.facets.source)) + "</td><td>" + esc(label("status", p.facets.status)) + "</td><td>" + chips + "</td></tr>";
     }

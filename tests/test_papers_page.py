@@ -47,6 +47,7 @@ def test_papers_page_lists_entries_facets_and_analysis_links(tmp_path):
     assert 'id="paper-search"' in page and 'id="year-min"' in page and 'id="year-max"' in page
     assert 'data-facet="source"' in page and 'data-facet="status"' in page and 'data-facet="portability"' in page
     assert 'data-facet="key_contribution"' not in page  # 자유 글은 갈래가 아니다
+    assert '<h2 id="검색-도구">검색 도구</h2>' in page and 'style="--fc: var(--c1)"' in page and 'PAPER_FACET_COLORS' in page
     data = (tmp_path / "dashboard" / "assets" / "papers.js").read_text(encoding="utf-8")
     rows = json.loads(data.split("=", 1)[1].strip().rstrip(";"))
     first = next(r for r in rows if r["id"] == "arxiv:2601.00001")
