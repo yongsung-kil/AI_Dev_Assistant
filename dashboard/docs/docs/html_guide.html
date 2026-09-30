@@ -5,62 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HTML 작성 가이드</title>
 <link rel="stylesheet" href="../../assets/style.css">
+<script>try { var t = localStorage.getItem("dash-theme"); if (t) document.documentElement.setAttribute("data-theme", t);
+if (localStorage.getItem("dash-nav") === "closed") document.documentElement.classList.add("nav-closed"); } catch (e) {}</script>
 </head>
 <body>
 <header class="top">
+<button id="nav-toggle" class="icon-btn" type="button" title="사이드바 접기와 펴기" aria-label="사이드바 접기와 펴기"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="9" y1="4" x2="9" y2="20"/></svg></button>
 <a class="brand" href="../../index.html">AI_Assisted_Dev</a>
-<input id="search" type="search" placeholder="검색 (제목과 본문)" autocomplete="off">
-<div id="search-results" hidden></div>
+<div class="search-wrap"><svg class="lens" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.5" y2="16.5"/></svg><input id="search" type="search" placeholder="검색 (제목과 본문, Ctrl K)" autocomplete="off">
+<div id="search-results" hidden></div></div>
+<div id="theme-toggle" class="seg" title="테마">
+<button type="button" data-theme="" title="시스템 설정 따름"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg></button><button type="button" data-theme="light" title="밝게"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="7" y2="7"/><line x1="17" y1="17" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="7" y2="17"/><line x1="17" y1="7" x2="19.1" y2="4.9"/></svg></button><button type="button" data-theme="dark" title="어둡게"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
+</div>
 </header>
 <div class="layout">
 <nav class="sidebar">
-<a class="nav-home" href="../../index.html">대시보드</a>
-<details><summary>작업</summary>
+<div class="nav-top">
+<a href="../../index.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg><span class="lbl">대시보드</span></a>
+<a href="../../changelog.html"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg><span class="lbl">변경 이력</span></a>
+</div>
+<details class="nav-l1" open><summary><span><span class="lbl">온보딩</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li>라이트 리뷰 잔여 작은 지적 5건 (2026-09-30 검토)</li>
-<li>검사 사례 보강: paper-analyze, speed-opt, robustness-check, plan, debug, test-design 사례 추가. `claude plugin eval`이 열리면 전부 실행</li>
-</ul>
-</details>
-<details><summary>결정</summary>
-</details>
-<details><summary>아이디어</summary>
-</details>
-<details><summary>실험</summary>
-</details>
-<details open><summary>문서</summary>
-<details><summary>루트</summary>
+<li class="nav-l2"><a href="../README.html"><span class="lbl">AI_Assisted_Dev</span></a></li>
+<li class="nav-l2"><a href="../CLAUDE.html"><span class="lbl">CLAUDE.md: 이 저장소에서 작업할 때의 규칙</span></a></li>
+</ul></details>
+<details class="nav-l1" open><summary><span><span class="lbl">작업 관리</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li><a href="../CLAUDE.html">CLAUDE.md: 이 저장소에서 작업할 때의 규칙</a></li>
-<li><a href="../README.html">AI_Assisted_Dev</a></li>
-</ul>
-</details>
-<details><summary>_pm</summary>
+<li class="nav-l2"><a href="../_pm/TODO.html"><span class="lbl">TODO</span></a></li>
+<li class="nav-l2"><a href="../_pm/DONE.html"><span class="lbl">DONE</span></a></li>
+<li><details class="nav-l2"><summary><span><span class="lbl">완료 작업</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li><a href="../_pm/DONE.html">DONE</a></li>
-<li><a href="../_pm/TODO.html">TODO</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage1/20260930_plugin_stage1.html">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage2/20260930_plugin_stage2.html">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage3/20260930_plugin_stage3.html">플러그인 3단계: 대시보드와 HTML 작성 가이드</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage4/20260930_plugin_stage4.html">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage5/20260930_plugin_stage5.html">플러그인 5단계: paper-search, paper-screen, paper-analyze</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage6/20260930_plugin_stage6.html">플러그인 6단계: plan, review, debug, test-design 스킬 이관</a></li>
-<li><a href="../_pm/done/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html">플러그인 7단계 배포와 8단계 소개 페이지</a></li>
-<li><a href="../_pm/tasks/_template/README.html">tasks/ 폴더 규칙 (삭제 금지)</a></li>
-<li><a href="../_pm/tasks/_template/decision_request.html">판정요청: (주제)</a></li>
-<li><a href="../_pm/tasks/_template/task.html">(작업 제목)</a></li>
-</ul>
-</details>
-<details open><summary>docs</summary>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage1/20260930_plugin_stage1.html"><span class="lbl">플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage2/20260930_plugin_stage2.html"><span class="lbl">플러그인 2단계: onboard, explore, wiki 스킬과 프로젝트 프로파일</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage3/20260930_plugin_stage3.html"><span class="lbl">플러그인 3단계: 대시보드와 HTML 작성 가이드</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage4/20260930_plugin_stage4.html"><span class="lbl">플러그인 4단계: idea-apply, speed-opt, robustness-check, param-opt</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage5/20260930_plugin_stage5.html"><span class="lbl">플러그인 5단계: paper-search, paper-screen, paper-analyze</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage6/20260930_plugin_stage6.html"><span class="lbl">플러그인 6단계: plan, review, debug, test-design 스킬 이관</span></a></li>
+<li class="nav-l3"><a href="../_pm/done/20260930_plugin_stage7_8/20260930_plugin_stage7_8.html"><span class="lbl">플러그인 7단계 배포와 8단계 소개 페이지</span></a></li>
+</ul></details></li>
+<li><details class="nav-l2"><summary><span><span class="lbl">진행 중 작업</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li><a href="html_guide.html">HTML 작성 가이드</a></li>
-</ul>
-</details>
-<details><summary>plugin</summary>
+<li><details class="nav-l3"><summary><a href="../_pm/tasks/_template/README.html"><span class="lbl">양식</span></a><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
 <ul>
-<li><a href="../plugin/README.html">ai-assisted-dev</a></li>
-</ul>
-</details>
-</details>
+<li class="nav-l4"><a href="../_pm/tasks/_template/task.html"><span class="lbl">(작업 제목)</span></a></li>
+<li class="nav-l4"><a href="../_pm/tasks/_template/decision_request.html"><span class="lbl">판정요청: (주제)</span></a></li>
+</ul></details></li>
+</ul></details></li>
+</ul></details>
+<details class="nav-l1" open><summary><span><span class="lbl">기타 문서</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
+<ul>
+<li class="nav-l2"><a href="../plugin/README.html"><span class="lbl">ai-assisted-dev</span></a></li>
+<li><details class="nav-l2" open><summary><span><span class="lbl">docs</span></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg></summary>
+<ul>
+<li class="nav-l3"><a class="current" href="html_guide.html"><span class="lbl">HTML 작성 가이드</span></a></li>
+</ul></details></li>
+</ul></details>
 </nav>
 <main class="content">
 <h1 id="html-작성-가이드">HTML 작성 가이드</h1>
@@ -68,14 +67,14 @@
 <h2 id="1-파일과-링크">1. 파일과 링크</h2>
 <ul><li>㉮ 정적 파일이다. 서버 프로그램 없이 파일을 열어도 동작하고, 어느 서버에 올려도 그대로 동작한다</li><li>㉯ 링크는 상대 경로만 쓴다. 절대 주소와 호스트 이름을 넣지 않는다</li><li>㉰ 외부 자원(CDN의 스크립트, 글꼴, 스타일)을 불러오지 않는다. 스타일과 스크립트는 <code>assets/</code> 안의 파일이거나 페이지 안에 둔다 (사내망에서 바깥이 막혀도 열린다)</li><li>㉱ 한글 파일 이름은 href에서 퍼센트 인코딩한다</li><li>㉲ md가 정본인 문서는 html을 손으로 고치지 않고 렌더러를 고쳐 다시 만든다. 소개 페이지처럼 html이 정본인 것은 그 사실을 파일 머리 주석에 적는다</li></ul>
 <h2 id="2-틀">2. 틀</h2>
-<table><thead><tr><th>자리</th><th>내용</th><th>참고 사이트 메모의 출처</th></tr></thead><tbody><tr><td>왼쪽 사이드바</td><td>큰 장과 그 아래 작은 장. 장마다 접었다 편다 (<code>details</code> 요소). 현재 페이지를 표시</td><td>1, 2, 3</td></tr><tr><td>위</td><td>검색 상자. 제목과 본문을 찾아 결과 목록을 보인다</td><td>1</td></tr><tr><td>오른쪽</td><td>"이 페이지의 차례" (h2, h3). 스크롤에 따라 현재 절 표시</td><td>3</td></tr><tr><td>가운데</td><td>본문. 최대 폭 880px</td><td></td></tr><tr><td>첫 화면</td><td>진행 중인 일을 카드로. 카드를 누르면 상세 문서로 간다</td><td>4</td></tr><tr><td>변경 이력</td><td>커밋 단위가 아니라 작업 단위 (완료 이력에서)</td><td>5</td></tr><tr><td>빠른 시작</td><td>소개 페이지에 다섯 단계 안의 시작 안내</td><td>6</td></tr></tbody></table>
+<table><thead><tr><th>자리</th><th>내용</th><th>참고 사이트 메모의 출처</th></tr></thead><tbody><tr><td>왼쪽 사이드바</td><td>맨 위에 대시보드와 변경 이력 링크. 그 아래 일 갈래 묶음(온보딩, 작업 관리, 논문, 아이디어 적용, 최적화, 위키)과 그 안의 폴더와 문서. 단계가 깊을수록 글자가 작고 옅다 (<code>nav-l1</code>, <code>nav-l2</code>, <code>nav-l3</code>). 묶음과 폴더마다 꺾쇠로 접었다 편다 (<code>details</code> 요소). 현재 페이지는 옅은 강조 바탕</td><td>1, 2, 3</td></tr><tr><td>위</td><td>사이드바 전체를 접는 버튼, 프로젝트 이름, 검색 상자(제목과 본문, Ctrl K), 테마 전환(시스템, 밝게, 어둡게). 접힘과 테마는 브라우저에 남는다</td><td>1, 2, 3</td></tr><tr><td>오른쪽</td><td>"이 페이지의 차례" (h2, h3). 세로 선 위에 현재 절을 강조색으로 표시</td><td>3</td></tr><tr><td>가운데</td><td>본문. 최대 폭 880px</td><td></td></tr><tr><td>첫 화면</td><td>계획, 진행 중, 완료 세 칸의 보드. 카드는 제목, 한 줄 설명, 진행률 막대와 백분율. 카드를 누르면 상세 문서로 간다. 보드 아래에 결정 대기 목록(미답 수)</td><td>4</td></tr><tr><td>변경 이력</td><td>별도 페이지. 커밋 단위가 아니라 작업 단위 (완료 이력에서). 기간(from, to)과 달 탭으로 거르고 날짜별로 카드를 놓는다</td><td>5</td></tr><tr><td>빠른 시작</td><td>소개 페이지에 다섯 단계 안의 시작 안내</td><td>6</td></tr></tbody></table>
 <ul><li>㉮ 휴대폰 폭(600px 아래)에서는 사이드바와 오른쪽 차례를 접고 본문만 보인다. 가로 스크롤이 생기지 않게 한다</li><li>㉯ 표는 넘치면 표 안에서만 가로 스크롤한다</li></ul>
 <h2 id="3-색과-글꼴">3. 색과 글꼴</h2>
 <ul><li>㉮ 색은 <code>:root</code>의 css 변수로 정의한다: <code>--bg</code>, <code>--surface</code>, <code>--text</code>, <code>--muted</code>, <code>--border</code>, <code>--accent</code>, <code>--ok</code>, <code>--warn</code></li><li>㉯ 어두운 모드는 <code>@media (prefers-color-scheme: dark)</code>에서 같은 변수만 다시 정의한다</li><li>㉰ 글꼴은 시스템 글꼴 묶음: <code>"Segoe UI", "Malgun Gothic", "맑은 고딕", "Apple SD Gothic Neo", sans-serif</code>. 코드는 <code>Consolas, "D2Coding", monospace</code></li><li>㉱ 본문 16px, 줄 간격 1.7. 제목은 계층대로만 (h1 하나, h2와 h3로 나눔)</li><li>㉲ 대비는 본문 글자와 바탕이 4.5:1 이상</li></ul>
 <h2 id="4-문장">4. 문장</h2>
 <ul><li>㉮ 꾸미는 말과 감탄을 쓰지 않는다. 기능은 하는 일로 말한다 ("검색한다", "카드를 누르면 상세로 간다")</li><li>㉯ 줄글 대신 표, 카드, 목록, 흐름 그림으로 구성한다. 문단은 한 가지만 말한다</li><li>㉰ 줄표(U+2014)와 가운뎃점(U+00B7)을 쓰지 않는다. 약어는 첫 등장에서 풀어 쓴다</li><li>㉱ 회사 이름, 사업 도메인 이름, 입력 파일의 출처를 적지 않는다</li></ul>
 <h2 id="5-요소">5. 요소</h2>
-<ul><li>㉮ 카드: 제목, 한 줄 설명, 진행률 막대(하위 단계 완료 수 / 전체), 링크</li><li>㉯ 표: 머리 행 고정, 짝수 행 옅은 바탕</li><li>㉰ 접기: <code>details</code>와 <code>summary</code>. 기본은 현재 장만 펼침</li><li>㉱ 상태 표시: 미답 결정은 <code>--warn</code>, 완료는 <code>--ok</code></li><li>㉲ 코드: <code>pre code</code>, 가로 스크롤</li></ul>
+<ul><li>㉮ 카드: 제목, 한 줄 설명, 진행률 막대(하위 단계 완료 수 / 전체), 링크</li><li>㉯ 표: 머리 행 고정, 짝수 행 옅은 바탕</li><li>㉰ 접기: <code>details</code>와 <code>summary</code>. 1단계 묶음은 펼치고, 그 아래 폴더는 현재 페이지가 든 것만 펼침</li><li>㉱ 상태 표시: 미답 결정은 <code>--warn</code>, 완료는 <code>--ok</code></li><li>㉲ 코드: <code>pre code</code>, 가로 스크롤</li><li>㉳ 사이드바 묶음: <code>dashboard/config.json</code>의 <code>sidebar</code> 목록(묶음 이름과 경로)이 정한다. 폴더 경로가 하나뿐인 묶음은 그 폴더의 내용이 묶음 바로 아래에 오고, 둘 이상이면 폴더마다 항목이 된다. 어느 묶음에도 들지 않는 문서는 "기타 문서"로 간다. 폴더의 대표 문서(폴더 이름.md, README.md, MOC*.md)는 폴더 항목의 링크가 된다</li></ul>
 <h2 id="6-검사">6. 검사</h2>
 <ul><li>㉮ 렌더 뒤 상대 링크가 가리키는 파일이 모두 있어야 한다 (렌더러가 검사하고 보고)</li><li>㉯ 금지 표현 0건, 줄표와 가운뎃점 0건</li><li>㉰ 파일을 두 번 만들어도 생성 시각 줄 말고는 같아야 한다</li></ul>
 
@@ -84,7 +83,7 @@
 <ul><li class="h2"><a href="#1-파일과-링크">1. 파일과 링크</a></li><li class="h2"><a href="#2-틀">2. 틀</a></li><li class="h2"><a href="#3-색과-글꼴">3. 색과 글꼴</a></li><li class="h2"><a href="#4-문장">4. 문장</a></li><li class="h2"><a href="#5-요소">5. 요소</a></li><li class="h2"><a href="#6-검사">6. 검사</a></li></ul>
 </aside>
 </div>
-<footer class="foot">생성: 2026-09-30 03:43:14</footer>
+<footer class="foot">생성: 2026-09-30 12:24:37</footer>
 <script>window.DASH_PREFIX = "../../";</script>
 <script src="../../assets/search.js"></script>
 <script src="../../assets/app.js"></script>

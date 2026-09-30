@@ -1,8 +1,10 @@
 (function () {
   var prefix = window.DASH_PREFIX || "";
+  var root = document.documentElement;
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
   var input = document.getElementById("search");
   var box = document.getElementById("search-results");
-  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
   if (input && box) {
     input.addEventListener("input", function () {
       var q = input.value.trim().toLowerCase();
@@ -21,15 +23,31 @@
       box.hidden = false;
     });
     document.addEventListener("click", function (e) { if (!box.contains(e.target) && e.target !== input) { box.hidden = true; } });
+    document.addEventListener("keydown", function (e) { if ((e.ctrlKey || e.metaKey) && e.key === "k") { e.preventDefault(); input.focus(); } });
   }
-  var here = decodeURIComponent(location.pathname.split("/").slice(-1)[0]);
-  var links = document.querySelectorAll(".sidebar a");
-  for (var j = 0; j < links.length; j++) {
-    var h = decodeURIComponent(links[j].getAttribute("href") || "").split("#")[0].split("/").slice(-1)[0];
-    if (h && h === here && links[j].className.indexOf("nav-home") < 0) {
-      links[j].classList.add("current");
-      var det = links[j].closest("details"); while (det) { det.open = true; det = det.parentElement.closest("details"); }
+  var navToggle = document.getElementById("nav-toggle");
+  if (navToggle) {
+    navToggle.addEventListener("click", function () {
+      var closed = root.classList.toggle("nav-closed");
+      store("dash-nav", closed ? "closed" : "open");
+    });
+  }
+  var themeBox = document.getElementById("theme-toggle");
+  if (themeBox) {
+    var buttons = themeBox.querySelectorAll("button");
+    function mark() {
+      var cur = root.getAttribute("data-theme") || "";
+      for (var i = 0; i < buttons.length; i++) { buttons[i].classList.toggle("on", buttons[i].getAttribute("data-theme") === cur); }
     }
+    for (var j = 0; j < buttons.length; j++) {
+      buttons[j].addEventListener("click", function () {
+        var v = this.getAttribute("data-theme");
+        if (v) { root.setAttribute("data-theme", v); } else { root.removeAttribute("data-theme"); }
+        store("dash-theme", v);
+        mark();
+      });
+    }
+    mark();
   }
   var heads = document.querySelectorAll(".content h2, .content h3");
   var tocLinks = document.querySelectorAll(".toc a");
@@ -42,5 +60,36 @@
       });
     }, { rootMargin: "0px 0px -70% 0px" });
     for (var m = 0; m < heads.length; m++) { obs.observe(heads[m]); }
+  }
+  var from = document.getElementById("range-from"), to = document.getElementById("range-to");
+  if (from && to) {
+    var month = "";
+    function applyFilter() {
+      var lo = from.value, hi = to.value;
+      if (lo > hi) { var tmp = lo; lo = hi; hi = tmp; }
+      var changes = document.querySelectorAll(".change");
+      var shown = {};
+      for (var i = 0; i < changes.length; i++) {
+        var d = changes[i].getAttribute("data-date");
+        var ok = d >= lo && d <= hi && (!month || changes[i].getAttribute("data-month") === month);
+        changes[i].classList.toggle("hidden", !ok);
+        if (ok) { shown[d] = true; }
+      }
+      var vers = document.querySelectorAll(".ver");
+      for (var v = 0; v < vers.length; v++) { vers[v].classList.toggle("hidden", !shown[vers[v].getAttribute("data-date")]); }
+      var grids = document.querySelectorAll(".changes");
+      for (var g = 0; g < grids.length; g++) { grids[g].classList.toggle("hidden", !shown[grids[g].getAttribute("data-date")]); }
+    }
+    from.addEventListener("change", applyFilter);
+    to.addEventListener("change", applyFilter);
+    var tabs = document.querySelectorAll(".tab");
+    for (var t = 0; t < tabs.length; t++) {
+      tabs[t].addEventListener("click", function () {
+        month = this.getAttribute("data-month") || "";
+        for (var u = 0; u < tabs.length; u++) { tabs[u].classList.toggle("active", tabs[u] === this); }
+        applyFilter();
+      });
+    }
+    applyFilter();
   }
 })();

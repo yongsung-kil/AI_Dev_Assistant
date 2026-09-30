@@ -2,6 +2,12 @@
 
 > 완료 이력. 최근 것이 위.
 
+### 2026-09-30 대시보드 사이드바를 일 갈래 묶음으로 바꾸고 작업 보드와 변경 이력 페이지를 더함
+사이드바는 config의 묶음(온보딩, 작업 관리, 논문, 아이디어 적용, 최적화, 위키)과 그 안의 폴더로 단계별 접기, 첫 화면은 계획, 진행 중, 완료 보드, 완료 작업 단위의 변경 이력 페이지
+- **배경**: 사용자가 참고 사이트(Storyblok 사이드바 단계, Greptile과 Railway 문서의 접기와 차례, Railway 로드맵 보드, Handsontable 변경 이력)처럼 바꾸자고 했고, 옛 사이드바는 대시보드 요약 칸을 그대로 옮긴 꼴이라 갈래가 맞지 않았다
+- **변경**: build_nav(config 기반 트리, 대표 문서 규칙, 같은 이름 폴더 구분), nav-l1부터 nav-l3 글자 단계, 사이드바 전체 접기와 테마 전환(브라우저에 기억), 오른쪽 차례의 세로 선 표시, 작업 보드 세 칸과 결정 대기 목록, changelog.html(기간과 달 탭 필터), DONE 파서의 상세 줄 수집과 제목 앞 줄표 제거, 기본 문서 폴더에 ideas, papers, optim 추가, 소개 페이지도 같은 틀로
+- **파일**: plugin/scripts/render_dashboard.py, plugin/scripts/collect_status.py, plugin/templates/dashboard/config.json, plugin/skills/dashboard/SKILL.md, docs/html_guide.md, docs/intro.html, tests/test_dashboard_nav.py, tests/test_collect_status.py
+
 ### 2026-09-30 플러그인 1단계: 저장소 뼈대, pm 스킬, doc-check 스킬
 플러그인 뼈대와 자기 관리 도구를 만들고 시험장 실제 실행과 검토자 검토로 확인했다
 - **배경**: 다른 모든 스킬이 기대는 작업 관리와 문서 검사부터 플러그인으로 만들어 자기 관리에 썼다

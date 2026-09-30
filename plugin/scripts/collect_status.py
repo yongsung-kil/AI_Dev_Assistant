@@ -25,7 +25,7 @@ SKIP_DIRS = {".git", ".hg", ".svn", "node_modules", "__pycache__", ".venv", "ven
              "out", "obj", "third_party", "vendor", "external", "xcelium.d", ".Xil", "work",
              "Sim_Output", ".superpowers", ".pytest_cache", ".idea", ".vscode", "dashboard", "testbed"}
 DEFAULT_CONFIG = {"ideas_files": None, "experiment_logs": None,
-                  "doc_dirs": ["docs", "_wiki", "_pm"], "root_docs": ["README.md", "CLAUDE.md"]}
+                  "doc_dirs": ["docs", "_wiki", "_pm", "ideas", "papers", "optim"], "root_docs": ["README.md", "CLAUDE.md"]}
 TODO_ITEM = re.compile(r"^- \[( |x|X)\] (.*)$")
 DONE_HEAD = re.compile(r"^### (\d{4}-\d{2}-\d{2})\s+(.*)$")
 QUESTION = re.compile(r"^## 물음 (\d+)\.\s*(.*)$")
@@ -80,13 +80,19 @@ def parse_done(text):
     for line in text.splitlines():
         m = DONE_HEAD.match(line)
         if m:
-            current = {"date": m.group(1), "title": m.group(2).strip(), "summary": ""}
+            current = {"date": m.group(1), "title": re.sub("^[ —–:-]+", "", m.group(2)).strip(), "summary": "", "details": []}
             entries.append(current)
             continue
-        if current is not None and not current["summary"]:
-            stripped = line.strip()
-            if stripped and not stripped.startswith(("-", "#", ">")):
-                current["summary"] = stripped
+        if line.startswith("#"):  # 다른 절이 시작되면 항목이 끝난다
+            current = None
+            continue
+        if current is None:
+            continue
+        stripped = line.strip()
+        if not current["summary"] and stripped and not stripped.startswith(("-", ">")):
+            current["summary"] = stripped
+        elif line.startswith("- "):  # 맨 바깥 불릿만 상세로 (들여쓴 하위 불릿은 뺀다)
+            current["details"].append(line[2:].strip())
     return entries
 
 

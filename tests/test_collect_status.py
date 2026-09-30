@@ -44,8 +44,8 @@ def test_todo_items_with_subtasks_and_detail(tmp_path):
 def test_done_sections(tmp_path):
     make_project(tmp_path)
     s = collect_status.collect(str(tmp_path))
-    assert s["done"] == [{"date": "2026-09-29", "title": "둘째 완료", "summary": "요약 둘"},
-                         {"date": "2026-09-28", "title": "첫째 완료", "summary": "요약 하나"}]
+    assert s["done"] == [{"date": "2026-09-29", "title": "둘째 완료", "summary": "요약 둘", "details": ["**배경**: b"]},
+                         {"date": "2026-09-28", "title": "첫째 완료", "summary": "요약 하나", "details": []}]
 
 
 def test_decision_questions_answered_flag(tmp_path):
@@ -89,3 +89,25 @@ def test_main_writes_status_json_utf8(tmp_path):
     assert r.returncode == 0
     data = json.loads((tmp_path / "dashboard" / "status.json").read_text(encoding="utf-8"))
     assert data["todo"][0]["title"] == "첫 작업" and "generated" in data
+
+
+def test_done_title_strips_leading_dash():
+    text = """### 2026-08-14 — 제목 하나
+요약
+"""
+    entries = collect_status.parse_done(text)
+    assert entries[0]["title"] == "제목 하나" and entries[0]["summary"] == "요약"
+
+
+def test_done_details_stop_at_next_section_and_skip_nested_bullets():
+    text = """### 2026-08-14 A
+요약
+- **배경**: x
+  - 하위
+- **변경**: y
+
+## 참고
+- 무관한 줄
+"""
+    entries = collect_status.parse_done(text)
+    assert entries[0]["details"] == ["**배경**: x", "**변경**: y"]
